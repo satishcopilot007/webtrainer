@@ -1,0 +1,6396 @@
+[
+  {
+    "id": 1,
+    "title": "Fashion Design Course",
+    "slug": "fashion-design-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 50,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Fashion Design Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Fashion Design Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Interior Design Course",
+    "slug": "interior-design-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 53,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Interior Design Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Interior Design Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Corporate Generative Ai Course",
+    "slug": "corporate-generative-ai-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 56,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Generative Ai Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Generative Ai Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Corporate Personality Development Training",
+    "slug": "corporate-personality-development-training",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 59,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Personality Development Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Personality Development Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Corporate Hr Analytics Training",
+    "slug": "corporate-hr-analytics-training",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 62,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Hr Analytics Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Hr Analytics Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Corporate Machine Learning Course",
+    "slug": "corporate-machine-learning-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 65,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Machine Learning Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Machine Learning Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Corporate Artificial Intelligence Course",
+    "slug": "corporate-artificial-intelligence-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 68,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Artificial Intelligence Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Artificial Intelligence Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Corporate Sap Training",
+    "slug": "corporate-sap-training",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 71,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Sap Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Sap Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Pmp Certification Course",
+    "slug": "pmp-certification-course",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 74,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Pmp Certification Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Pmp Certification Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Corporate Soft Skills Training",
+    "slug": "corporate-soft-skills-training",
+    "category_id": 7,
+    "category_name": "Job-Oriented Programs",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 77,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Soft Skills Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Soft Skills Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Corporate Sales Service Training",
+    "slug": "corporate-sales-service-training",
+    "category_id": 7,
+    "category_name": "Job-Oriented Programs",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 80,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Corporate Sales Service Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Corporate Sales Service Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Mlops With Aws Course",
+    "slug": "mlops-with-aws-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 83,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Mlops With Aws Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Mlops With Aws Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Ai Infrastructure Engineer Course",
+    "slug": "ai-infrastructure-engineer-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 86,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ai Infrastructure Engineer Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ai Infrastructure Engineer Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Probability And Statistics Course",
+    "slug": "probability-and-statistics-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 89,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Probability And Statistics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Probability And Statistics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Retrieval Augmented Generation Rag Course",
+    "slug": "retrieval-augmented-generation-rag-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 92,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Retrieval Augmented Generation Rag Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Retrieval Augmented Generation Rag Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "3Ds Max Course",
+    "slug": "3ds-max-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 95,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive 3Ds Max Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: 3Ds Max Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Bim Course",
+    "slug": "bim-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 98,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Bim Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Bim Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Mechanical Cad Course",
+    "slug": "mechanical-cad-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 101,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Mechanical Cad Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Mechanical Cad Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Autocad Civil Course",
+    "slug": "autocad-civil-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 104,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Autocad Civil Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Autocad Civil Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Landscape Design Course",
+    "slug": "landscape-design-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 107,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Landscape Design Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Landscape Design Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "French Language Classes",
+    "slug": "french-language-classes",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 110,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive French Language Classes course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: French Language Classes Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "German Language Course",
+    "slug": "german-language-course",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 113,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive German Language Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: German Language Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Oet Course",
+    "slug": "oet-course",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 116,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Oet Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Oet Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Toefl Course",
+    "slug": "toefl-course",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 119,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Toefl Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Toefl Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Train The Trainer Course",
+    "slug": "train-the-trainer-course",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 122,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Train The Trainer Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Train The Trainer Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Spoken English Classes",
+    "slug": "spoken-english-classes",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 125,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Spoken English Classes course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Spoken English Classes Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Personality Development Classes",
+    "slug": "personality-development-classes",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 128,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Personality Development Classes course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Personality Development Classes Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Ielts Course",
+    "slug": "ielts-course",
+    "category_id": 3,
+    "category_name": "Language & Soft Skills",
+    "price": 3999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 131,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ielts Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ielts Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Workday Course",
+    "slug": "workday-course",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 134,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Workday Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Workday Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Hr Certification Course",
+    "slug": "hr-certification-course",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 137,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Hr Certification Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Hr Certification Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Hr Audit Course",
+    "slug": "hr-audit-course",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 140,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Hr Audit Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Hr Audit Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Hr Analytics Course",
+    "slug": "hr-analytics-course",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 143,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Hr Analytics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Hr Analytics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Hr Training",
+    "slug": "hr-training",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 146,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Hr Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Hr Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Sap Hr Course",
+    "slug": "sap-hr-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 149,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Hr Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Hr Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Hrbp Course",
+    "slug": "hrbp-course",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 152,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Hrbp Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Hrbp Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Dotnet Full Stack Software Development Dsa Course",
+    "slug": "dotnet-full-stack-software-development-dsa-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 155,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Dotnet Full Stack Software Development Dsa Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Dotnet Full Stack Software Development Dsa Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Java Full Stack Software Development Dsa Course",
+    "slug": "java-full-stack-software-development-dsa-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 158,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Java Full Stack Software Development Dsa Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Java Full Stack Software Development Dsa Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Python Full Stack Software Development Dsa Course",
+    "slug": "python-full-stack-software-development-dsa-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 161,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Python Full Stack Software Development Dsa Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Python Full Stack Software Development Dsa Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Digital Marketing Course",
+    "slug": "digital-marketing-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 164,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Digital Marketing Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Digital Marketing Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Sap Success Factor Course",
+    "slug": "sap-success-factor-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 167,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Success Factor Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Success Factor Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Web Full Stack Software Development Dsa Course",
+    "slug": "web-full-stack-software-development-dsa-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 170,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Web Full Stack Software Development Dsa Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Web Full Stack Software Development Dsa Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Sap Basis Course",
+    "slug": "sap-basis-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 173,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Basis Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Basis Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "title": "Sap Pp Course",
+    "slug": "sap-pp-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 176,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Pp Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Pp Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Sap Abap Course",
+    "slug": "sap-abap-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 179,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Abap Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Abap Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Sap Mm Course",
+    "slug": "sap-mm-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 182,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Mm Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Mm Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Sap Fico Course",
+    "slug": "sap-fico-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 185,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Fico Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Fico Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "title": "Sap Course",
+    "slug": "sap-course",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 188,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "title": "Salesforce Course",
+    "slug": "salesforce-course",
+    "category_id": 11,
+    "category_name": "Software Testing & Others",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 191,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Salesforce Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Salesforce Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "title": "Linux Course",
+    "slug": "linux-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 194,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Linux Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Linux Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "title": "Devops Course",
+    "slug": "devops-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 197,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Devops Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Devops Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "title": "Ccnp Course",
+    "slug": "ccnp-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 200,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ccnp Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ccnp Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "title": "Ccna Course",
+    "slug": "ccna-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 203,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ccna Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ccna Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "title": "Cloud Computing Course",
+    "slug": "cloud-computing-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 206,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Cloud Computing Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Cloud Computing Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "title": "Google Cloud Platform Course",
+    "slug": "google-cloud-platform-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 209,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Google Cloud Platform Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Google Cloud Platform Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "title": "Azure Course",
+    "slug": "azure-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 212,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Azure Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Azure Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "title": "Aws Course",
+    "slug": "aws-course",
+    "category_id": 12,
+    "category_name": "Cloud & Networking",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 215,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Aws Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Aws Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "title": "Cyber Security Analyst Course",
+    "slug": "cyber-security-analyst-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 218,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Cyber Security Analyst Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Cyber Security Analyst Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "title": "Chfi Course",
+    "slug": "chfi-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 221,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Chfi Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Chfi Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "title": "Security Operations Center Course",
+    "slug": "security-operations-center-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 224,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Security Operations Center Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Security Operations Center Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "title": "Ethical Hacking Course",
+    "slug": "ethical-hacking-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 227,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ethical Hacking Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ethical Hacking Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "title": "Cyber Security Course",
+    "slug": "cyber-security-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 230,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Cyber Security Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Cyber Security Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "title": "Wapt Course",
+    "slug": "wapt-course",
+    "category_id": 13,
+    "category_name": "Cyber Security",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 233,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Wapt Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Wapt Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "title": "Uiux Design Course",
+    "slug": "uiux-design-course",
+    "category_id": 1,
+    "category_name": "Design",
+    "price": 5499,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 236,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Uiux Design Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Uiux Design Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "title": "Data Structures Algorithms Course",
+    "slug": "data-structures-algorithms-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 239,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Structures Algorithms Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Structures Algorithms Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "title": "Data Structures With C C Course",
+    "slug": "data-structures-with-c-c-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 242,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Structures With C C Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Structures With C C Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "title": "Software Testing Course",
+    "slug": "software-testing-course",
+    "category_id": 11,
+    "category_name": "Software Testing & Others",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 245,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Software Testing Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Software Testing Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "title": "Java Course",
+    "slug": "java-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 248,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Java Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Java Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "title": "C And C Course",
+    "slug": "c-and-c-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 51,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive C And C Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: C And C Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "title": "Angular 16 Course",
+    "slug": "angular-16-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 54,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Angular 16 Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Angular 16 Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "title": "React Js Course",
+    "slug": "react-js-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 57,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive React Js Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: React Js Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "title": "Front End Development Course",
+    "slug": "front-end-development-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 60,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Front End Development Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Front End Development Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "title": "Web Development Course",
+    "slug": "web-development-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 63,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Web Development Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Web Development Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "title": "Mern Stack Course",
+    "slug": "mern-stack-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 66,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Mern Stack Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Mern Stack Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "title": "Mean Stack Course",
+    "slug": "mean-stack-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 69,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Mean Stack Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Mean Stack Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "title": "Dot Net Full Stack Course",
+    "slug": "dot-net-full-stack-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 72,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Dot Net Full Stack Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Dot Net Full Stack Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "title": "Full Stack Java Course",
+    "slug": "full-stack-java-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 75,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Full Stack Java Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Full Stack Java Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "title": "Mobile App Development Course",
+    "slug": "mobile-app-development-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 78,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Mobile App Development Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Mobile App Development Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "title": "Full Stack Developer Course",
+    "slug": "full-stack-developer-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 81,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Full Stack Developer Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Full Stack Developer Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "title": "Advanced Excel Course",
+    "slug": "advanced-excel-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 84,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Advanced Excel Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Advanced Excel Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "title": "Plsql Course",
+    "slug": "plsql-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 87,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Plsql Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Plsql Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "title": "Rpa Course",
+    "slug": "rpa-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 90,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Rpa Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Rpa Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "title": "Ai Course",
+    "slug": "ai-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 93,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ai Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ai Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "title": "Sql Course",
+    "slug": "sql-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 96,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sql Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sql Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "title": "Business Analyst Course",
+    "slug": "business-analyst-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 99,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Business Analyst Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Business Analyst Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "title": "Tableau Course",
+    "slug": "tableau-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 102,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Tableau Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Tableau Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "title": "Machine Learning Course",
+    "slug": "machine-learning-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 105,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Machine Learning Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Machine Learning Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "title": "Python Course",
+    "slug": "python-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 108,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Python Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Python Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "title": "Power Bi Course",
+    "slug": "power-bi-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 111,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Power Bi Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Power Bi Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "title": "Databricks Course",
+    "slug": "databricks-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 114,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Databricks Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Databricks Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "title": "Django Course",
+    "slug": "django-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 117,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Django Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Django Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "title": "R Programming Course",
+    "slug": "r-programming-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 120,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive R Programming Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: R Programming Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "title": "Full Stack Python Course",
+    "slug": "full-stack-python-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 123,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Full Stack Python Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Full Stack Python Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "title": "Data Engineering Course",
+    "slug": "data-engineering-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 126,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Engineering Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Engineering Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "title": "Pyspark Course",
+    "slug": "pyspark-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 129,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Pyspark Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Pyspark Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "title": "Agentic Ai Course",
+    "slug": "agentic-ai-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 132,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Agentic Ai Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Agentic Ai Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "title": "Financial Analyst Course",
+    "slug": "financial-analyst-course",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 135,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Financial Analyst Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Financial Analyst Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "title": "Generative Ai Course",
+    "slug": "generative-ai-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 138,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Generative Ai Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Generative Ai Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "title": "Data Analytics Course",
+    "slug": "data-analytics-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 141,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Analytics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Analytics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "title": "Data Science Course",
+    "slug": "data-science-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 144,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Science Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Science Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "title": "Data Science And Ai Course",
+    "slug": "data-science-and-ai-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 147,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Data Science And Ai Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Data Science And Ai Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "title": "Chatgpt Course",
+    "slug": "chatgpt-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 150,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Chatgpt Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Chatgpt Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "title": "Chatgpt Prompt Engineering Course",
+    "slug": "chatgpt-prompt-engineering-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 153,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Chatgpt Prompt Engineering Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Chatgpt Prompt Engineering Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Laravel Course Certification",
+    "slug": "laravel-course-certification",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 156,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Laravel Course Certification course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Laravel Course Certification Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "title": "Copywriting Course",
+    "slug": "copywriting-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 159,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Copywriting Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Copywriting Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "title": "Wordpress Course Certification",
+    "slug": "wordpress-course-certification",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 162,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Wordpress Course Certification course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Wordpress Course Certification Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "title": "Google Analytics Course",
+    "slug": "google-analytics-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 165,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Google Analytics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Google Analytics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "title": "Social Media Marketing Smm Course",
+    "slug": "social-media-marketing-smm-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 168,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Social Media Marketing Smm Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Social Media Marketing Smm Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "title": "Email Marketing Course",
+    "slug": "email-marketing-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 171,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Email Marketing Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Email Marketing Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "title": "Content Marketing Course",
+    "slug": "content-marketing-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 174,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Content Marketing Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Content Marketing Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "title": "Google Ads Ppc Course",
+    "slug": "google-ads-ppc-course",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 177,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Google Ads Ppc Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Google Ads Ppc Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "title": "Sem Course Certification",
+    "slug": "sem-course-certification",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 180,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sem Course Certification course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sem Course Certification Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "title": "Seo Course Certification",
+    "slug": "seo-course-certification",
+    "category_id": 10,
+    "category_name": "Digital Marketing",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 183,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Seo Course Certification course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Seo Course Certification Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "title": "Ai In Uiux Design Course",
+    "slug": "ai-in-uiux-design-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 186,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Ai In Uiux Design Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Ai In Uiux Design Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "title": "Nextjs Course Training In Pune",
+    "slug": "nextjs-course-training-in-pune",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 189,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Nextjs Course Training In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Nextjs Course Training In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "title": "Safe Agile Certification Training",
+    "slug": "safe-agile-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 192,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Safe Agile Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Safe Agile Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "title": "Certified Scrum Product Owner Cspo Certification Training",
+    "slug": "certified-scrum-product-owner-cspo-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 195,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Certified Scrum Product Owner Cspo Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Certified Scrum Product Owner Cspo Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "title": "Professional Scrum Master Psm Certification Training",
+    "slug": "professional-scrum-master-psm-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 198,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Professional Scrum Master Psm Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Professional Scrum Master Psm Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "title": "Itil 4 Certification Training",
+    "slug": "itil-4-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 201,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Itil 4 Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Itil 4 Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "title": "Prince2 Certification Training",
+    "slug": "prince2-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 204,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Prince2 Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Prince2 Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "title": "Certified Scrum Master Csm Certification Training",
+    "slug": "certified-scrum-master-csm-certification-training",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 207,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Certified Scrum Master Csm Certification Training course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Certified Scrum Master Csm Certification Training Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "title": "Software Development Course In Pune",
+    "slug": "software-development-course-in-pune",
+    "category_id": 11,
+    "category_name": "Software Testing & Others",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 210,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Software Development Course In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Software Development Course In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "title": "Job Oriented Data Science Ai With Data Analytics Course",
+    "slug": "job-oriented-data-science-ai-with-data-analytics-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 213,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Data Science Ai With Data Analytics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Data Science Ai With Data Analytics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "title": "Job Oriented Java Fullstack Course",
+    "slug": "job-oriented-java-fullstack-course",
+    "category_id": 9,
+    "category_name": "Software Development",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 216,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Java Fullstack Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Java Fullstack Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "title": "Job Oriented Business Analyst Courses",
+    "slug": "job-oriented-business-analyst-courses",
+    "category_id": 8,
+    "category_name": "Analytics & Tools",
+    "price": 6999,
+    "currency": "INR",
+    "duration_weeks": 10,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 219,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Business Analyst Courses course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Business Analyst Courses Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 125,
+    "title": "Job Oriented Web Fullstack Course",
+    "slug": "job-oriented-web-fullstack-course",
+    "category_id": 7,
+    "category_name": "Job-Oriented Programs",
+    "price": 5999,
+    "currency": "INR",
+    "duration_weeks": 6,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 222,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Web Fullstack Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Web Fullstack Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 126,
+    "title": "Job Oriented Data Engineering Course",
+    "slug": "job-oriented-data-engineering-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 225,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Data Engineering Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Data Engineering Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "title": "Job Oriented Data Analytics Course",
+    "slug": "job-oriented-data-analytics-course",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 228,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Job Oriented Data Analytics Course course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Job Oriented Data Analytics Course Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 128,
+    "title": "Deep Learning Course In Pune",
+    "slug": "deep-learning-course-in-pune",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 231,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Deep Learning Course In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Deep Learning Course In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 129,
+    "title": "Pyspark Training In Pune",
+    "slug": "pyspark-training-in-pune",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 234,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Pyspark Training In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Pyspark Training In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "title": "Databricks Certification Training In Pune",
+    "slug": "databricks-certification-training-in-pune",
+    "category_id": 2,
+    "category_name": "Data Science & AI",
+    "price": 7499,
+    "currency": "INR",
+    "duration_weeks": 12,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 237,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Databricks Certification Training In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Databricks Certification Training In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 131,
+    "title": "Workday Training In Pune",
+    "slug": "workday-training-in-pune",
+    "category_id": 4,
+    "category_name": "HR & Management",
+    "price": 4999,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 240,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Workday Training In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Workday Training In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "title": "Iso Course In Ahmedabad",
+    "slug": "iso-course-in-ahmedabad",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 243,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Course In Ahmedabad course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Course In Ahmedabad Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "title": "Iso Certification Training In Indore",
+    "slug": "iso-certification-training-in-indore",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 246,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Certification Training In Indore course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Certification Training In Indore Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "title": "Iso Certification Training In Bangalore",
+    "slug": "iso-certification-training-in-bangalore",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 249,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Certification Training In Bangalore course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Certification Training In Bangalore Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "title": "Iso Certification Training In Chennai",
+    "slug": "iso-certification-training-in-chennai",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 52,
+    "mentor_name": "Expert Mentor 5",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Certification Training In Chennai course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Certification Training In Chennai Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 136,
+    "title": "Iso Certification Training In Mumbai",
+    "slug": "iso-certification-training-in-mumbai",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 55,
+    "mentor_name": "Expert Mentor 1",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Certification Training In Mumbai course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Certification Training In Mumbai Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "title": "Iso Certification Training In Delhi",
+    "slug": "iso-certification-training-in-delhi",
+    "category_id": 6,
+    "category_name": "Project Management & Certifications",
+    "price": 6499,
+    "currency": "INR",
+    "duration_weeks": 8,
+    "level": "intermediate",
+    "rating": 4.8,
+    "review_count": 58,
+    "mentor_name": "Expert Mentor 2",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Iso Certification Training In Delhi course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Iso Certification Training In Delhi Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "title": "Sap Mdg Training In Pune",
+    "slug": "sap-mdg-training-in-pune",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.9,
+    "review_count": 61,
+    "mentor_name": "Expert Mentor 3",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap Mdg Training In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap Mdg Training In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "title": "Sap S4 Hana Course In Pune",
+    "slug": "sap-s4-hana-course-in-pune",
+    "category_id": 5,
+    "category_name": "SAP",
+    "price": 8499,
+    "currency": "INR",
+    "duration_weeks": 14,
+    "level": "intermediate",
+    "rating": 4.7,
+    "review_count": 64,
+    "mentor_name": "Expert Mentor 4",
+    "mentor_expertise": "Industry Expert",
+    "description": "Comprehensive Sap S4 Hana Course In Pune course designed to provide hands-on training and industry insights.",
+    "features": [
+      "Live Project Training",
+      "Certification",
+      "Placement Assistance",
+      "1-on-1 Mentorship",
+      "Class Recordings",
+      "EMI Options"
+    ],
+    "modules": [
+      {
+        "title": "Module 1: Sap S4 Hana Course In Pune Basics",
+        "topics": 8
+      },
+      {
+        "title": "Module 2: Core Concepts",
+        "topics": 10
+      },
+      {
+        "title": "Module 3: Advanced Topics",
+        "topics": 12
+      },
+      {
+        "title": "Module 4: Real-World Projects",
+        "topics": 8
+      },
+      {
+        "title": "Module 5: Interview Prep & Placement",
+        "topics": 6
+      }
+    ]
+  }
+]

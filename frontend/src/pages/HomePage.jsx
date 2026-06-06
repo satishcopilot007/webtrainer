@@ -1,0 +1,114 @@
+import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
+import { FaRocket } from 'react-icons/fa';
+import HeroSection from '../components/home/HeroSection';
+import StatsCounter from '../components/home/StatsCounter';
+import FeaturedCourses from '../components/home/FeaturedCourses';
+import CategoryGrid from '../components/home/CategoryGrid';
+import TestimonialSlider from '../components/home/TestimonialSlider';
+import HiringPartners from '../components/home/HiringPartners';
+import AlumniSection from '../components/common/AlumniSection';
+import WhyChooseSection from '../components/common/WhyChooseSection';
+import GoogleRatings from '../components/common/GoogleRatings';
+import EmployerCarousel from '../components/common/EmployerCarousel';
+import EnhancedTestimonials from '../components/home/EnhancedTestimonials';
+import SuccessStories from '../components/home/SuccessStories';
+import BlogListing from '../components/blog/BlogListing';
+import StickyFooterCTA from '../components/common/StickyFooterCTA';
+import DemoBookingForm from '../components/forms/DemoBookingForm';
+import useUIStore from '../store/useUIStore';
+import { SITE_NAME, SITE_TAGLINE } from '../utils/constants';
+
+const HomePage = () => {
+  const openDemoModal = useUIStore((s) => s.openDemoModal);
+
+  return (
+    <>
+      <Helmet>
+        <title>{SITE_NAME} — {SITE_TAGLINE}</title>
+        <meta name="description" content="TrainerMentors offers expert-led, industry-aligned courses in SAP, Data Science, AI/ML, Full-Stack Development, and more. 95% placement rate with 15,000+ students trained." />
+        <meta property="og:title" content={`${SITE_NAME} — ${SITE_TAGLINE}`} />
+        <meta property="og:description" content="Empowering Your Career Through Expert-Led Training. Enroll now and transform your future." />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trainermentors.com/" />
+      </Helmet>
+
+      <HeroSection />
+
+      <StatsCounter />
+
+      {/* Google Ratings Banner */}
+      <section className="py-8 bg-white border-t border-b border-gray-200 flex justify-center">
+        <GoogleRatings />
+      </section>
+
+      <FeaturedCourses />
+
+      {/* Employer Carousel */}
+      <EmployerCarousel />
+
+      <CategoryGrid />
+
+      {/* Enhanced Testimonials */}
+      <EnhancedTestimonials />
+
+      <TestimonialSlider />
+
+      {/* Success Stories */}
+      <SuccessStories />
+
+      <HiringPartners />
+
+      <WhyChooseSection />
+
+      <AlumniSection />
+
+      {/* Blog Listing */}
+      <BlogListing limit={6} />
+
+      {/* CTA Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#461E96] to-[#00B4E6]" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=')] opacity-30" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10 max-w-4xl mx-auto px-4 text-center"
+        >
+          <FaRocket className="text-5xl text-white/80 mx-auto mb-6" />
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            Start Your Skill Development Journey Today
+          </h2>
+          <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+            Join 15,000+ students who have transformed their careers with industry-expert mentorship,
+            hands-on projects, and guaranteed placement support.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={openDemoModal}
+              className="px-8 py-4 bg-white text-[#461E96] font-bold rounded-full hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl text-lg"
+            >
+              Book Free Demo
+            </button>
+            <a
+              href="/courses"
+              className="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-colors text-lg"
+            >
+              Explore Courses
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      <DemoBookingForm />
+
+      {/* Sticky Footer CTA */}
+      <StickyFooterCTA />
+    </>
+  );
+};
+
+export default HomePage;

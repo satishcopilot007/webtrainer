@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: trainermentors-api
+    runtime: python311
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn config.wsgi
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        fromBuild: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.production
+      - key: FRONTEND_URL
+        value: "https://trainermentors.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://trainermentors.com,https://www.trainermentors.com"
+    disk:
+      name: postgres-data
+      mountPath: /var/lib/postgresql
+      sizeGB: 10
+
+  - type: pserv
+    name: trainermentors-postgres
+    runtime: python311
+    plan: starter
+    envVars:
+      - key: POSTGRES_USER
+        value: trainermentors
+      - key: POSTGRES_PASSWORD
+        generateValue: true
+      - key: POSTGRES_DB
+        value: trainermentors
+    disk:
+      name: postgres-data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 10
+
+  - type: pserv
+    name: trainermentors-redis
+    runtime: python311
+    plan: starter

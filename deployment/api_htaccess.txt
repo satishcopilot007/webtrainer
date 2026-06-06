@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+
+    # Don't process real directories and files
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Route all requests to index.php
+    RewriteRule ^(.*)$ index.php?request=$1 [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+    Header set Content-Type "application/json"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Set proper PHP settings
+php_value date.timezone "Asia/Kolkata"
+php_value max_input_vars "5000"
+php_value upload_max_filesize "50M"
+php_value post_max_size "50M"
