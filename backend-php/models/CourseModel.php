@@ -160,6 +160,24 @@ class CourseModel {
     }
 
     /**
+     * Get modules for a course
+     */
+    public function getModulesByCourseId($courseId) {
+        $query = "SELECT id, title, description, sequence FROM course_modules WHERE course_id = ? ORDER BY sequence ASC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $courseId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $modules = [];
+        while ($row = $result->fetch_assoc()) {
+            $modules[] = $row;
+        }
+        $stmt->close();
+        return $modules;
+    }
+
+    /**
      * Create course (admin only)
      */
     public function create($data) {

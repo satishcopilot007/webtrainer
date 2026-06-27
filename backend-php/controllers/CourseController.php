@@ -56,6 +56,9 @@ class CourseController extends BaseController {
             Response::error('Course not found', null, 404);
         }
 
+        // Include modules/syllabus
+        $course['modules'] = $courseModel->getModulesByCourseId($course['id']);
+
         Response::success($course, 'Course retrieved successfully');
     }
 
