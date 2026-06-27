@@ -27,13 +27,6 @@ const PaymentComponent = ({ course }) => {
 
   if (!course) return null;
 
-  const displayPrice = Number(
-    course.effective_price || course.discounted_price || course.discount_price || course.price || 0
-  );
-  const originalPrice = Number(course.original_price || course.price || 0);
-  const hasValidPrice = displayPrice > 0;
-  const hasSavings = hasValidPrice && originalPrice > displayPrice;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -44,19 +37,15 @@ const PaymentComponent = ({ course }) => {
         {/* Price Display */}
         <div className="text-center">
           <p className="text-gray-600 text-sm mb-2">Course Fee</p>
-          {hasValidPrice ? (
-            <div className="flex items-baseline justify-center gap-2">
-              <span className="text-4xl font-bold text-purple-600">₹{displayPrice.toLocaleString('en-IN')}</span>
-              {hasSavings && (
-                <span className="text-lg text-gray-500 line-through">₹{originalPrice.toLocaleString('en-IN')}</span>
-              )}
-            </div>
-          ) : (
-            <div className="text-2xl font-bold text-purple-600">Contact for pricing</div>
-          )}
-          {hasSavings && (
+          <div className="flex items-baseline justify-center gap-2">
+            <span className="text-4xl font-bold text-purple-600">₹{course.price}</span>
+            {course.original_price && course.original_price > course.price && (
+              <span className="text-lg text-gray-500 line-through">₹{course.original_price}</span>
+            )}
+          </div>
+          {course.original_price && course.original_price > course.price && (
             <p className="text-green-600 font-semibold mt-2">
-              Save ₹{(originalPrice - displayPrice).toFixed(2)}
+              Save ₹{(course.original_price - course.price).toFixed(2)}
             </p>
           )}
         </div>

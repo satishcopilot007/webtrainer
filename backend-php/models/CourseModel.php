@@ -17,7 +17,7 @@ class CourseModel {
      */
     public function getAll($page = 1, $pageSize = DEFAULT_PAGE_SIZE, $filters = []) {
         $offset = ($page - 1) * $pageSize;
-        $whereClause = "WHERE c.is_active = 1";
+        $whereClause = "WHERE is_active = 1";
         $params = [];
         $types = '';
 
@@ -79,7 +79,7 @@ class CourseModel {
         $countStmt->close();
 
         // Get paginated results
-        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name, cat.slug as category_slug
+        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name 
                   FROM " . $this->table . " c
                   LEFT JOIN users u ON c.mentor_id = u.id
                   LEFT JOIN categories cat ON c.category_id = cat.id
@@ -100,7 +100,7 @@ class CourseModel {
 
         $courses = [];
         while ($row = $result->fetch_assoc()) {
-            $courses[] = $this->normalizeCourse($row);
+            $courses[] = $row;
         }
 
         $stmt->close();
@@ -112,7 +112,7 @@ class CourseModel {
      */
     public function getById($id) {
         $query = "SELECT c.*, u.name as mentor_name, u.email as mentor_email, u.phone as mentor_phone,
-                         cat.name as category_name, cat.slug as category_slug
+                         cat.name as category_name
                   FROM " . $this->table . " c
                   LEFT JOIN users u ON c.mentor_id = u.id
                   LEFT JOIN categories cat ON c.category_id = cat.id
@@ -128,92 +128,9 @@ class CourseModel {
             return null;
         }
 
-        $course = $this->normalizeCourse($result->fetch_assoc());
+        $course = $result->fetch_assoc();
         $stmt->close();
         return $course;
-    }
-
-    /**
-     * Get course by slug
-     */
-    public function getBySlug($slug) {
-        $query = "SELECT c.*, u.name as mentor_name, u.email as mentor_email, u.phone as mentor_phone,
-                         cat.name as category_name, cat.slug as category_slug
-                  FROM " . $this->table . " c
-                  LEFT JOIN users u ON c.mentor_id = u.id
-                  LEFT JOIN categories cat ON c.category_id = cat.id
-                  WHERE c.slug = ? AND c.is_active = 1";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('s', $slug);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows === 0) {
-            $stmt->close();
-            return null;
-        }
-
-        $course = $this->normalizeCourse($result->fetch_assoc());
-        $stmt->close();
-        return $course;
-    }
-
-    /**
-     * Get featured courses (rating-based fallback for schemas without featured flag)
-     */
-    public function getFeatured($limit = 8) {
-        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name, cat.slug as category_slug
-                  FROM " . $this->table . " c
-                  LEFT JOIN users u ON c.mentor_id = u.id
-                  LEFT JOIN categories cat ON c.category_id = cat.id
-                  WHERE c.is_active = 1
-                  ORDER BY c.rating DESC, c.total_reviews DESC, c.created_at DESC
-                  LIMIT ?";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('i', $limit);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $courses = [];
-        while ($row = $result->fetch_assoc()) {
-            $courses[] = $this->normalizeCourse($row);
-        }
-
-        $stmt->close();
-        return $courses;
-    }
-
-    /**
-     * Normalize DB row to API contract used by frontend components.
-     */
-    private function normalizeCourse($row) {
-        $description = $row['description'] ?? '';
-        $price = isset($row['price']) ? floatval($row['price']) : 0.0;
-        $rating = isset($row['rating']) ? floatval($row['rating']) : 0.0;
-        $reviews = isset($row['total_reviews']) ? intval($row['total_reviews']) : 0;
-        $durationWeeks = isset($row['duration_weeks']) ? intval($row['duration_weeks']) : 0;
-
-        $row['price'] = $price;
-        $row['rating'] = $rating;
-        $row['total_reviews'] = $reviews;
-        $row['rating_count'] = $reviews;
-        $row['duration_weeks'] = $durationWeeks;
-        $row['duration'] = $durationWeeks > 0 ? ($durationWeeks . ' weeks') : null;
-        $row['short_description'] = substr(strip_tags($description), 0, 140);
-        $row['discount_price'] = null;
-        $row['discounted_price'] = null;
-        $row['discount_percentage'] = 0;
-        $row['effective_price'] = $price;
-        $row['enrollment_count'] = isset($row['current_students']) ? intval($row['current_students']) : 0;
-        $row['category'] = [
-            'id' => isset($row['category_id']) ? intval($row['category_id']) : null,
-            'name' => $row['category_name'] ?? null,
-            'slug' => $row['category_slug'] ?? null,
-        ];
-
-        return $row;
     }
 
     /**

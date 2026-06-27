@@ -44,32 +44,13 @@ class CourseController extends BaseController {
         }
 
         $courseModel = new CourseModel($this->conn);
-        $course = ctype_digit((string)$id)
-            ? $courseModel->getById(intval($id))
-            : $courseModel->getBySlug($id);
+        $course = $courseModel->getById($id);
 
         if (!$course) {
             Response::error('Course not found', null, 404);
         }
 
         Response::success($course, 'Course retrieved successfully');
-    }
-
-    /**
-     * Get Featured Courses
-     * GET /api/courses/featured
-     */
-    public function getFeatured() {
-        if ($this->getMethod() !== 'GET') {
-            Response::error('Method not allowed', null, 405);
-        }
-
-        $limit = max(1, min(intval($_GET['limit'] ?? 8), 24));
-
-        $courseModel = new CourseModel($this->conn);
-        $courses = $courseModel->getFeatured($limit);
-
-        Response::success($courses, 'Featured courses retrieved successfully');
     }
 
     /**
