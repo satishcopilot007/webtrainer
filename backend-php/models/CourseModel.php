@@ -17,7 +17,7 @@ class CourseModel {
      */
     public function getAll($page = 1, $pageSize = DEFAULT_PAGE_SIZE, $filters = []) {
         $offset = ($page - 1) * $pageSize;
-        $whereClause = "WHERE is_active = 1";
+        $whereClause = "WHERE c.is_active = 1";
         $params = [];
         $types = '';
 
