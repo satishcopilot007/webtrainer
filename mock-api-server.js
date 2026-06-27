@@ -13,7 +13,6 @@ const bodyParser = require('body-parser');
 
 // Import all courses from Excel catalog
 const ALL_COURSES = require('./courses_data.js');
-const CORPORATE_COHORT_SOURCE = require('./notion_courses_extracted.json');
 console.log(`[STARTUP] Loaded ALL_COURSES with ${ALL_COURSES.length} courses`);
 if (ALL_COURSES.length > 0) {
   console.log(`[STARTUP] First course: ${ALL_COURSES[0].title}`);
@@ -62,94 +61,6 @@ const mockDB = {
 
 // JWT Secret
 const JWT_SECRET = 'your_local_jwt_secret_key';
-
-const CORPORATE_CATEGORY_ID = 1;
-
-function slugifyCourseTitle(value) {
-  return String(value || '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function loadBaseCourses() {
-  const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
-  const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
-  return JSON.parse(coursesCode);
-}
-
-function buildCorporateCohortCourses(baseMaxId) {
-  return CORPORATE_COHORT_SOURCE.map((row, index) => {
-    const title = row['Name of Cohort'];
-    const categoryName = row.Category;
-    const syllabusUrl = row.Syllabus;
-    const slug = slugifyCourseTitle(title);
-
-    return {
-      id: baseMaxId + index + 1,
-      title,
-      slug,
-      category_id: CORPORATE_CATEGORY_ID,
-      category_name: categoryName,
-      main_category: 'corporate',
-      price: 22000,
-      currency: 'INR',
-      duration: '4-8 weeks',
-      level: 'all-levels',
-      modes: ['Online', 'Corporate'],
-      mode: 'corporate',
-      rating: 4.7,
-      review_count: 120 + (index % 40),
-      mentor_name: 'TrainerMentors Corporate Faculty',
-      mentor_expertise: categoryName,
-      description: `${title} corporate training cohort in ${categoryName}. Includes instructor-led sessions, practical exercises, team enablement, and a structured syllabus.`,
-      features: [
-        'Instructor-led corporate sessions',
-        'Practical QA and enterprise use cases',
-        'Flexible scheduling for teams',
-        'Completion certificate',
-        'Syllabus reference included'
-      ],
-      modules: [
-        {
-          id: `${slug}-1`,
-          title: `Module 1: ${title} Foundations`,
-          topics: ['Program introduction', 'Core concepts', 'Business context'],
-          duration_hours: 6,
-          order: 1
-        },
-        {
-          id: `${slug}-2`,
-          title: 'Module 2: Applied Learning',
-          topics: ['Hands-on practice', 'Guided exercises', 'Real-world scenarios'],
-          duration_hours: 8,
-          order: 2
-        },
-        {
-          id: `${slug}-3`,
-          title: 'Module 3: Team Adoption',
-          topics: ['Implementation strategy', 'Team workflows', 'Best practices'],
-          duration_hours: 6,
-          order: 3
-        }
-      ],
-      certification: 'Corporate Completion Certificate',
-      batch_options: 'Corporate Team Batch / Private Cohort',
-      locations: 'Online / Corporate Delivery',
-      url: `https://trainermentors.com/course/${slug}`,
-      thumbnail: `https://via.placeholder.com/400x250?text=${encodeURIComponent(title).slice(0, 60)}`,
-      is_featured: false,
-      syllabus_url: syllabusUrl
-    };
-  });
-}
-
-function getAllCoursesCatalog() {
-  const baseCourses = loadBaseCourses();
-  const maxBaseId = baseCourses.reduce((maxId, course) => Math.max(maxId, Number(course.id) || 0), 0);
-  return baseCourses.concat(buildCorporateCohortCourses(maxBaseId));
-}
 
 // ===== UTILITIES =====
 function generateToken(userId) {
@@ -369,12 +280,11 @@ app.post('/api/refresh', (req, res) => {
 
 // Get featured courses
 app.get('/api/courses/featured', (req, res) => {
-  const allCourses = getAllCoursesCatalog();
-  const featured = allCourses.filter(c => c.is_featured).slice(0, 8);
+  const featured = ALL_COURSES.filter(c => c.is_featured).slice(0, 8);
   res.json({
     success: true,
     message: 'Featured courses retrieved successfully',
-    data: featured.length > 0 ? featured : allCourses.slice(0, 8)
+    data: featured.length > 0 ? featured : ALL_COURSES.slice(0, 8)
   });
 });
 
@@ -395,7 +305,9 @@ app.get('/api/courses', (req, res) => {
   
   // Read courses directly from file to bypass cache
   try {
-    const allCourses = getAllCoursesCatalog();
+    const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
+    const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
+    const allCourses = JSON.parse(coursesCode);
     
     console.log(`[DEBUG] /api/courses - Loaded ${allCourses.length} courses from file`);
     
@@ -494,10 +406,10 @@ app.get('/api/categories', (req, res) => {
     let count;
     if (cat.slug === 'certificate') {
       // Certificate category: all courses with certification
-      count = getAllCoursesCatalog().filter(c => c.certification).length;
+      count = ALL_COURSES.filter(c => c.certification).length;
     } else {
       // Other categories: filter by main_category
-      count = getAllCoursesCatalog().filter(c => c.main_category === cat.slug).length;
+      count = ALL_COURSES.filter(c => c.main_category === cat.slug).length;
     }
     return { ...cat, course_count: count };
   });
@@ -511,7 +423,9 @@ app.get('/api/categories', (req, res) => {
 // Get filter options (levels, modes)
 app.get('/api/filters', (req, res) => {
   try {
-    const allCourses = getAllCoursesCatalog();
+    const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
+    const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
+    const allCourses = JSON.parse(coursesCode);
     
     // Extract unique levels
     const levels = [...new Set(allCourses.map(c => c.level))].filter(Boolean).sort();
@@ -553,17 +467,16 @@ app.get('/api/filters', (req, res) => {
 // Get course by ID or slug
 app.get('/api/courses/:id', (req, res) => {
   const { id } = req.params;
-  const allCourses = getAllCoursesCatalog();
   
   // Try to find by ID first (if it's a number)
   let course = null;
   if (!isNaN(id)) {
-    course = allCourses.find(c => c.id === parseInt(id));
+    course = ALL_COURSES.find(c => c.id === parseInt(id));
   }
   
   // If not found by ID, try by slug
   if (!course) {
-    course = allCourses.find(c => c.slug === id);
+    course = ALL_COURSES.find(c => c.slug === id);
   }
   
   if (!course) {
