@@ -6,9 +6,20 @@
 -- =============================================
 
 -- =============================================
+-- DISABLE FOREIGN KEY CHECKS
+-- =============================================
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- =============================================
+-- CLEAR OLD DATA (order matters)
+-- =============================================
+DELETE FROM `course_modules`;
+DELETE FROM `courses`;
+DELETE FROM `categories`;
+
+-- =============================================
 -- CATEGORIES
 -- =============================================
-DELETE FROM `categories`;
 INSERT INTO `categories` (id, name, slug, description, is_active) VALUES
 (1, 'Corporate Courses', 'corporate', 'Corporate training programs for professionals', 1),
 (2, 'Technical Courses', 'technical', 'Industry-leading technical training', 1),
@@ -21,12 +32,6 @@ INSERT IGNORE INTO `users` (name, email, password, phone, role, is_active)
 VALUES ('TrainerMentors Admin', 'courses@trainermentors.com', '$2y$10$H8S4RLB2WXPqXbE0C8h1pO6H9k5Q2R3L', '+91-9999999999', 'mentor', 1);
 
 SET @mentor_id = (SELECT id FROM `users` WHERE email = 'courses@trainermentors.com' LIMIT 1);
-
--- =============================================
--- CLEAR OLD DATA
--- =============================================
-DELETE FROM `course_modules`;
-DELETE FROM `courses`;
 
 -- =============================================
 -- INSERT 897 COURSES
@@ -5526,6 +5531,11 @@ INSERT INTO `course_modules` (id, course_id, title, description, sequence) VALUE
 (2689, 837, 'Basic Level Syllabus', 'Duration: 10 hours | Level: basic | Topics: Swift Syntax | Variables & Constants | Optionals | Control Flow | Functions | Structs & Classes | Enumerations | Protocols | Collections | Error Handling', 1),
 (2690, 837, 'Intermediate Level Syllabus', 'Duration: 22 hours | Level: intermediate | Topics: SwiftUI Basics | Data Binding | Navigation | Networking (URLSession) | Codable/JSON | CoreData | Combine Framework | Concurrency (async/await) | Animations | Testing (XCTest)', 2),
 (2691, 837, 'Advanced Level Syllabus', 'Duration: 40 hours | Level: advanced | Topics: Advanced SwiftUI | Swift Macros | Swift Concurrency Advanced | Swift Packages | CoreML Integration | ARKit | CloudKit | Performance Optimization | Accessibility | App Store Deployment', 3);
+
+-- =============================================
+-- RE-ENABLE FOREIGN KEY CHECKS
+-- =============================================
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- =============================================
 -- VERIFY IMPORT
