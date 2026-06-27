@@ -35,8 +35,8 @@ class CourseController extends BaseController {
     }
 
     /**
-     * Get Course by ID
-     * GET /api/courses/:id
+     * Get Course by ID or Slug
+     * GET /api/courses/:idOrSlug
      */
     public function getById($id) {
         if ($this->getMethod() !== 'GET') {
@@ -44,7 +44,13 @@ class CourseController extends BaseController {
         }
 
         $courseModel = new CourseModel($this->conn);
-        $course = $courseModel->getById($id);
+
+        // If numeric, look up by ID; otherwise look up by slug
+        if (is_numeric($id)) {
+            $course = $courseModel->getById($id);
+        } else {
+            $course = $courseModel->getBySlug($id);
+        }
 
         if (!$course) {
             Response::error('Course not found', null, 404);

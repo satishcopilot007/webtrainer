@@ -134,6 +134,32 @@ class CourseModel {
     }
 
     /**
+     * Get course by slug
+     */
+    public function getBySlug($slug) {
+        $query = "SELECT c.*, u.name as mentor_name, u.email as mentor_email, u.phone as mentor_phone,
+                         cat.name as category_name
+                  FROM " . $this->table . " c
+                  LEFT JOIN users u ON c.mentor_id = u.id
+                  LEFT JOIN categories cat ON c.category_id = cat.id
+                  WHERE c.slug = ? AND c.is_active = 1";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('s', $slug);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            $stmt->close();
+            return null;
+        }
+
+        $course = $result->fetch_assoc();
+        $stmt->close();
+        return $course;
+    }
+
+    /**
      * Create course (admin only)
      */
     public function create($data) {
