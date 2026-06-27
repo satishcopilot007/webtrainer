@@ -1,58 +1,52 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { FaStar, FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { CORPORATE_COHORTS } from '../data/corporateCohorts';
 
 const CorporateCoursesListPage = () => {
-  const courses = [
-    {
-      id: 1,
-      title: 'PMP CERTIFICATION TRAINING',
-      image: '📋',
-      description: 'Become a certified Project Management Professional',
-      rating: 4.9,
-      reviews: 234
-    },
-    {
-      id: 2,
-      title: 'CSM CERTIFICATION TRAINING',
-      image: '🎯',
-      description: 'Master Certified Scrum Master principles',
-      rating: 4.8,
-      reviews: 189
-    },
-    {
-      id: 3,
-      title: 'JIRA CERTIFICATION TRAINING',
-      image: '⚙️',
-      description: 'Expert-level Jira administration and usage',
-      rating: 4.9,
-      reviews: 156
-    },
-    {
-      id: 4,
-      title: 'PRINCE2 CERTIFICATION TRAINING',
-      image: '👑',
-      description: 'PRINCE2 project management methodology',
-      rating: 4.7,
-      reviews: 142
-    },
-    {
-      id: 5,
-      title: 'ITIL 4 CERTIFICATION TRAINING',
-      image: '🔄',
-      description: 'IT Service Management Excellence',
-      rating: 4.8,
-      reviews: 167
-    },
-    {
-      id: 6,
-      title: 'PSM CERTIFICATION TRAINING',
-      image: '📈',
-      description: 'Professional Scrum Master certification',
-      rating: 4.9,
-      reviews: 198
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
+
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(new Set(CORPORATE_COHORTS.map((course) => course.category))).sort();
+    return ['All', ...uniqueCategories];
+  }, []);
+
+  useEffect(() => {
+    if (!categories.includes(selectedCategory)) {
+      setSelectedCategory('All');
     }
-  ];
+  }, [categories, selectedCategory]);
+
+  useEffect(() => {
+    const nextParams = new URLSearchParams();
+    const trimmedQuery = searchQuery.trim();
+
+    if (trimmedQuery) {
+      nextParams.set('q', trimmedQuery);
+    }
+    if (selectedCategory && selectedCategory !== 'All') {
+      nextParams.set('category', selectedCategory);
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  }, [searchQuery, selectedCategory, setSearchParams]);
+
+  const filteredCourses = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    return CORPORATE_COHORTS.filter((course) => {
+      const categoryMatch = selectedCategory === 'All' || course.category === selectedCategory;
+      const textMatch = !query
+        || course.name.toLowerCase().includes(query)
+        || course.category.toLowerCase().includes(query);
+
+      return categoryMatch && textMatch;
+    });
+  }, [searchQuery, selectedCategory]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -88,10 +82,10 @@ const CorporateCoursesListPage = () => {
             className="text-center"
           >
             <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
-              Corporate Courses
+              Corporate Courses ({CORPORATE_COHORTS.length})
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Enterprise-level certifications and training for corporate teams
+              Complete cohort catalog imported from The Test Tribe corporate offerings
             </p>
           </motion.div>
         </div>
@@ -100,6 +94,35 @@ const CorporateCoursesListPage = () => {
       {/* Courses Grid */}
       <section className="py-20 bg-gradient-to-b from-dark-900 to-dark-800">
         <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+            <div className="md:col-span-2">
+              <label htmlFor="course-search" className="block text-sm text-gray-300 mb-2">Search Cohort</label>
+              <input
+                id="course-search"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by cohort name or category"
+                className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="category-filter" className="block text-sm text-gray-300 mb-2">Category</label>
+              <select
+                id="category-filter"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <p className="text-gray-300 mb-6">Showing {filteredCourses.length} of {CORPORATE_COHORTS.length} cohorts</p>
+
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -107,7 +130,7 @@ const CorporateCoursesListPage = () => {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {courses.map((course) => (
+            {filteredCourses.map((course) => (
               <motion.div
                 key={course.id}
                 variants={itemVariants}
@@ -115,43 +138,51 @@ const CorporateCoursesListPage = () => {
               >
                 {/* Image */}
                 <div className="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-6xl">
-                  {course.image}
+                  🎓
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-dark-900 group-hover:text-primary-600 transition-colors mb-3">
-                    {course.title}
+                    {course.name}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">
-                    {course.description}
+                    {course.category}
                   </p>
 
-                  {/* Rating */}
-                  <div className="flex items-center space-x-2 mb-6">
-                    <div className="flex items-center space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar
-                          key={i}
-                          className={i < Math.floor(course.rating) ? 'text-yellow-400' : 'text-gray-300'}
-                          size={16}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-600 font-semibold">
-                      {course.rating} ({course.reviews} reviews)
-                    </span>
+                  <div className="mb-6">
+                    <a
+                      href={course.syllabus}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold"
+                    >
+                      Open Syllabus
+                      <FaExternalLinkAlt className="text-xs" />
+                    </a>
                   </div>
 
                   {/* CTA Button */}
-                  <button className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center space-x-2 group/btn">
-                    <span>EXPLORE COURSE</span>
+                  <a
+                    href={course.syllabus}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center space-x-2 group/btn"
+                  >
+                    <span>VIEW DETAILS</span>
                     <FaArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
+                  </a>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+
+          {filteredCourses.length === 0 && (
+            <div className="mt-10 text-center bg-white/10 rounded-xl p-8 border border-white/20">
+              <p className="text-white text-lg font-semibold">No cohorts matched your filters.</p>
+              <p className="text-gray-300 mt-2">Try a different keyword or reset category to All.</p>
+            </div>
+          )}
         </div>
       </section>
 

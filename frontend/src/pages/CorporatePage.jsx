@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { FaCheckCircle, FaUsers, FaChartLine, FaTrophy, FaHandshake, FaAward, FaLaptop, FaBook, FaGraduationCap, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa';
+import { FaCheckCircle, FaUsers, FaChartLine, FaTrophy, FaHandshake, FaAward, FaLaptop, FaBook, FaGraduationCap, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChevronDown, FaExternalLinkAlt } from 'react-icons/fa';
 import { useState } from 'react';
+import { CORPORATE_COHORTS } from '../data/corporateCohorts';
 
 const CorporatePage = () => {
   const [expandedFaq, setExpandedFaq] = useState(null);
@@ -35,19 +36,6 @@ const CorporatePage = () => {
     'Logistics & Supply Chain',
     'Insurance',
     'Telecom',
-  ];
-
-  const corporateCourses = [
-    { name: 'Java Development', duration: '6-8 weeks', level: 'Intermediate' },
-    { name: 'Python for Data Analytics', duration: '4-6 weeks', level: 'Beginner' },
-    { name: 'Web Development (MERN)', duration: '8-10 weeks', level: 'Intermediate' },
-    { name: 'Cloud Computing (AWS/Azure)', duration: '4-6 weeks', level: 'Intermediate' },
-    { name: 'Data Science & Machine Learning', duration: '10-12 weeks', level: 'Advanced' },
-    { name: 'Cybersecurity Fundamentals', duration: '6-8 weeks', level: 'Intermediate' },
-    { name: 'DevOps & CI/CD', duration: '4-6 weeks', level: 'Advanced' },
-    { name: 'Project Management (PMP)', duration: '4 weeks', level: 'Professional' },
-    { name: 'Agile & Scrum Master', duration: '2-3 weeks', level: 'Intermediate' },
-    { name: 'Leadership Development', duration: '3-4 weeks', level: 'All Levels' },
   ];
 
   const benefits = [
@@ -288,16 +276,16 @@ const CorporatePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Popular Corporate Courses</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Corporate Training Cohorts ({CORPORATE_COHORTS.length})</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose from our extensive library of industry-relevant courses
+              Imported directly from the latest corporate training offerings
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {corporateCourses.map((course, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {CORPORATE_COHORTS.map((course, idx) => (
               <motion.div
-                key={idx}
+                key={course.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
@@ -305,8 +293,18 @@ const CorporatePage = () => {
               >
                 <h3 className="font-bold text-gray-900 mb-3">{course.name}</h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-gray-600"><span className="font-semibold">Duration:</span> {course.duration}</p>
-                  <p className="text-gray-600"><span className="font-semibold">Level:</span> {course.level}</p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">Category:</span> {course.category}
+                  </p>
+                  <a
+                    href={course.syllabus}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold"
+                  >
+                    View Syllabus
+                    <FaExternalLinkAlt className="text-xs" />
+                  </a>
                 </div>
               </motion.div>
             ))}

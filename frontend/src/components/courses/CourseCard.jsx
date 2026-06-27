@@ -16,7 +16,11 @@ const CourseCard = ({ course }) => {
 
   const { addToCart } = useCartStore();
 
-  const hasDiscount = discounted_price && discounted_price < price;
+  const basePrice = Number(price || 0);
+  const discountedPrice = Number(discounted_price || course.discount_price || course.effective_price || 0);
+  const hasDiscount = discountedPrice > 0 && basePrice > 0 && discountedPrice < basePrice;
+  const effectivePrice = hasDiscount ? discountedPrice : basePrice;
+  const hasValidPrice = effectivePrice > 0;
   const levelClass = LEVEL_COLORS[level] || LEVEL_COLORS.beginner;
   const categorySlug = typeof category === 'object' ? category?.slug : category;
   const categoryName = typeof category === 'object' ? category?.name : category;
@@ -26,7 +30,7 @@ const CourseCard = ({ course }) => {
     addToCart({
       id,
       title,
-      price: hasDiscount ? discounted_price : price,
+      price: hasValidPrice ? effectivePrice : 0,
       thumbnail,
       category: categoryName,
       slug,
@@ -112,13 +116,13 @@ const CourseCard = ({ course }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold text-primary-600">
-                {formatPrice(hasDiscount ? discounted_price : price)}
+                {hasValidPrice ? formatPrice(effectivePrice) : 'Contact for price'}
               </span>
               {hasDiscount && (
                 <>
-                  <span className="text-sm text-gray-400 line-through">{formatPrice(price)}</span>
+                  <span className="text-sm text-gray-400 line-through">{formatPrice(basePrice)}</span>
                   <span className="text-xs font-semibold bg-accent-green/10 text-accent-green px-2 py-0.5 rounded">
-                    {discount_percentage || Math.round((1 - discounted_price / price) * 100)}% OFF
+                    {discount_percentage || Math.round((1 - discountedPrice / basePrice) * 100)}% OFF
                   </span>
                 </>
               )}

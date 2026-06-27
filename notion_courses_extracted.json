@@ -1,0 +1,302 @@
+[
+  {
+    "Name of Cohort": "Agentic AI in the context of QA",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/Building-AI-Agents-for-QAs-234763fd2da080e3b4f8ca9924b29494?source=copy_link"
+  },
+  {
+    "Name of Cohort": "Lead with Impact:and Building Leadership Skills",
+    "Category": "Leadership",
+    "Syllabus": "https://www.notion.so/Workshop-on-Lead-with-Impact-Building-QA-Leadership-Skills-1e1763fd2da08032a539d43daf7f6cc1?pvs=4"
+  },
+  {
+    "Name of Cohort": "Testing AI Apps - GPT, LLMs and more",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/Testing-AI-Apps-Workshop-1e3763fd2da080879b14d178c9a91c69?pvs=4"
+  },
+  {
+    "Name of Cohort": "Performance Testing with JMeter",
+    "Category": "Performance Testing",
+    "Syllabus": "https://www.notion.so/Learn-Load-Testing-using-Apache-JMeter-from-Scratch-1e1763fd2da0806b9076eb7614d7e654?pvs=4"
+  },
+  {
+    "Name of Cohort": "AI-Powered Testing Blueprint",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/AI-Driven-Testing-and-Automation-QA-s-Leap-Forward-1e1763fd2da080d5917beb639685b446?pvs=4"
+  },
+  {
+    "Name of Cohort": "Design Patterns for Testers",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Design-Patterns-for-Testers-Workshop-1e1763fd2da08065959bed79012c90a2?pvs=4"
+  },
+  {
+    "Name of Cohort": "QA Infra - Forging CI Pipelines for Selenium with Kubernetes & AWS",
+    "Category": "CI/CD and DevOps",
+    "Syllabus": "https://www.notion.so/QA-Infra-Forging-CI-Pipelines-for-Selenium-with-Kubernetes-AWS-1ce763fd2da080339aeef32325879f70?pvs=4"
+  },
+  {
+    "Name of Cohort": "API Testing Bootcamp",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/API-Testing-Bootcamp-1ce763fd2da0803eac20daa7e40a7262?pvs=4"
+  },
+  {
+    "Name of Cohort": "Cypress Automation Testing",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Learn-Cypress-Automation-1ce763fd2da0804fa281fcc5ffd2d152?pvs=4"
+  },
+  {
+    "Name of Cohort": "Learn API Testing",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/QA-Infra-Forging-CI-Pipelines-for-Selenium-with-Kubernetes-AWS-1ce763fd2da080339aeef32325879f70?pvs=4"
+  },
+  {
+    "Name of Cohort": "Web Security Testing",
+    "Category": "Security Testing",
+    "Syllabus": "https://www.notion.so/Web-Security-Testing-1ce763fd2da080bf8db9f65370d638b7?pvs=4"
+  },
+  {
+    "Name of Cohort": "Mobile Testing with Appium",
+    "Category": "Mobile Testing",
+    "Syllabus": "https://www.notion.so/Mobile-Testing-with-Appium-1ce763fd2da080cb83e7ed2d8cba947c?pvs=4"
+  },
+  {
+    "Name of Cohort": "AI Masterclasses",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/AI-Masterclass-1e1763fd2da080e29306e4dcf9bd90ea?pvs=4"
+  },
+  {
+    "Name of Cohort": "AI Launchpad",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/AI-Launchpad-1e1763fd2da08035bf3ad403a3f7eb59?pvs=4"
+  },
+  {
+    "Name of Cohort": "Selenium with Java - 12 week programme",
+    "Category": "Web and Mobile Testing",
+    "Syllabus": "https://www.notion.so/Selenium-with-Java-Bootcamp-12-weeks-Syllabus-1ce763fd2da08068973ac4e7a4d93fb3?pvs=4"
+  },
+  {
+    "Name of Cohort": "Designing Test Automation and Automating Test Design",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Automating-Test-Design-and-Designing-Test-Automation-1ce763fd2da08028a1ccf004814914ba?pvs=4"
+  },
+  {
+    "Name of Cohort": "DevOps and Continuous Testing Workshop",
+    "Category": "CI/CD and DevOps",
+    "Syllabus": "https://www.notion.so/DevOps-and-Continuous-Testing-Workshop-1e1763fd2da080d5820edce430357ff9?pvs=4"
+  },
+  {
+    "Name of Cohort": "Elementor Locator Workshop",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Element-Locator-Workshop-Summary-1e1763fd2da080abacedf48bd6658640?pvs=4"
+  },
+  {
+    "Name of Cohort": "Just in Time Testing Workshop",
+    "Category": "Testing Fundamentals",
+    "Syllabus": "https://www.notion.so/Just-In-Time-Testing-Workshop-1e1763fd2da08021931ce113c1e1422a?pvs=4"
+  },
+  {
+    "Name of Cohort": "Accessibility Testing Workshop",
+    "Category": "Accessibility Testing",
+    "Syllabus": "https://www.notion.so/Accessibility-Testing-Workshop-1e1763fd2da0802c9e70c7f2aa0f37b7?pvs=4"
+  },
+  {
+    "Name of Cohort": "Playwright with Typescript Bootcamp",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Playwright-with-TypeScript-Bootcamp-1e1763fd2da080f1a9e3eec60551b0f0?pvs=4"
+  },
+  {
+    "Name of Cohort": "Usability Testing",
+    "Category": "NFT",
+    "Syllabus": "https://www.notion.so/Pathway-to-Usability-Testing-1e1763fd2da080f3ad75faafa4a7a8f8?pvs=4"
+  },
+  {
+    "Name of Cohort": "Performance Testing using Gatling",
+    "Category": "Performance Testing",
+    "Syllabus": "https://www.notion.so/Performance-Testing-using-Gatling-1e1763fd2da080d6aa86f943c60ad9e6?pvs=4"
+  },
+  {
+    "Name of Cohort": "REST Assured: Mastering Microservices and REST API Automation using REST Assured",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/Mastering-Microservices-and-REST-API-Automation-with-REST-Assured-1e3763fd2da080b3a3c9ee32165afa7f?pvs=4"
+  },
+  {
+    "Name of Cohort": "Postman: Learn API Testing with Postman",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/Mastering-API-Testing-with-Postman-1e3763fd2da080db9580cd24ecc4ba35?pvs=4"
+  },
+  {
+    "Name of Cohort": "Bug Advocacy and Beyond - Report Bugs, Influence Stakeholders",
+    "Category": "Testing Fundamentals",
+    "Syllabus": "https://www.notion.so/Bug-Advocacy-and-Beyond-for-Testers-1e3763fd2da08043b723e9bd7d5508e1?pvs=4"
+  },
+  {
+    "Name of Cohort": "Learn Core and Advanced Java for Testers and QAs",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/SDET-ready-Core-and-Advanced-Java-Bootcamp-1e3763fd2da08022a49fc098ffb2c990?pvs=4"
+  },
+  {
+    "Name of Cohort": "Master Selenium with Python - Learn, Practice, & Create your own Frameworks",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Selenium-with-Python-Bootcamp-1e3763fd2da080fd86ece49f0f2f7be0?pvs=4"
+  },
+  {
+    "Name of Cohort": "Mastering SQL",
+    "Category": "Database",
+    "Syllabus": "https://www.notion.so/SQL-Workshop-1e3763fd2da080eb91adda9559871252?pvs=4"
+  },
+  {
+    "Name of Cohort": "Agile and Scrum - Project Management Methodologies",
+    "Category": "Agile and Project Management",
+    "Syllabus": "https://www.notion.so/Agile-and-Scrum-for-Project-Management-Workshop-1e3763fd2da08048b9c0fce953beae2f?pvs=4"
+  },
+  {
+    "Name of Cohort": "Linux for Testers",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Linux-for-Enterprise-Test-Automation-Workshop-1e3763fd2da080ab8caec481196496ee?pvs=4"
+  },
+  {
+    "Name of Cohort": "Learn Python from Scratch",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Python-Programming-for-Enterprise-Applications-Workshop-1e3763fd2da08087b71ac1956a529a6b?pvs=4"
+  },
+  {
+    "Name of Cohort": "GIT and Version Control Methodologies",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/Git-and-Version-Control-Methodologies-Workshop-1e3763fd2da08031bdabf58493db03f0?pvs=4"
+  },
+  {
+    "Name of Cohort": "Shifting Left: A Course for Accelerated Quality",
+    "Category": "Agile and Project Management",
+    "Syllabus": "https://www.notion.so/Shifting-Left-Workshop-1e3763fd2da080138a71d29325952529?pvs=4"
+  },
+  {
+    "Name of Cohort": "Revealing Most Important Variables To Design Better Tests",
+    "Category": "Testing Fundamentals",
+    "Syllabus": "https://www.notion.so/Variables-in-Test-Design-Workshop-1e3763fd2da08059889ed1fc4bdd8978?pvs=4"
+  },
+  {
+    "Name of Cohort": "Learn Typescript from Scratch",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/TypeScript-for-Programmers-and-Test-Automation-Engineers-Workshop-1e3763fd2da0803b86cfeb29ac7a4401?pvs=4"
+  },
+  {
+    "Name of Cohort": "Mastering Karate DSL",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/Karate-DSL-Workshop-1e3763fd2da080b98041e4a1e9199bc4?pvs=4"
+  },
+  {
+    "Name of Cohort": "Learn JavaScript from Scratch",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/JavaScript-for-Entry-level-Professionals-Bootcamp-1e3763fd2da0809daa6debe11a68603d?pvs=4"
+  },
+  {
+    "Name of Cohort": "Master WebDriverIO with JavaScript - From Basics to Advanced",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/WebDriverIO-with-JavaScript-Mastery-Workshop-1e3763fd2da080eca534f59e0c22e764?pvs=4"
+  },
+  {
+    "Name of Cohort": "DevOps for Testers",
+    "Category": "CI/CD and DevOps",
+    "Syllabus": "https://www.notion.so/DevOps-for-Testers-Workshop-1e3763fd2da08042bd27c1c63594e45c?pvs=4"
+  },
+  {
+    "Name of Cohort": "AWS for Testers",
+    "Category": "Cloud Computing",
+    "Syllabus": "https://www.notion.so/AWS-for-Enterprises-Corporate-Training-1e3763fd2da0805da4e0d76f8432d58a?pvs=4"
+  },
+  {
+    "Name of Cohort": "ETL Testing",
+    "Category": "ETL",
+    "Syllabus": "https://www.notion.so/ETL-Testing-Workshop-1e3763fd2da080e299e6d8a63607f472?pvs=4"
+  },
+  {
+    "Name of Cohort": "BDD with Cucumber",
+    "Category": "Automation",
+    "Syllabus": "https://www.notion.so/BDD-with-Cucumber-Workshop-1e3763fd2da08098b7dbc59c081fce73?pvs=4"
+  },
+  {
+    "Name of Cohort": "Prompt Engineering for Testers",
+    "Category": "AI and Testing",
+    "Syllabus": "https://www.notion.so/Prompt-Engineering-for-QAs-Workshop-1e3763fd2da080e29329c50106d60d44?pvs=4"
+  },
+  {
+    "Name of Cohort": "Robot Framework",
+    "Category": "Web Automation",
+    "Syllabus": "https://www.notion.so/Robot-Framework-Outline-1e3763fd2da080f0917ef8495b71e143?pvs=4"
+  },
+  {
+    "Name of Cohort": "Salesforce Testing",
+    "Category": "Salesforce Testing",
+    "Syllabus": "https://www.notion.so/Salesforce-Testing-Bootcamp-1e3763fd2da080b2ba7dec00cbb56688?pvs=4"
+  },
+  {
+    "Name of Cohort": "Bootcamp for Freshers",
+    "Category": "Fresher Bootcamp",
+    "Syllabus": "https://www.notion.so/QA-Bootcamp-for-Freshers-1e3763fd2da080aaa113f6ef3f4efcbd?pvs=4"
+  },
+  {
+    "Name of Cohort": "Performance Engineering Bootcamp",
+    "Category": "Performance Engineering",
+    "Syllabus": "https://www.notion.so/Performance-Engineering-Bootcamp-1e3763fd2da080d6b970fd689f56f1d8"
+  },
+  {
+    "Name of Cohort": "SoapUI",
+    "Category": "API Testing",
+    "Syllabus": "https://www.notion.so/SoapUI-Workshop-1e3763fd2da0800da827dadbf4bd8196?pvs=4"
+  },
+  {
+    "Name of Cohort": "SAP Testing Workshop",
+    "Category": "SAP Testing",
+    "Syllabus": "https://www.notion.so/SAP-Testing-Workshop-1e3763fd2da0808598c5d409f2e304a4?pvs=4"
+  },
+  {
+    "Name of Cohort": "Chaos Engineering",
+    "Category": "Chaos Engineering",
+    "Syllabus": "https://www.notion.so/Chaos-Engineering-Workshop-1e3763fd2da0806f92c3e4e060435b64?pvs=4"
+  },
+  {
+    "Name of Cohort": "Writing clean automation code",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/Writing-Clean-Automation-Code-Workshop-1e3763fd2da080a59929f4117a049fa4?pvs=4"
+  },
+  {
+    "Name of Cohort": "ISTQB Certifications - Basic, intermediate, and advanced",
+    "Category": "Certifications",
+    "Syllabus": "Based on ISTQB certification required"
+  },
+  {
+    "Name of Cohort": "Bootcamp to become an SDET",
+    "Category": "Automation",
+    "Syllabus": "https://www.notion.so/Becoming-an-SDET-Bootcamp-1e3763fd2da080dfb91bd648f4648766?pvs=4"
+  },
+  {
+    "Name of Cohort": "iOS Development with Swift",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/iOS-Development-with-Swift-Bootcamp-1e3763fd2da080a69e27f7c92299d514?pvs=4"
+  },
+  {
+    "Name of Cohort": "Cross-Platform with Flutter",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/Cross-Platform-Development-with-Flutter-Bootcamp-1e3763fd2da080519967d40e858f8012?pvs=4"
+  },
+  {
+    "Name of Cohort": "Embedded Systems",
+    "Category": "Embedded",
+    "Syllabus": "https://www.notion.so/Embedded-Systems-Bootcamp-1e3763fd2da0809a8271da09423374c6?pvs=4"
+  },
+  {
+    "Name of Cohort": "IoT Testing",
+    "Category": "IoT Testing",
+    "Syllabus": "https://www.notion.so/IoT-Testing-Workshop-1e3763fd2da0808e9c52c66403eca5d6?pvs=4"
+  },
+  {
+    "Name of Cohort": "Android Development with Kotlin",
+    "Category": "Programming",
+    "Syllabus": "https://www.notion.so/Android-Development-with-Kotlin-1e3763fd2da08045be32c5f04e027358?pvs=4"
+  },
+  {
+    "Name of Cohort": "MLOps and Model Development",
+    "Category": "AI/ML",
+    "Syllabus": "https://www.notion.so/MLOps-and-Model-Development-1e3763fd2da0804bad2af6c1e86767b6?pvs=4"
+  }
+]
