@@ -257,7 +257,11 @@ const DynamicCourseDetailPageV2 = () => {
                     const duration = module.duration || `${module.duration_hours || 0} hours`;
                     const focus = module.focus;
                     const tools = module.tools;
-                    const topics = module.topics;
+                    const topics = Array.isArray(module.topics)
+                      ? module.topics
+                      : typeof module.topics === 'string' && module.topics.trim()
+                        ? [module.topics]
+                        : [];
 
                     return (
                       <div
@@ -324,7 +328,7 @@ const DynamicCourseDetailPageV2 = () => {
                               </div>
                             ) : (
                               /* Old format display */
-                              topics && (
+                              topics.length > 0 ? (
                                 <ul className="space-y-2">
                                   {topics.map((topic, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
@@ -333,6 +337,8 @@ const DynamicCourseDetailPageV2 = () => {
                                     </li>
                                   ))}
                                 </ul>
+                              ) : (
+                                <p className="text-gray-600">Curriculum details coming soon.</p>
                               )
                             )}
                           </div>
