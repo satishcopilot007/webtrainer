@@ -16,17 +16,42 @@ const CourseCard = ({ course }) => {
 
   const { addToCart } = useCartStore();
 
-  const hasDiscount = discounted_price && discounted_price < price;
+  const basePrice = Number(price || 0);
+  const discountedPrice = Number(discounted_price || course.discount_price || course.effective_price || 0);
+  const hasDiscount = discountedPrice > 0 && basePrice > 0 && discountedPrice < basePrice;
+  const effectivePrice = hasDiscount ? discountedPrice : basePrice;
+  const hasValidPrice = effectivePrice > 0;
+  const pricingNote = course.pricing_note || 'Contact for price or drop email to contact@trainermentors.com';
   const levelClass = LEVEL_COLORS[level] || LEVEL_COLORS.beginner;
   const categorySlug = typeof category === 'object' ? category?.slug : category;
   const categoryName = typeof category === 'object' ? category?.name : category;
+  const durationLabel = course.duration || (course.duration_weeks ? `${course.duration_weeks} weeks` : 'Flexible');
+
+  const syllabusPreview = (() => {
+    if (Array.isArray(course.syllabus_outline) && course.syllabus_outline.length > 0) {
+      return course.syllabus_outline.slice(0, 2);
+    }
+
+    if (Array.isArray(course.modules) && course.modules.length > 0) {
+      return course.modules.slice(0, 2).map((module) => {
+        const moduleTitle = module?.title || module?.module || 'Module';
+        const topicCount = Number(module?.topics);
+        if (Number.isFinite(topicCount) && topicCount > 0) {
+          return `${moduleTitle} (${topicCount} topics)`;
+        }
+        return moduleTitle;
+      });
+    }
+
+    return [];
+  })();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
     addToCart({
       id,
       title,
-      price: hasDiscount ? discounted_price : price,
+      price: hasValidPrice ? effectivePrice : 0,
       thumbnail,
       category: categoryName,
       slug,
@@ -73,6 +98,17 @@ const CourseCard = ({ course }) => {
           {truncateText(short_description, 90)}
         </p>
 
+        {syllabusPreview.length > 0 && (
+          <div className="mb-3 rounded-lg bg-gray-50 p-2.5 border border-gray-100">
+            <p className="text-[11px] font-semibold text-gray-600 mb-1">Syllabus Highlights</p>
+            <ul className="space-y-1">
+              {syllabusPreview.map((item, idx) => (
+                <li key={`${slug}-syllabus-${idx}`} className="text-xs text-gray-600 line-clamp-1">• {item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* Tools tags */}
         {tools_covered?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
@@ -94,9 +130,9 @@ const CourseCard = ({ course }) => {
         <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
           <StarRating rating={rating || 0} showCount count={rating_count || 0} />
           <div className="flex items-center gap-3">
-            {duration && (
+            {durationLabel && (
               <span className="flex items-center gap-1">
-                <FaClock className="text-xs" /> {duration}
+                <FaClock className="text-xs" /> {durationLabel}
               </span>
             )}
             {enrollment_count > 0 && (
@@ -112,13 +148,13 @@ const CourseCard = ({ course }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xl font-bold text-primary-600">
-                {formatPrice(hasDiscount ? discounted_price : price)}
+                {hasValidPrice ? formatPrice(effectivePrice) : pricingNote}
               </span>
               {hasDiscount && (
                 <>
-                  <span className="text-sm text-gray-400 line-through">{formatPrice(price)}</span>
+                  <span className="text-sm text-gray-400 line-through">{formatPrice(basePrice)}</span>
                   <span className="text-xs font-semibold bg-accent-green/10 text-accent-green px-2 py-0.5 rounded">
-                    {discount_percentage || Math.round((1 - discounted_price / price) * 100)}% OFF
+                    {discount_percentage || Math.round((1 - discountedPrice / basePrice) * 100)}% OFF
                   </span>
                 </>
               )}

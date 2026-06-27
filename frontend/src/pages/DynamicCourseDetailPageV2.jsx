@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaCheckCircle, FaClock, FaUsers, FaTrophy, FaStar, FaChevronDown } from 'react-icons/fa';
 import { getCourseBySlug } from '../api/courseApi';
@@ -36,6 +37,7 @@ const DynamicCourseDetailPageV2 = () => {
         // Convert courseSlug back to course ID or fetch by slug
         const response = await getCourseBySlug(courseSlug);
         setCourst(response);
+        setExpandedModules({ 0: true });
         setError(null);
       } catch (err) {
         console.error('Error fetching course:', err);
@@ -166,9 +168,48 @@ const DynamicCourseDetailPageV2 = () => {
 
   const discountPercentage = course.discount_percentage || 0;
   const effectivePrice = course.effective_price || course.price;
+  const durationLabel = course.duration || (course.duration_weeks ? `${course.duration_weeks} weeks` : 'Flexible');
 
   return (
     <div className="bg-white">
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>{course.title} - Training Course | TrainerMentors</title>
+        <meta name="description" content={`${course.title} training by TrainerMentors. ${course.description?.slice(0, 140)}. Duration: ${durationLabel}. Expert trainers & mentors. Enroll now!`} />
+        <meta name="keywords" content={`${course.title}, ${course.category_name} training, ${course.title} course, trainer, mentor, online training, ${course.category_name} certification, TrainerMentors`} />
+        <meta property="og:title" content={`${course.title} - Training Course | TrainerMentors`} />
+        <meta property="og:description" content={`Learn ${course.title} with expert trainers and mentors. ${durationLabel}. Placement assistance included.`} />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content={`https://trainermentors.com/course/${course.slug}`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`${course.title} | TrainerMentors`} />
+        <link rel="canonical" href={`https://trainermentors.com/course/${course.slug}`} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Course",
+          "name": course.title,
+          "description": course.description,
+          "provider": {
+            "@type": "Organization",
+            "name": "TrainerMentors",
+            "url": "https://trainermentors.com"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": effectivePrice,
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock"
+          },
+          "aggregateRating": course.rating ? {
+            "@type": "AggregateRating",
+            "ratingValue": course.rating,
+            "reviewCount": course.review_count || 50
+          } : undefined,
+          "courseMode": "Online",
+          "duration": durationLabel
+        })}</script>
+      </Helmet>
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -219,7 +260,7 @@ const DynamicCourseDetailPageV2 = () => {
                 <div className="bg-orange-50 p-4 rounded-lg text-center">
                   <FaClock className="text-orange-500 mx-auto text-2xl mb-2" />
                   <p className="text-sm text-gray-600">Duration</p>
-                  <p className="font-semibold">{course.duration_weeks}-{course.duration_weeks + 2} Weeks</p>
+                  <p className="font-semibold">{durationLabel}</p>
                 </div>
                 <div className="bg-blue-50 p-4 rounded-lg text-center">
                   <FaUsers className="text-blue-500 mx-auto text-2xl mb-2" />
@@ -257,7 +298,13 @@ const DynamicCourseDetailPageV2 = () => {
                     const duration = module.duration || `${module.duration_hours || 0} hours`;
                     const focus = module.focus;
                     const tools = module.tools;
-                    const topics = module.topics;
+                    const topics = Array.isArray(module.topics)
+                      ? module.topics
+                      : typeof module.topics === 'string' && module.topics.trim()
+                        ? [module.topics]
+                        : Number.isFinite(Number(module.topics)) && Number(module.topics) > 0
+                          ? Array.from({ length: Number(module.topics) }, (_, idx) => `Topic ${idx + 1}`)
+                          : [];
 
                     return (
                       <div
@@ -282,6 +329,13 @@ const DynamicCourseDetailPageV2 = () => {
                                 </p>
                               )}
                             </div>
+                            {!isNewFormat && topics.length > 0 && (
+                              <ul className="mt-2 space-y-1">
+                                {topics.slice(0, 2).map((topic, idx) => (
+                                  <li key={`preview-${idx}`} className="text-xs text-gray-600 line-clamp-1">• {topic}</li>
+                                ))}
+                              </ul>
+                            )}
                             {isNewFormat && focus && (
                               <p className="text-sm text-gray-700 mt-2">
                                 <span className="font-medium">Focus:</span> {focus}
@@ -324,7 +378,7 @@ const DynamicCourseDetailPageV2 = () => {
                               </div>
                             ) : (
                               /* Old format display */
-                              topics && (
+                              topics.length > 0 ? (
                                 <ul className="space-y-2">
                                   {topics.map((topic, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
@@ -333,6 +387,8 @@ const DynamicCourseDetailPageV2 = () => {
                                     </li>
                                   ))}
                                 </ul>
+                              ) : (
+                                <p className="text-gray-600">Curriculum details coming soon.</p>
                               )
                             )}
                           </div>
@@ -406,7 +462,7 @@ const DynamicCourseDetailPageV2 = () => {
               <div className="bg-gray-50 rounded-lg p-6 space-y-4">
                 <div>
                   <p className="text-gray-600 text-sm uppercase">DURATION</p>
-                  <p className="font-semibold text-lg">{course.duration_weeks}-{course.duration_weeks + 2} Weeks</p>
+                  <p className="font-semibold text-lg">{durationLabel}</p>
                 </div>
                 <div>
                   <p className="text-gray-600 text-sm uppercase">SCHEDULE</p>

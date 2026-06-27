@@ -49,8 +49,11 @@ const CourseCatalogPage = () => {
 
   useEffect(() => {
     const params = { page: currentPage };
-    if (mainCategory) params.category = mainCategory;
-    if (selectedCategory) params.category = selectedCategory;
+    // When search is active, search across ALL courses regardless of category
+    if (!search) {
+      if (mainCategory) params.category = mainCategory;
+      if (selectedCategory) params.category = selectedCategory;
+    }
     if (selectedLevel) params.level = selectedLevel;
     if (selectedMode) params.mode = selectedMode;
     if (search) params.search = search;

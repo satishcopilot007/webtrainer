@@ -5,6 +5,58 @@ import { COURSE_CATEGORIES, COURSE_DETAILS } from '../utils/constants';
 export const getCourses = (params) => api.get('/courses', { params });
 export const getCourseById = (id) => api.get(`/courses/${id}`);
 
+const parsePrice = (value) => {
+  const num = Number(value);
+  return Number.isFinite(num) && num > 0 ? num : 0;
+};
+
+export const normalizeCourse = (course) => {
+  if (!course || typeof course !== 'object') return null;
+
+  const categoryObj = typeof course.category === 'object'
+    ? course.category
+    : {
+        id: course.category_id || null,
+        name: course.category_name || course.category || null,
+        slug: course.category_slug || course.category || null,
+      };
+
+  const rawPrice = parsePrice(course.price);
+  const rawDiscountPrice = parsePrice(
+    course.discounted_price ?? course.discount_price ?? course.effective_price
+  );
+
+  const basePrice = rawPrice;
+  const discountedPrice = rawDiscountPrice > 0 && rawDiscountPrice < basePrice
+    ? rawDiscountPrice
+    : null;
+  const effectivePrice = discountedPrice || basePrice || 0;
+  const discountPct = discountedPrice
+    ? (course.discount_percentage || Math.round((1 - discountedPrice / basePrice) * 100))
+    : 0;
+
+  return {
+    ...course,
+    title: course.title || course.name || 'Course',
+    short_description: course.short_description || course.description || `Learn ${course.title || course.name || 'this course'}`,
+    category: categoryObj,
+    rating: Number(course.rating || 0),
+    rating_count: Number(course.rating_count || course.total_reviews || course.review_count || 0),
+    review_count: Number(course.review_count || course.total_reviews || course.rating_count || 0),
+    enrollment_count: Number(course.enrollment_count || course.current_students || 0),
+    duration_weeks: Number(course.duration_weeks || 0),
+    price: basePrice,
+    discount_price: discountedPrice,
+    discounted_price: discountedPrice,
+    effective_price: effectivePrice,
+    discount_percentage: discountPct,
+    original_price: basePrice,
+    pricing_note: course.pricing_note || (effectivePrice <= 0
+      ? 'Contact for price or drop email to contact@trainermentors.com'
+      : null),
+  };
+};
+
 /**
  * Get course by slug with fallback to mock data
  * First tries to fetch from backend API
@@ -14,12 +66,13 @@ export const getCourseBySlug = async (slug) => {
   try {
     // Try to fetch from backend API first
     const response = await api.get(`/courses/${slug}`);
-    // Check if response has success flag (from API wrapper)
-    if (response.data && response.data.data) {
-      return response.data.data;
-    }
-    return response.data;
+    const course = response.data?.data || response.data;
+    return normalizeCourse(course);
   } catch (error) {
+    if (error?.response?.status === 404) {
+      throw new Error('Course not found');
+    }
+
     // Fallback to mock data if API fails
     console.warn('API fetch failed, using mock data:', error.message);
     const mockCourse = findCourseBySlug(slug, COURSE_CATEGORIES);
@@ -62,7 +115,7 @@ export const getCourseBySlug = async (slug) => {
     ];
 
     // Transform mock course data to match API response format
-    return {
+    return normalizeCourse({
       id: slug,
       title: mockCourse.name,
       slug: slug,
@@ -98,7 +151,7 @@ export const getCourseBySlug = async (slug) => {
         'Job assistance',
       ],
       batches: [],
-    };
+    });
   }
 };
 export const createCourse = (data) => api.post('/courses', data);

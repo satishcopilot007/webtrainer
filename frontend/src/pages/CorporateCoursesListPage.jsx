@@ -126,6 +126,11 @@ const CorporateCoursesListPage = () => {
                   <p className="text-gray-600 mb-4 line-clamp-2">
                     {course.description}
                   </p>
+                  {course.price > 0 ? (
+                    <p className="text-sm font-semibold text-green-700 mb-4">Price: ₹{Number(course.price).toLocaleString('en-IN')}</p>
+                  ) : (
+                    <p className="text-sm text-orange-700 mb-4">{course.pricing_note || 'Contact for price or drop email to contact@trainermentors.com'}</p>
+                  )}
 
                   {/* Rating */}
                   <div className="flex items-center space-x-2 mb-6">

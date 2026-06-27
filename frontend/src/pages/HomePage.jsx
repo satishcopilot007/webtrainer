@@ -25,11 +25,17 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>{SITE_NAME} — {SITE_TAGLINE}</title>
-        <meta name="description" content="TrainerMentors offers expert-led, industry-aligned courses in SAP, Data Science, AI/ML, Full-Stack Development, and more. 95% placement rate with 15,000+ students trained." />
-        <meta property="og:title" content={`${SITE_NAME} — ${SITE_TAGLINE}`} />
-        <meta property="og:description" content="Empowering Your Career Through Expert-Led Training. Enroll now and transform your future." />
+        <title>TrainerMentors - Best Online Training Institute | Expert Trainers & Mentors | 900+ Courses</title>
+        <meta name="description" content="TrainerMentors is India's #1 online training and mentorship platform. 900+ courses in AI, Cloud, Programming, SAP, Data Science with expert trainers and mentors. Get 1:1 mentorship, placement assistance, and globally recognized certification. Join 15,000+ successful learners." />
+        <meta name="keywords" content="trainer, mentor, training, mentors, trainers, online training, corporate training, IT training, TrainerMentors, trainer mentors, best training institute, training courses, mentorship programs, tech training, AI training, cloud training, programming courses, SAP training, data science training, placement training, online courses India, best online trainer, mentor for career, professional training" />
+        <meta property="og:title" content="TrainerMentors - Best Online Training Institute | Expert Trainers & Mentors" />
+        <meta property="og:description" content="900+ expert-led training courses with 1:1 mentorship. AI, Cloud, Programming, SAP & more. Join thousands of successful learners at TrainerMentors." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://trainermentors.com/" />
+        <meta property="og:site_name" content="TrainerMentors" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="TrainerMentors - Best Online Training & Mentorship Platform" />
+        <meta name="twitter:description" content="900+ expert-led courses. AI, Cloud, SAP, Programming. 1:1 mentorship + placement assistance." />
         <link rel="canonical" href="https://trainermentors.com/" />
       </Helmet>
 

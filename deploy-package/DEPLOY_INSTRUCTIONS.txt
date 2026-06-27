@@ -1,0 +1,162 @@
+============================================================
+  HOSTINGER DEPLOYMENT GUIDE - TrainerMentors
+  Date: 2026-06-28
+============================================================
+
+WHAT'S IN THIS FOLDER (deploy-package/):
+============================================================
+
+deploy-package/
+├── public_html/          ← Upload to Hostinger public_html/
+│   ├── index.html        ← Main app entry (with SEO meta tags)
+│   ├── .htaccess         ← SPA routing + caching + compression
+│   ├── robots.txt        ← Search engine crawler rules
+│   ├── sitemap.xml       ← 905 URLs for Google/Bing indexing
+│   ├── favicon.svg       ← Site icon
+│   └── assets/           ← JS/CSS bundles (auto-generated)
+│
+├── api/                  ← Backend API files
+│   ├── mock-api-server.js  ← Express API server
+│   ├── courses_data.js     ← 897 courses (all data)
+│   └── package.json        ← Node.js dependencies
+│
+├── courses_complete.sql  ← FULL SQL IMPORT (897 courses + 2691 modules)
+│                           Import directly in phpMyAdmin
+│
+└── DEPLOY_INSTRUCTIONS.txt  ← This file
+
+
+============================================================
+CHANGES MADE TODAY (vs Production):
+============================================================
+
+1. COURSE DATA (courses_data.js):
+   - Regenerated from enriched_courses_with_syllabus.xlsx (807 courses)
+   - Added AI_Cloud_Programming_Course_Catalog_2025.xlsx (90 courses)
+   - Total: 897 courses (Technical: 615, Non-Technical: 116, Corporate: 166)
+   - All prices REDUCED by 60% (Basic/Intermediate/Advanced tiers)
+   - All durations REDUCED by 60% (everywhere: tiers + modules)
+   - Real syllabus topics from Excel (not generic placeholders)
+
+2. PRICING UI (PaymentComponent.jsx):
+   - Shows 3 selectable price tiers: Basic / Intermediate / Advanced
+   - Radio-button selection (click to choose tier)
+   - Selected tier price goes to cart/checkout
+   - Duration updates based on selected tier
+
+3. SEARCH FIX (CourseCatalogPage.jsx):
+   - Search now works across ALL categories (bypasses category filter)
+   - All 897 courses are searchable
+
+4. SEO ENHANCEMENTS:
+   - index.html: Rich meta tags, keywords, Open Graph, Twitter Cards
+   - JSON-LD structured data (EducationalOrganization + WebSite + SearchAction)
+   - robots.txt: Crawler directives
+   - sitemap.xml: 905 URLs for search engines
+   - HomePage: SEO-optimized title & description
+   - Course detail pages: Dynamic Helmet with per-course SEO + JSON-LD Course schema
+
+5. FORM VALIDATION (LoginPage.jsx + RegisterPage.jsx):
+   - Login: Required email + min 6 char password
+   - Register: Letters-only names, valid phone format,
+     password requires uppercase + lowercase + number + special char
+
+============================================================
+DEPLOYMENT STEPS:
+============================================================
+
+STEP 1: Import SQL Database
+--------------------------------------
+1. Log in to Hostinger hPanel → Databases → phpMyAdmin
+2. Select your database (e.g., u123456789_trainermentors)
+3. Click "Import" tab at the top
+4. Choose File → select "courses_complete.sql" (1.98 MB)
+5. Click "Go" / "Import"
+6. Wait for success message: "897 courses inserted, 2691 modules inserted"
+
+   What this SQL does:
+   - Adds new columns (price tiers, duration tiers) to existing courses table
+   - Deletes old 243 courses
+   - Inserts 897 new courses with real pricing (60% reduced)
+   - Inserts 2,691 syllabus modules (Basic/Intermediate/Advanced per course)
+
+STEP 2: Upload Frontend to Hostinger
+--------------------------------------
+1. Log in to Hostinger hPanel → File Manager
+2. Navigate to public_html/
+3. DELETE all existing files in public_html/ (select all → delete)
+4. Upload ALL contents of deploy-package/public_html/ folder:
+   - index.html
+   - .htaccess
+   - robots.txt
+   - sitemap.xml
+   - favicon.svg
+   - assets/ folder (entire folder with JS/CSS files)
+
+   OR use FTP:
+   - Host: ftp.trainermentors.com (or from hPanel → FTP Accounts)
+   - Upload deploy-package/public_html/* → /public_html/
+
+STEP 3: Deploy Backend API (Node.js)
+--------------------------------------
+Option A - If Hostinger supports Node.js hosting:
+1. hPanel → Websites → Node.js
+2. Upload deploy-package/api/ contents to the Node.js app root
+3. Set startup file: mock-api-server.js
+4. Run: npm install express cors xlsx
+5. Start the application
+
+Option B - If using Hostinger VPS:
+1. SSH into your VPS
+2. Upload api/ folder to /var/www/api/
+3. Run:
+   cd /var/www/api
+   npm install express cors xlsx
+   pm2 start mock-api-server.js --name trainermentors-api
+4. Configure Nginx to proxy /api/ to localhost:8000
+
+Option C - Use a separate host (Render/Railway - FREE):
+1. Push api/ folder to GitHub
+2. Connect to Render.com → New Web Service
+3. Build command: npm install
+4. Start command: node mock-api-server.js
+5. Update frontend API_BASE_URL to Render URL
+
+STEP 4: Configure API URL in Frontend
+--------------------------------------
+If your API is on a different domain/port, update:
+- frontend/src/api/courseApi.js → change the base URL
+- Rebuild: npm run build
+- Re-upload dist/ to public_html/
+
+STEP 5: Verify Deployment
+--------------------------------------
+1. Visit https://trainermentors.com/ → should load homepage
+2. Visit https://trainermentors.com/courses/technical → should show 615 courses
+3. Visit https://trainermentors.com/course/fashion-design-course → should show course detail with pricing tiers
+4. Search for "Python" → should find results
+5. Check https://trainermentors.com/robots.txt → should display
+6. Check https://trainermentors.com/sitemap.xml → should show 905 URLs
+
+STEP 6: Submit to Search Engines (after deployment)
+--------------------------------------
+1. Google Search Console: https://search.google.com/search-console
+   - Add property → URL prefix → https://trainermentors.com
+   - Verify via HTML meta tag (already in index.html, just add your verification code)
+   - Submit sitemap: sitemap.xml
+
+2. Bing Webmaster: https://www.bing.com/webmasters
+   - Add site → https://trainermentors.com
+   - Verify via HTML meta tag
+   - Submit sitemap: https://trainermentors.com/sitemap.xml
+
+============================================================
+IMPORTANT NOTES:
+============================================================
+
+- The .htaccess file handles SPA routing (so /course/python-course loads correctly)
+- If course detail pages still show "Not Found" after deploy, it means
+  the API backend is not running. The frontend needs the API at /api/courses/:slug
+- Make sure your Hostinger Node.js or VPS is running the mock-api-server.js
+- The API serves on port 8000 by default. Adjust proxy/Nginx accordingly.
+- All SEO meta tags are already in the built HTML/JS files.

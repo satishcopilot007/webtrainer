@@ -10,12 +10,34 @@ import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
 
 const registerSchema = z.object({
-  first_name: z.string().min(2, 'First name must be at least 2 characters'),
-  last_name: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number').max(15, 'Phone number too long'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  password_confirm: z.string().min(8, 'Please confirm your password'),
+  first_name: z.string()
+    .min(1, 'First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, 'First name is too long')
+    .regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
+  last_name: z.string()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long')
+    .regex(/^[a-zA-Z\s]+$/, 'Last name must contain only letters'),
+  email: z.string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address')
+    .max(100, 'Email is too long'),
+  phone: z.string()
+    .min(1, 'Phone number is required')
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number is too long')
+    .regex(/^[+]?[0-9\s-]+$/, 'Phone number must contain only digits, spaces, or dashes'),
+  password: z.string()
+    .min(1, 'Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .max(64, 'Password is too long')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
+  password_confirm: z.string()
+    .min(1, 'Please confirm your password'),
 }).refine((data) => data.password === data.password_confirm, {
   message: 'Passwords do not match',
   path: ['password_confirm'],
@@ -321,7 +343,7 @@ const RegisterPage = () => {
                     {getFieldError('password')}
                   </p>
                 )}
-                <p className="text-gray-500 text-xs mt-1">💡 Min 8 characters, mix of letters & numbers recommended</p>
+                <p className="text-gray-500 text-xs mt-1">💡 Min 8 characters with uppercase, lowercase, number & special character</p>
               </div>
 
               {/* Confirm Password */}

@@ -8,24 +8,57 @@ const PaymentComponent = ({ course }) => {
   const navigate = useNavigate();
   const { addToCart, isInCart } = useCartStore();
   const [isAdded, setIsAdded] = React.useState(isInCart(course?.id));
+  const [selectedTier, setSelectedTier] = React.useState('basic');
+
+  // Price tiers from Excel
+  const USD_TO_INR = 83;
+  const priceTiers = course?.price_tiers_usd || {};
+  const durationTiers = course?.duration_tiers_hours || {};
+  const hasMultipleTiers = priceTiers.basic && priceTiers.intermediate && priceTiers.advanced;
+
+  // Get selected tier price
+  const getSelectedPrice = () => {
+    if (hasMultipleTiers) {
+      return Math.round((priceTiers[selectedTier] || priceTiers.basic) * USD_TO_INR);
+    }
+    return Number(course.effective_price || course.discounted_price || course.discount_price || course.price || 0);
+  };
 
   const handleAddToCart = () => {
     if (course) {
-      addToCart(course);
+      const cartItem = {
+        ...course,
+        selected_tier: selectedTier,
+        price: getSelectedPrice(),
+        duration: hasMultipleTiers ? `${durationTiers[selectedTier]} hours` : course.duration
+      };
+      addToCart(cartItem);
       setIsAdded(true);
-      // Show success message briefly
       setTimeout(() => setIsAdded(false), 2000);
     }
   };
 
   const handleCheckout = () => {
     if (course) {
-      addToCart(course);
+      const cartItem = {
+        ...course,
+        selected_tier: selectedTier,
+        price: getSelectedPrice(),
+        duration: hasMultipleTiers ? `${durationTiers[selectedTier]} hours` : course.duration
+      };
+      addToCart(cartItem);
       navigate('/checkout');
     }
   };
 
   if (!course) return null;
+
+  const displayPrice = getSelectedPrice();
+  const originalPrice = Number(course.original_price || course.price || 0);
+  const hasValidPrice = displayPrice > 0;
+  const hasSavings = !hasMultipleTiers && hasValidPrice && originalPrice > displayPrice;
+  const pricingNote = course.pricing_note || 'Contact for price or drop email to contact@trainermentors.com';
+  const durationLabel = hasMultipleTiers ? `${durationTiers[selectedTier]} hours` : (course.duration || (course.duration_weeks ? `${course.duration_weeks} weeks` : 'Flexible'));
 
   return (
     <motion.div
@@ -36,17 +69,98 @@ const PaymentComponent = ({ course }) => {
       <div className="space-y-6">
         {/* Price Display */}
         <div className="text-center">
-          <p className="text-gray-600 text-sm mb-2">Course Fee</p>
-          <div className="flex items-baseline justify-center gap-2">
-            <span className="text-4xl font-bold text-purple-600">₹{course.price}</span>
-            {course.original_price && course.original_price > course.price && (
-              <span className="text-lg text-gray-500 line-through">₹{course.original_price}</span>
-            )}
-          </div>
-          {course.original_price && course.original_price > course.price && (
-            <p className="text-green-600 font-semibold mt-2">
-              Save ₹{(course.original_price - course.price).toFixed(2)}
-            </p>
+          {hasMultipleTiers ? (
+            <div className="space-y-3">
+              <p className="text-gray-600 text-sm font-medium">Choose Your Level</p>
+              <div className="grid grid-cols-1 gap-2">
+                {/* Basic */}
+                <div
+                  onClick={() => setSelectedTier('basic')}
+                  className={`cursor-pointer rounded-lg p-3 flex items-center justify-between transition-all ${
+                    selectedTier === 'basic'
+                      ? 'bg-green-50 border-2 border-green-500 ring-2 ring-green-200'
+                      : 'bg-white border-2 border-gray-200 hover:border-green-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedTier === 'basic' ? 'border-green-500' : 'border-gray-300'
+                    }`}>
+                      {selectedTier === 'basic' && <div className="w-2 h-2 rounded-full bg-green-500"></div>}
+                    </div>
+                    <div className="text-left">
+                      <span className="text-sm font-bold text-green-700">Basic</span>
+                      <p className="text-xs text-gray-500">{durationTiers.basic || '—'} hours</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-bold text-green-600">₹{Math.round(priceTiers.basic * USD_TO_INR).toLocaleString('en-IN')}</span>
+                </div>
+                {/* Intermediate */}
+                <div
+                  onClick={() => setSelectedTier('intermediate')}
+                  className={`cursor-pointer rounded-lg p-3 flex items-center justify-between relative transition-all ${
+                    selectedTier === 'intermediate'
+                      ? 'bg-blue-50 border-2 border-blue-500 ring-2 ring-blue-200'
+                      : 'bg-white border-2 border-gray-200 hover:border-blue-300'
+                  }`}
+                >
+                  <span className="absolute -top-2 left-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">POPULAR</span>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedTier === 'intermediate' ? 'border-blue-500' : 'border-gray-300'
+                    }`}>
+                      {selectedTier === 'intermediate' && <div className="w-2 h-2 rounded-full bg-blue-500"></div>}
+                    </div>
+                    <div className="text-left">
+                      <span className="text-sm font-bold text-blue-700">Intermediate</span>
+                      <p className="text-xs text-gray-500">{durationTiers.intermediate || '—'} hours</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-bold text-blue-600">₹{Math.round(priceTiers.intermediate * USD_TO_INR).toLocaleString('en-IN')}</span>
+                </div>
+                {/* Advanced */}
+                <div
+                  onClick={() => setSelectedTier('advanced')}
+                  className={`cursor-pointer rounded-lg p-3 flex items-center justify-between transition-all ${
+                    selectedTier === 'advanced'
+                      ? 'bg-purple-50 border-2 border-purple-500 ring-2 ring-purple-200'
+                      : 'bg-white border-2 border-gray-200 hover:border-purple-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedTier === 'advanced' ? 'border-purple-500' : 'border-gray-300'
+                    }`}>
+                      {selectedTier === 'advanced' && <div className="w-2 h-2 rounded-full bg-purple-500"></div>}
+                    </div>
+                    <div className="text-left">
+                      <span className="text-sm font-bold text-purple-700">Advanced</span>
+                      <p className="text-xs text-gray-500">{durationTiers.advanced || '—'} hours</p>
+                    </div>
+                  </div>
+                  <span className="text-lg font-bold text-purple-600">₹{Math.round(priceTiers.advanced * USD_TO_INR).toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <p className="text-gray-600 text-sm mb-2">Course Fee</p>
+              {hasValidPrice ? (
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-4xl font-bold text-purple-600">₹{displayPrice.toLocaleString('en-IN')}</span>
+                  {hasSavings && (
+                    <span className="text-lg text-gray-500 line-through">₹{originalPrice.toLocaleString('en-IN')}</span>
+                  )}
+                </div>
+              ) : (
+                <div className="text-lg font-bold text-purple-600 text-center">{pricingNote}</div>
+              )}
+              {hasSavings && (
+                <p className="text-green-600 font-semibold mt-2">
+                  Save ₹{(originalPrice - displayPrice).toFixed(2)}
+                </p>
+              )}
+            </>
           )}
         </div>
 
@@ -54,11 +168,11 @@ const PaymentComponent = ({ course }) => {
         <div className="bg-white rounded-lg p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-gray-700">Duration:</span>
-            <span className="font-semibold text-gray-800">{course.duration_weeks} weeks</span>
+            <span className="font-semibold text-gray-800">{durationLabel}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-gray-700">Level:</span>
-            <span className="font-semibold text-gray-800 capitalize">{course.level}</span>
+            <span className="font-semibold text-gray-800 capitalize">{hasMultipleTiers ? selectedTier : course.level}</span>
           </div>
           {course.rating && (
             <div className="flex items-center justify-between">

@@ -5,6 +5,7 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 
 const express = require('express');
 const cors = require('cors');
@@ -13,6 +14,24 @@ const bodyParser = require('body-parser');
 
 // Import all courses from Excel catalog
 const ALL_COURSES = require('./courses_data.js');
+
+function loadJsonArray(candidates) {
+  for (const candidate of candidates) {
+    const fullPath = path.join(__dirname, candidate);
+    if (!fs.existsSync(fullPath)) continue;
+    try {
+      const text = fs.readFileSync(fullPath, 'utf8').replace(/^\uFEFF/, '');
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) return parsed;
+    } catch (error) {
+      console.warn(`[WARN] Failed parsing ${candidate}: ${error.message}`);
+    }
+  }
+  return [];
+}
+
+const CORPORATE_COHORT_SOURCE = loadJsonArray(['notion_courses_enriched.json', 'notion_courses_extracted.json']);
+const EXCEL_ENRICHED_SOURCE = loadJsonArray(['excel_syllabus_enriched.json']);
 console.log(`[STARTUP] Loaded ALL_COURSES with ${ALL_COURSES.length} courses`);
 if (ALL_COURSES.length > 0) {
   console.log(`[STARTUP] First course: ${ALL_COURSES[0].title}`);
@@ -61,6 +80,414 @@ const mockDB = {
 
 // JWT Secret
 const JWT_SECRET = 'your_local_jwt_secret_key';
+
+const CORPORATE_CATEGORY_ID = 1;
+const USD_TO_INR = 83;
+
+function slugifyCourseTitle(value) {
+  return String(value || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function loadBaseCourses() {
+  const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
+  const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
+  return JSON.parse(coursesCode);
+}
+
+function parseHours(value) {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+function titleKey(value) {
+  return slugifyCourseTitle(value);
+}
+
+const STOP_WORDS = new Set([
+  'course', 'courses', 'training', 'program', 'programme', 'bootcamp', 'workshop', 'masterclass',
+  'mastering', 'learn', 'learning', 'for', 'and', 'the', 'to', 'with', 'in', 'of', 'an', 'a',
+  'certification', 'certifications', 'essentials', 'fundamentals'
+]);
+
+function tokenizeTitle(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .map((part) => part.trim())
+    .filter((part) => part.length > 1 && !STOP_WORDS.has(part));
+}
+
+function similarityScore(course, excelRow) {
+  const aTokens = tokenizeTitle(course.title);
+  const bTokens = tokenizeTitle(excelRow.course_name);
+
+  if (aTokens.length === 0 || bTokens.length === 0) return 0;
+
+  const bSet = new Set(bTokens);
+  const intersection = aTokens.filter((token) => bSet.has(token)).length;
+  let score = intersection / Math.max(aTokens.length, bTokens.length);
+
+  const aJoined = aTokens.join(' ');
+  const bJoined = bTokens.join(' ');
+  if (aJoined && bJoined && (aJoined.includes(bJoined) || bJoined.includes(aJoined))) {
+    score += 0.1;
+  }
+
+  const courseCategory = String(course.category_name || '').toLowerCase();
+  const excelCategory = String(excelRow.category || '').toLowerCase();
+  if (courseCategory && excelCategory && (courseCategory.includes(excelCategory) || excelCategory.includes(courseCategory))) {
+    score += 0.08;
+  }
+
+  return Math.min(score, 1);
+}
+
+const EXCEL_ENRICHED_MAP = new Map(
+  EXCEL_ENRICHED_SOURCE.map((row) => [titleKey(row.course_name), row])
+);
+
+function findBestExcelRow(course) {
+  // Strict mapping to avoid cross-course syllabus leakage.
+  const direct = EXCEL_ENRICHED_MAP.get(titleKey(course.title));
+  if (direct) return direct;
+
+  // Safe alias-only fallbacks (exact key checks, no fuzzy scoring).
+  const title = String(course.title || '').trim();
+  if (!title) return null;
+
+  const aliasCandidates = [];
+
+  if (/\scourse$/i.test(title)) {
+    const stem = title.replace(/\scourse$/i, '').trim();
+    aliasCandidates.push(`${stem} Development Course`);
+  }
+
+  if (/\straining$/i.test(title)) {
+    const stem = title.replace(/\straining$/i, '').trim();
+    aliasCandidates.push(`${stem} Course`);
+  }
+
+  for (const aliasTitle of aliasCandidates) {
+    const aliasRow = EXCEL_ENRICHED_MAP.get(titleKey(aliasTitle));
+    if (aliasRow) return aliasRow;
+  }
+
+  return null;
+}
+
+function moduleHasRealTopics(module) {
+  if (!module) return false;
+  if (!Array.isArray(module.topics)) return false;
+  return module.topics.some((topic) => String(topic || '').trim().length > 0);
+}
+
+function syllabusDepthScore(course) {
+  if (!course || typeof course !== 'object') return 0;
+
+  const modules = Array.isArray(course.modules) ? course.modules : [];
+  const moduleTopicCount = modules.reduce((total, module) => {
+    if (!moduleHasRealTopics(module)) return total;
+    return total + module.topics.length;
+  }, 0);
+
+  const outlineCount = Array.isArray(course.syllabus_outline) ? course.syllabus_outline.length : 0;
+  const tiersCount = course.duration_tiers_hours || course.price_tiers_usd ? 10 : 0;
+  return moduleTopicCount + outlineCount + tiersCount;
+}
+
+function buildModulesFromExcelRow(row, slug) {
+  const modules = [];
+  const levels = [
+    {
+      key: 'basic',
+      title: 'Basic Level',
+      topics: Array.isArray(row.basic_syllabus) ? row.basic_syllabus : [],
+      hours: parseHours(row.basic_duration_hours),
+      priceUsd: parseHours(row.basic_price_usd)
+    },
+    {
+      key: 'intermediate',
+      title: 'Intermediate Level',
+      topics: Array.isArray(row.intermediate_syllabus) ? row.intermediate_syllabus : [],
+      hours: parseHours(row.intermediate_duration_hours),
+      priceUsd: parseHours(row.intermediate_price_usd)
+    },
+    {
+      key: 'advanced',
+      title: 'Advanced Level',
+      topics: Array.isArray(row.advanced_syllabus) ? row.advanced_syllabus : [],
+      hours: parseHours(row.advanced_duration_hours),
+      priceUsd: parseHours(row.advanced_price_usd)
+    }
+  ];
+
+  levels.forEach((level, idx) => {
+    if (!level.topics.length) return;
+    modules.push({
+      id: `${slug}-${level.key}-${idx + 1}`,
+      title: `${level.title} Syllabus`,
+      topics: level.topics,
+      duration_hours: level.hours || 6,
+      order: idx + 1,
+      level: level.key,
+      price_usd: level.priceUsd || null,
+      price_inr: level.priceUsd ? Math.round(level.priceUsd * USD_TO_INR) : null
+    });
+  });
+
+  return modules;
+}
+
+function applyExcelEnrichment(course) {
+  const row = findBestExcelRow(course);
+  if (!row) return course;
+
+  const modulesFromExcel = buildModulesFromExcelRow(row, course.slug || titleKey(course.title));
+  const allTopics = modulesFromExcel.flatMap((m) => m.topics).filter(Boolean);
+
+  const suggestedPriceInr = row.basic_price_usd
+    ? Math.round(Number(row.basic_price_usd) * USD_TO_INR)
+    : 0;
+
+  const price = Number(course.price) > 0
+    ? Number(course.price)
+    : (suggestedPriceInr > 0 ? suggestedPriceInr : 0);
+
+  const durationParts = [
+    parseHours(row.basic_duration_hours),
+    parseHours(row.intermediate_duration_hours),
+    parseHours(row.advanced_duration_hours)
+  ].filter(Boolean);
+
+  const duration = durationParts.length > 0
+    ? `${Math.min(...durationParts)}-${Math.max(...durationParts)} hours`
+    : course.duration;
+
+  return {
+    ...course,
+    price,
+    duration,
+    modules: modulesFromExcel.length > 0 ? modulesFromExcel : course.modules,
+    syllabus_outline: allTopics.slice(0, 60),
+    syllabus_source: row.syllabus_source || course.syllabus_source,
+    price_tiers_usd: {
+      basic: parseHours(row.basic_price_usd),
+      intermediate: parseHours(row.intermediate_price_usd),
+      advanced: parseHours(row.advanced_price_usd)
+    },
+    duration_tiers_hours: {
+      basic: parseHours(row.basic_duration_hours),
+      intermediate: parseHours(row.intermediate_duration_hours),
+      advanced: parseHours(row.advanced_duration_hours)
+    }
+  };
+}
+
+function buildExcelStandaloneCourses(existingCourses) {
+  const seen = new Set(existingCourses.map((course) => titleKey(course.title)));
+  const maxId = existingCourses.reduce((max, c) => Math.max(max, Number(c.id) || 0), 0);
+  let nextId = maxId + 1;
+  const extra = [];
+
+  for (const row of EXCEL_ENRICHED_SOURCE) {
+    const name = String(row.course_name || '').trim();
+    if (!name) continue;
+    const key = titleKey(name);
+    if (seen.has(key)) continue;
+
+    const slug = slugifyCourseTitle(name);
+    const modules = buildModulesFromExcelRow(row, slug);
+    const allTopics = modules.flatMap((m) => m.topics).filter(Boolean);
+
+    const priceInr = row.basic_price_usd ? Math.round(Number(row.basic_price_usd) * USD_TO_INR) : 0;
+    const durationParts = [
+      parseHours(row.basic_duration_hours),
+      parseHours(row.intermediate_duration_hours),
+      parseHours(row.advanced_duration_hours)
+    ].filter(Boolean);
+
+    extra.push({
+      id: nextId++,
+      title: name,
+      slug,
+      category_id: 0,
+      category_name: row.category || 'General',
+      main_category: String(row.main_category || 'technical').toLowerCase(),
+      price: priceInr,
+      currency: 'INR',
+      duration: durationParts.length > 0
+        ? `${Math.min(...durationParts)}-${Math.max(...durationParts)} hours`
+        : 'Flexible',
+      level: 'all-levels',
+      modes: ['Online', 'Hybrid'],
+      mode: 'online',
+      rating: 4.6,
+      review_count: 80,
+      mentor_name: 'TrainerMentors Faculty',
+      mentor_expertise: row.category || 'General',
+      description: allTopics.slice(0, 3).join(' | ') || `${name} - syllabus available in detail page`,
+      features: ['Instructor-led sessions', 'Hands-on learning', 'Interview prep', 'Certificate support'],
+      modules,
+      certification: 'Completion Certificate',
+      batch_options: 'Weekend / Weekday',
+      locations: 'Online / Hybrid',
+      url: `https://trainermentors.com/course/${slug}`,
+      thumbnail: `https://via.placeholder.com/400x250?text=${encodeURIComponent(name).slice(0, 60)}`,
+      is_featured: false,
+      syllabus_outline: allTopics.slice(0, 60),
+      syllabus_source: row.syllabus_source || 'excel_syllabus_enriched.json',
+      price_tiers_usd: {
+        basic: parseHours(row.basic_price_usd),
+        intermediate: parseHours(row.intermediate_price_usd),
+        advanced: parseHours(row.advanced_price_usd)
+      },
+      duration_tiers_hours: {
+        basic: parseHours(row.basic_duration_hours),
+        intermediate: parseHours(row.intermediate_duration_hours),
+        advanced: parseHours(row.advanced_duration_hours)
+      },
+      pricing_note: priceInr > 0 ? null : 'Contact for price or drop email to contact@trainermentors.com'
+    });
+  }
+
+  return extra;
+}
+
+function buildModulesFromSyllabus(syllabusOutline, slug) {
+  const topics = (Array.isArray(syllabusOutline) ? syllabusOutline : [])
+    .map((item) => String(item || '').trim())
+    .filter((item) => item.length > 0);
+
+  if (topics.length === 0) {
+    return [
+      {
+        id: `${slug}-1`,
+        title: 'Module 1: Foundations',
+        topics: ['Introduction', 'Core concepts', 'Real-world applications'],
+        duration_hours: 6,
+        order: 1
+      }
+    ];
+  }
+
+  const modules = [];
+  const chunkSize = 6;
+
+  for (let i = 0; i < topics.length; i += chunkSize) {
+    const chunk = topics.slice(i, i + chunkSize);
+    modules.push({
+      id: `${slug}-${modules.length + 1}`,
+      title: `Module ${modules.length + 1}`,
+      topics: chunk,
+      duration_hours: 6,
+      order: modules.length + 1
+    });
+  }
+
+  return modules;
+}
+
+function normalizeTopicsList(topics, moduleTitle = 'Module') {
+  if (Array.isArray(topics)) {
+    const cleaned = topics
+      .map((item) => String(item || '').trim())
+      .filter((item) => item.length > 0);
+    if (cleaned.length > 0) return cleaned;
+  }
+
+  const numericTopics = Number(topics);
+  if (Number.isFinite(numericTopics) && numericTopics > 0) {
+    return Array.from({ length: numericTopics }, (_, idx) => `${moduleTitle} - Topic ${idx + 1}`);
+  }
+
+  return [];
+}
+
+function normalizeCurriculumModules(modules) {
+  const moduleList = Array.isArray(modules) ? modules : [];
+  return moduleList.map((module, index) => {
+    const title = String(module?.title || `Module ${index + 1}`).trim();
+    const normalizedTopics = normalizeTopicsList(module?.topics, title);
+    return {
+      ...module,
+      title,
+      topics: normalizedTopics,
+      duration_hours: module?.duration_hours || 6,
+      order: module?.order || index + 1
+    };
+  });
+}
+
+function buildCorporateCohortCourses(baseMaxId) {
+  return CORPORATE_COHORT_SOURCE.map((row, index) => {
+    const title = row.name;
+    const categoryName = row.category;
+    const syllabusUrl = row.syllabus_url;
+    const syllabusOutline = Array.isArray(row.syllabus_outline) ? row.syllabus_outline : [];
+    const extractedLevel = String(row.level_label || '').trim();
+    const normalizedLevel = extractedLevel
+      ? extractedLevel.split(',')[0].trim().toLowerCase()
+      : 'not_specified';
+    const parsedPrice = Number(row.price);
+    const hasPrice = Number.isFinite(parsedPrice) && parsedPrice > 0;
+    const effectivePrice = hasPrice ? parsedPrice : 0;
+    const slug = slugifyCourseTitle(title);
+
+    return {
+      id: baseMaxId + index + 1,
+      title,
+      slug,
+      category_id: CORPORATE_CATEGORY_ID,
+      category_name: categoryName,
+      main_category: 'corporate',
+      price: effectivePrice,
+      currency: 'INR',
+      duration: '4-8 weeks',
+      level: normalizedLevel,
+      level_label: extractedLevel || 'not_specified',
+      modes: ['Online', 'Corporate'],
+      mode: 'corporate',
+      rating: 4.7,
+      review_count: 120 + (index % 40),
+      mentor_name: 'TrainerMentors Corporate Faculty',
+      mentor_expertise: categoryName,
+      description: syllabusOutline.length > 0
+        ? syllabusOutline.slice(0, 3).join(' | ')
+        : `${title} corporate training cohort in ${categoryName}.`,
+      pricing_note: hasPrice
+        ? null
+        : (row.pricing_note || 'Contact for price or drop email to contact@trainermentors.com'),
+      features: [
+        'Instructor-led corporate sessions',
+        'Practical QA and enterprise use cases',
+        'Flexible scheduling for teams',
+        'Completion certificate',
+        'Syllabus reference included'
+      ],
+      modules: buildModulesFromSyllabus(syllabusOutline, slug),
+      certification: 'Corporate Completion Certificate',
+      batch_options: 'Corporate Team Batch / Private Cohort',
+      locations: 'Online / Corporate Delivery',
+      url: `https://trainermentors.com/course/${slug}`,
+      thumbnail: `https://via.placeholder.com/400x250?text=${encodeURIComponent(title).slice(0, 60)}`,
+      is_featured: false,
+      syllabus_url: syllabusUrl,
+      syllabus_outline: syllabusOutline
+    };
+  });
+}
+
+function getAllCoursesCatalog() {
+  // courses_data.js is now generated directly from enriched_courses_with_syllabus.xlsx
+  // It already contains correct syllabus, price, and duration for every course.
+  // No enrichment or standalone building needed.
+  return ALL_COURSES;
+}
 
 // ===== UTILITIES =====
 function generateToken(userId) {
@@ -280,11 +707,12 @@ app.post('/api/refresh', (req, res) => {
 
 // Get featured courses
 app.get('/api/courses/featured', (req, res) => {
-  const featured = ALL_COURSES.filter(c => c.is_featured).slice(0, 8);
+  const allCourses = getAllCoursesCatalog();
+  const featured = allCourses.filter(c => c.is_featured).slice(0, 8);
   res.json({
     success: true,
     message: 'Featured courses retrieved successfully',
-    data: featured.length > 0 ? featured : ALL_COURSES.slice(0, 8)
+    data: featured.length > 0 ? featured : allCourses.slice(0, 8)
   });
 });
 
@@ -305,9 +733,7 @@ app.get('/api/courses', (req, res) => {
   
   // Read courses directly from file to bypass cache
   try {
-    const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
-    const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
-    const allCourses = JSON.parse(coursesCode);
+    const allCourses = getAllCoursesCatalog();
     
     console.log(`[DEBUG] /api/courses - Loaded ${allCourses.length} courses from file`);
     
@@ -406,10 +832,10 @@ app.get('/api/categories', (req, res) => {
     let count;
     if (cat.slug === 'certificate') {
       // Certificate category: all courses with certification
-      count = ALL_COURSES.filter(c => c.certification).length;
+      count = getAllCoursesCatalog().filter(c => c.certification).length;
     } else {
       // Other categories: filter by main_category
-      count = ALL_COURSES.filter(c => c.main_category === cat.slug).length;
+      count = getAllCoursesCatalog().filter(c => c.main_category === cat.slug).length;
     }
     return { ...cat, course_count: count };
   });
@@ -423,9 +849,7 @@ app.get('/api/categories', (req, res) => {
 // Get filter options (levels, modes)
 app.get('/api/filters', (req, res) => {
   try {
-    const coursesJson = fs.readFileSync('./courses_data.js', 'utf8');
-    const coursesCode = coursesJson.replace('const ALL_COURSES = ', '').replace(/;[\s\n]*module\.exports.*/, '');
-    const allCourses = JSON.parse(coursesCode);
+    const allCourses = getAllCoursesCatalog();
     
     // Extract unique levels
     const levels = [...new Set(allCourses.map(c => c.level))].filter(Boolean).sort();
@@ -467,16 +891,21 @@ app.get('/api/filters', (req, res) => {
 // Get course by ID or slug
 app.get('/api/courses/:id', (req, res) => {
   const { id } = req.params;
+  const allCourses = getAllCoursesCatalog();
   
   // Try to find by ID first (if it's a number)
   let course = null;
   if (!isNaN(id)) {
-    course = ALL_COURSES.find(c => c.id === parseInt(id));
+    course = allCourses.find(c => c.id === parseInt(id));
   }
   
   // If not found by ID, try by slug
   if (!course) {
-    course = ALL_COURSES.find(c => c.slug === id);
+    const slugMatches = allCourses.filter(c => c.slug === id);
+    if (slugMatches.length > 0) {
+      // Prefer the richest syllabus payload when duplicate slugs exist.
+      course = slugMatches.sort((a, b) => syllabusDepthScore(b) - syllabusDepthScore(a))[0];
+    }
   }
   
   if (!course) {
@@ -487,16 +916,21 @@ app.get('/api/courses/:id', (req, res) => {
   }
 
   // Transform course for detail page compatibility
+  const basePrice = Number(course.price) || 0;
+  const hasValidPrice = basePrice > 0;
+  const discountedPrice = hasValidPrice ? Math.round(basePrice * 0.8) : 0;
+
   const detailCourse = {
     ...course,
     short_description: course.description ? course.description.substring(0, 150) : '',
     duration_weeks: parseInt(course.duration) || 8,
     duration_hours: (parseInt(course.duration) || 8) * 5,
-    effective_price: Math.round(course.price * 0.8),
-    discount_percentage: 20,
-    discount_price: Math.round(course.price * 0.8),
+    effective_price: hasValidPrice ? discountedPrice : 0,
+    discount_percentage: hasValidPrice ? 20 : 0,
+    discount_price: hasValidPrice ? discountedPrice : 0,
     enrollment_count: course.review_count ? course.review_count * 3 : 150,
     review_count: course.review_count || 50,
+    pricing_note: course.pricing_note || (!hasValidPrice ? 'Contact for price or drop email to contact@trainermentors.com' : null),
     category: {
       id: course.category_id,
       name: course.category_name,
@@ -506,7 +940,7 @@ app.get('/api/courses/:id', (req, res) => {
       name: course.mentor_name,
       expertise: course.mentor_expertise
     },
-    curriculum: course.modules ? (Array.isArray(course.modules) ? course.modules : [
+    curriculum: course.modules ? (Array.isArray(course.modules) ? normalizeCurriculumModules(course.modules) : [
       { id: '1', title: 'Module 1: Fundamentals', topics: ['Introduction', 'Core Concepts', 'Setup'], duration_hours: 8, order: 1 },
       { id: '2', title: 'Module 2: Core Skills', topics: ['Practical Applications', 'Hands-on Labs', 'Case Studies'], duration_hours: 10, order: 2 },
       { id: '3', title: 'Module 3: Advanced Topics', topics: ['Advanced Techniques', 'Industry Best Practices', 'Optimization'], duration_hours: 8, order: 3 },
