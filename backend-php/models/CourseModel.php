@@ -160,6 +160,27 @@ class CourseModel {
     }
 
     /**
+     * Get featured courses (top-rated, limited to 6)
+     */
+    public function getFeatured() {
+        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name 
+                  FROM " . $this->table . " c
+                  LEFT JOIN users u ON c.mentor_id = u.id
+                  LEFT JOIN categories cat ON c.category_id = cat.id
+                  WHERE c.is_active = 1
+                  ORDER BY c.rating DESC, c.total_reviews DESC
+                  LIMIT 6";
+        
+        $result = $this->conn->query($query);
+
+        $courses = [];
+        while ($row = $result->fetch_assoc()) {
+            $courses[] = $row;
+        }
+        return $courses;
+    }
+
+    /**
      * Get modules for a course
      */
     public function getModulesByCourseId($courseId) {

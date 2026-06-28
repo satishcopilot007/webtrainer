@@ -50,7 +50,9 @@ try {
         // Auth routes
         'GET' => [
             '/auth/me' => ['AuthController', 'getCurrentUser'],
+            '/categories' => ['CourseController', 'getCategories'],
             '/courses' => ['CourseController', 'getAll'],
+            '/courses/featured' => ['CourseController', 'getFeatured'],
             '/courses/{id}' => ['CourseController', 'getById'],
             '/users' => ['UserController', 'getAll'],
             '/users/{id}' => ['UserController', 'getById'],

@@ -63,6 +63,41 @@ class CourseController extends BaseController {
     }
 
     /**
+     * Get Featured Courses
+     * GET /api/courses/featured
+     */
+    public function getFeatured() {
+        if ($this->getMethod() !== 'GET') {
+            Response::error('Method not allowed', null, 405);
+        }
+
+        $courseModel = new CourseModel($this->conn);
+        $courses = $courseModel->getFeatured();
+
+        Response::success($courses, 'Featured courses retrieved successfully');
+    }
+
+    /**
+     * Get All Categories
+     * GET /api/categories
+     */
+    public function getCategories() {
+        if ($this->getMethod() !== 'GET') {
+            Response::error('Method not allowed', null, 405);
+        }
+
+        $query = "SELECT id, name, slug, description FROM categories WHERE is_active = 1 ORDER BY id ASC";
+        $result = $this->conn->query($query);
+
+        $categories = [];
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+
+        Response::success($categories, 'Categories retrieved successfully');
+    }
+
+    /**
      * Create Course (Admin/Mentor only)
      * POST /api/courses
      */
