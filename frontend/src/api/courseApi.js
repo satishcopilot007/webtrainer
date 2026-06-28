@@ -54,6 +54,16 @@ export const normalizeCourse = (course) => {
     pricing_note: course.pricing_note || (effectivePrice <= 0
       ? 'Contact for price or drop email to contact@trainermentors.com'
       : null),
+    price_tiers_usd: course.price_tiers_usd || {
+      basic: parsePrice(course.price_basic_usd),
+      intermediate: parsePrice(course.price_intermediate_usd),
+      advanced: parsePrice(course.price_advanced_usd),
+    },
+    duration_tiers_hours: course.duration_tiers_hours || {
+      basic: Number(course.duration_basic_hours || 0),
+      intermediate: Number(course.duration_intermediate_hours || 0),
+      advanced: Number(course.duration_advanced_hours || 0),
+    },
   };
 };
 
