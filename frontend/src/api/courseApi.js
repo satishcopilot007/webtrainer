@@ -64,8 +64,35 @@ export const normalizeCourse = (course) => {
       intermediate: Number(course.duration_intermediate_hours || 0),
       advanced: Number(course.duration_advanced_hours || 0),
     },
+    curriculum: course.curriculum || parseCurriculum(course.modules),
   };
 };
+
+/**
+ * Parse modules from API (description string) into curriculum format (topics array)
+ */
+function parseCurriculum(modules) {
+  if (!Array.isArray(modules) || modules.length === 0) return [];
+  return modules.map((mod, idx) => {
+    const desc = mod.description || '';
+    // Format: "Duration: X hours | Level: Y | Topics: topic1 | topic2 | ..."
+    const topicsMatch = desc.match(/Topics:\s*(.+)/i);
+    const topics = topicsMatch
+      ? topicsMatch[1].split(' | ').map(t => t.trim()).filter(Boolean)
+      : desc.split(' | ').map(t => t.trim()).filter(Boolean);
+    const durationMatch = desc.match(/Duration:\s*(\d+)\s*hours/i);
+    const duration_hours = durationMatch ? Number(durationMatch[1]) : 0;
+    const levelMatch = desc.match(/Level:\s*(\w+)/i);
+    return {
+      id: mod.id || `${idx + 1}`,
+      title: mod.title || `Module ${idx + 1}`,
+      topics,
+      duration_hours,
+      level: levelMatch ? levelMatch[1] : null,
+      order: mod.sequence || idx + 1,
+    };
+  });
+}
 
 /**
  * Get course by slug with fallback to mock data
