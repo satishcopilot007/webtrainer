@@ -1,47 +1,80 @@
-# ⚡ Quick Start - 5 Minutes to Running
+# ⚡ Quick Start - Run Locally in 5 Minutes
 
-**TL;DR version - get the app running in 5 minutes!**
+**Prerequisites:** Node.js 18+ installed ([download](https://nodejs.org))
 
 ---
 
 ## 🔄 One-Time Setup (First Time Only)
 
+### Step 1: Clone the repo
 ```bash
-# 1. Clone repository
-git clone https://github.com/YOUR_USERNAME/trainermentors.git
-cd trainermentors
-
-# 2. Copy environment files
-cp .env.example .env
-cp frontend/.env.example frontend/.env.local
-
-# 3. Install dependencies
-npm install
-cd frontend && npm install && cd ..
+git clone https://github.com/satishcopilot007/webtrainer.git
+cd webtrainer
+git checkout production-stable
 ```
 
-**Done!** ✅
+### Step 2: Create environment files
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item .env.example .env
+Copy-Item frontend/.env.example frontend/.env.local
+```
+
+**Mac/Linux:**
+```bash
+cp .env.example .env
+cp frontend/.env.example frontend/.env.local
+```
+
+> No changes needed in .env files for local development — defaults work out of the box.
+
+### Step 3: Install dependencies
+```bash
+npm install
+cd frontend
+npm install
+cd ..
+```
+
+**Setup complete!** ✅
 
 ---
 
-## ▶️ Every Time You Want to Run
+## ▶️ Run the App (Every Time)
 
-### Terminal 1:
+Open **two terminals** in the project root folder:
+
+### Terminal 1 — API Server (mock backend):
 ```bash
 node mock-api-server.js
 ```
+You should see: `Mock API server running on port 8000`
 
-### Terminal 2:
+### Terminal 2 — Frontend dev server:
 ```bash
-cd frontend && npm run dev
+cd frontend
+npm run dev
 ```
+You should see: `Local: http://localhost:3000`
 
 ### Open Browser:
 ```
 http://localhost:3000
 ```
 
-**Done!** 🎉
+**That's it!** 🎉 All 897 courses with syllabus, tier pricing, and full features work locally.
+
+---
+
+## 📁 What's Running
+
+| Service | URL | Source |
+|---------|-----|--------|
+| Frontend (React/Vite) | http://localhost:3000 | `frontend/src/` |
+| Mock API (Express) | http://localhost:8000 | `mock-api-server.js` + `courses_data.js` |
+
+The mock server uses local `courses_data.js` (all 897 courses with modules, tiers, etc.) — **no database needed locally**.
 
 ---
 
