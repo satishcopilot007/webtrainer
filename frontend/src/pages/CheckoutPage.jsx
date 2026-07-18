@@ -10,6 +10,11 @@ const API_BASE_URL = import.meta.env.VITE_API_URL
   ? import.meta.env.VITE_API_URL.replace(/\/api$/, '')
   : 'http://localhost:8000';
 
+const configuredUpiTestAmount = Number(import.meta.env.VITE_UPI_TEST_AMOUNT);
+const localUpiTestAmount = import.meta.env.DEV && Number.isFinite(configuredUpiTestAmount) && configuredUpiTestAmount > 0
+  ? configuredUpiTestAmount
+  : null;
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cartItems, totalPrice, removeFromCart, clearCart } = useCartStore();
@@ -142,7 +147,7 @@ const CheckoutPage = () => {
     setUpiLoading(true);
     setError('');
     try {
-      const finalAmount = totalPrice * 1.18;
+      const finalAmount = localUpiTestAmount ?? (totalPrice * 1.18);
       const response = await fetch(`${API_BASE_URL}/api/payment/upi-qr`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -475,6 +480,9 @@ const CheckoutPage = () => {
                         <p className="text-xs text-gray-500">Scan & Pay</p>
                         <p className="text-xl font-bold text-purple-700">₹{upiQrData.amount.toFixed(2)}</p>
                         <p className="text-xs text-gray-500">to {upiQrData.merchant_name}</p>
+                        {localUpiTestAmount && (
+                          <p className="text-xs font-semibold text-amber-700 mt-1">Local test amount — production still charges the full order total</p>
+                        )}
                       </div>
 
                       {/* UPI ID with copy */}
