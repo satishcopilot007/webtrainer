@@ -116,7 +116,7 @@ jobs:
           echo "API deploy files"
           find deploy-hostinger/api -maxdepth 2 -type f -printf '%P\n' | sort
 
-      - name: Deploy clean package to Hostinger public_html
+      - name: Deploy clean package to Hostinger served root
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.HOSTINGER_FTP_HOST }}
@@ -127,8 +127,8 @@ jobs:
           timeout: 600000
           log-level: standard
           local-dir: deploy-hostinger/
-          server-dir: /public_html/
-          state-name: .ftp-deploy-post-git-state.json
+          server-dir: /
+          state-name: .ftp-deploy-served-root-state.json
           dangerous-clean-slate: false
           exclude: |
             **/.git*
