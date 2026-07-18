@@ -86,7 +86,14 @@ class CourseController extends BaseController {
             Response::error('Method not allowed', null, 405);
         }
 
-        $query = "SELECT id, name, slug, description FROM categories WHERE is_active = 1 ORDER BY id ASC";
+                $query = "SELECT cat.id, cat.name, cat.slug, cat.description,
+                                                 COUNT(c.id) AS course_count
+                                    FROM categories cat
+                                    LEFT JOIN courses c
+                                        ON c.category_id = cat.id AND c.is_active = 1
+                                    WHERE cat.is_active = 1
+                                    GROUP BY cat.id, cat.name, cat.slug, cat.description
+                                    ORDER BY cat.id ASC";
         $result = $this->conn->query($query);
 
         $categories = [];

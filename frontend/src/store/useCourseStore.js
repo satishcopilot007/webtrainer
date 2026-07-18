@@ -44,8 +44,9 @@ const useCourseStore = create((set) => ({
   fetchFeaturedCourses: async () => {
     try {
       const response = await getFeaturedCourses();
-      const courses = Array.isArray(response.data) ? response.data : response.data || [];
-      set({ featuredCourses: courses });
+      const responseData = response.data || {};
+      const courses = responseData.data || (Array.isArray(responseData) ? responseData : []);
+      set({ featuredCourses: Array.isArray(courses) ? courses : [] });
     } catch (error) {
       console.error('Error fetching featured courses:', error);
       set({ featuredCourses: [] });
