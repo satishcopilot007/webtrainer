@@ -42,68 +42,10 @@ jobs:
           rm -f deploy-hostinger/api/README.md
           rm -f deploy-hostinger/api/database.sql
           rm -f deploy-hostinger/api/courses_insert.sql
-
-            DEPLOY_CLEANUP_TOKEN=$(openssl rand -hex 32)
-            echo "DEPLOY_CLEANUP_TOKEN=$DEPLOY_CLEANUP_TOKEN" >> "$GITHUB_ENV"
-            cat > deploy-hostinger/.deployment-cleanup.php <<'PHP'
-            <?php
-            declare(strict_types=1);
-
-            if (!hash_equals('__DEPLOY_CLEANUP_TOKEN__', $_GET['token'] ?? '')) {
-              http_response_code(403);
-              exit('Forbidden');
-            }
-
-            function removePath(string $path): void
-            {
-              if (is_link($path) || is_file($path)) {
-                unlink($path);
-                return;
-              }
-
-              if (!is_dir($path)) {
-                return;
-              }
-
-              foreach (scandir($path) ?: [] as $entry) {
-                if ($entry === '.' || $entry === '..') {
-                  continue;
-                }
-                removePath($path . DIRECTORY_SEPARATOR . $entry);
-              }
-              rmdir($path);
-            }
-
-            $preserve = array_fill_keys([
-              '.deployment-cleanup.php',
-              '.htaccess',
-              '.well-known',
-              'api',
-              'assets',
-              'index.html',
-              'robots.txt',
-              'sitemap.xml',
-              'uploads',
-            ], true);
-            $removed = [];
-
-            foreach (scandir(__DIR__) ?: [] as $entry) {
-              if ($entry === '.' || $entry === '..' || isset($preserve[$entry])) {
-                continue;
-              }
-              if (str_starts_with($entry, '.ftp-deploy-')) {
-                continue;
-              }
-
-              removePath(__DIR__ . DIRECTORY_SEPARATOR . $entry);
-              $removed[] = $entry;
-            }
-
-            header('Content-Type: application/json');
-            echo json_encode(['removed' => $removed], JSON_THROW_ON_ERROR);
-            unlink(__FILE__);
-            PHP
-            sed -i "s/__DEPLOY_CLEANUP_TOKEN__/$DEPLOY_CLEANUP_TOKEN/" deploy-hostinger/.deployment-cleanup.php
+          cp .github/scripts/hostinger-cleanup.php deploy-hostinger/.deployment-cleanup.php
+          DEPLOY_CLEANUP_TOKEN=$(openssl rand -hex 32)
+          echo "DEPLOY_CLEANUP_TOKEN=$DEPLOY_CLEANUP_TOKEN" >> "$GITHUB_ENV"
+          sed -i "s/__DEPLOY_CLEANUP_TOKEN__/$DEPLOY_CLEANUP_TOKEN/" deploy-hostinger/.deployment-cleanup.php
 
       - name: Verify deploy package
         run: |
@@ -137,7 +79,9 @@ jobs:
       - name: Remove non-production server files
         run: |
           curl --fail-with-body --show-error --silent \
-            --get \
+            --retry 12 \
+            --retry-all-errors \
+            --retry-delay 5 \
             --data-urlencode "token=$DEPLOY_CLEANUP_TOKEN" \
             https://trainermentors.com/.deployment-cleanup.php
 
