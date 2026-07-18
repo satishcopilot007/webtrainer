@@ -65,8 +65,7 @@ jobs:
           timeout: 600000
           log-level: standard
           local-dir: deploy-hostinger/
-          # This FTP account is already rooted at Hostinger's public_html.
-          server-dir: /
+          server-dir: /public_html/
           dangerous-clean-slate: true
           exclude: |
             **/.git*
