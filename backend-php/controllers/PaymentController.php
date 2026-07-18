@@ -6,6 +6,30 @@
 
 class PaymentController extends BaseController {
 
+    private function validateCustomer($data) {
+        $name = isset($data['name']) ? trim(preg_replace('/\s+/', ' ', strval($data['name']))) : '';
+        $email = isset($data['email']) ? trim(strval($data['email'])) : '';
+        $phone = isset($data['phone']) ? preg_replace('/\D/', '', strval($data['phone'])) : '';
+
+        if (strlen($name) < 5 || strlen($name) > 100 || !preg_match("/^[\p{L}][\p{L}'-]*(?:\s+[\p{L}][\p{L}'-]*)+$/u", $name)) {
+            Response::error('Please enter a valid full name using at least two words', null, 422);
+        }
+
+        if (strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            Response::error('Please enter a valid email address', null, 422);
+        }
+
+        if (!preg_match('/^[6-9]\d{9}$/', $phone)) {
+            Response::error('Please enter a valid 10-digit Indian mobile number', null, 422);
+        }
+
+        return [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone
+        ];
+    }
+
     private function requestRazorpay($method, $path, $payload = null) {
         if (empty(RAZORPAY_KEY) || empty(RAZORPAY_SECRET)) {
             Response::error('Razorpay is not configured on server', null, 503);
@@ -66,6 +90,8 @@ class PaymentController extends BaseController {
             Response::error('At least one course is required', null, 422);
         }
 
+        $customer = $this->validateCustomer($data);
+
         $amount = floatval($data['amount']);
         if ($amount <= 0) {
             Response::error('Valid amount is required', null, 422);
@@ -79,8 +105,8 @@ class PaymentController extends BaseController {
             'currency' => 'INR',
             'receipt' => 'rcpt_' . time(),
             'notes' => [
-                'customer_name' => strval($data['name']),
-                'customer_email' => strval($data['email'])
+                'customer_name' => $customer['name'],
+                'customer_email' => $customer['email']
             ]
         ]);
 
@@ -88,8 +114,8 @@ class PaymentController extends BaseController {
             'order_id' => $rzpOrder['id'],
             'amount' => $amount,
             'currency' => 'INR',
-            'customer_email' => strval($data['email']),
-            'customer_name' => strval($data['name']),
+            'customer_email' => $customer['email'],
+            'customer_name' => $customer['name'],
             'razorpay_key' => RAZORPAY_KEY
         ], 'Payment order created successfully', 201);
     }
@@ -165,11 +191,13 @@ class PaymentController extends BaseController {
         }
 
         $data = $this->getRequestData();
-        $requiredErrors = $this->validateRequired($data, ['amount']);
+        $requiredErrors = $this->validateRequired($data, ['amount', 'name', 'email', 'phone']);
 
         if (!empty($requiredErrors)) {
             Response::error('Validation failed', $requiredErrors, 422);
         }
+
+        $this->validateCustomer($data);
 
         $amount = floatval($data['amount']);
         if ($amount <= 0) {

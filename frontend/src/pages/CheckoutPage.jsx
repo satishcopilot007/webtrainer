@@ -33,23 +33,28 @@ const CheckoutPage = () => {
   const [upiQrData, setUpiQrData] = useState(null);
   const [upiLoading, setUpiLoading] = useState(false);
   const [upiCopied, setUpiCopied] = useState(false);
-  const [upiConfirmed, setUpiConfirmed] = useState(false);
 
   const isAuthenticated = !!localStorage.getItem('access_token');
   const userFromStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
   // Validate form
   const validateForm = () => {
-    if (!userName.trim()) {
-      setError('Please enter your name');
+    const normalizedName = userName.trim().replace(/\s+/g, ' ');
+    const normalizedEmail = userEmail.trim();
+    const normalizedPhone = userPhone.replace(/\D/g, '');
+    const fullNamePattern = /^[\p{L}][\p{L}'-]*(?:\s+[\p{L}][\p{L}'-]*)+$/u;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    if (normalizedName.length < 5 || normalizedName.length > 100 || !fullNamePattern.test(normalizedName)) {
+      setError('Please enter your full name using at least two words');
       return false;
     }
-    if (!userEmail.trim() || !userEmail.includes('@')) {
-      setError('Please enter a valid email');
+    if (normalizedEmail.length > 254 || !emailPattern.test(normalizedEmail)) {
+      setError('Please enter a valid email address');
       return false;
     }
-    if (!userPhone.trim() || userPhone.length < 10) {
-      setError('Please enter a valid phone number');
+    if (!/^[6-9]\d{9}$/.test(normalizedPhone)) {
+      setError('Please enter a valid 10-digit Indian mobile number');
       return false;
     }
     if (validCartItems.length === 0) {
@@ -143,7 +148,9 @@ const CheckoutPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: parseFloat(finalAmount.toFixed(2)),
-          name: userName,
+          name: userName.trim().replace(/\s+/g, ' '),
+          email: userEmail.trim(),
+          phone: userPhone.replace(/\D/g, ''),
           note: `Course Payment - ${validCartItems.map(c => c.title).join(', ').slice(0, 60)}`
         })
       });
@@ -163,16 +170,6 @@ const CheckoutPage = () => {
       setUpiCopied(true);
       setTimeout(() => setUpiCopied(false), 2000);
     }
-  };
-
-  const handleUpiConfirm = () => {
-    setShowSuccessModal(true);
-    setPaymentData({
-      orderId: `UPI-${Date.now()}`,
-      paymentId: 'Pending verification',
-      courses: validCartItems.map(c => c.title).join(', ')
-    });
-    clearCart();
   };
 
   if (showSuccessModal && paymentData) {
@@ -298,8 +295,12 @@ const CheckoutPage = () => {
                     <input
                       type="text"
                       value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
+                      onChange={(e) => { setUserName(e.target.value); setUpiQrData(null); setError(''); }}
                       placeholder="Enter your full name"
+                      autoComplete="name"
+                      minLength={5}
+                      maxLength={100}
+                      required
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
                     />
                   </div>
@@ -309,8 +310,11 @@ const CheckoutPage = () => {
                     <input
                       type="email"
                       value={userEmail}
-                      onChange={(e) => setUserEmail(e.target.value)}
+                      onChange={(e) => { setUserEmail(e.target.value); setUpiQrData(null); setError(''); }}
                       placeholder="Enter your email"
+                      autoComplete="email"
+                      maxLength={254}
+                      required
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
                     />
                   </div>
@@ -320,8 +324,17 @@ const CheckoutPage = () => {
                     <input
                       type="tel"
                       value={userPhone}
-                      onChange={(e) => setUserPhone(e.target.value)}
+                      onChange={(e) => {
+                        setUserPhone(e.target.value.replace(/\D/g, '').slice(0, 10));
+                        setUpiQrData(null);
+                        setError('');
+                      }}
                       placeholder="Enter your phone number"
+                      autoComplete="tel"
+                      inputMode="numeric"
+                      pattern="[6-9][0-9]{9}"
+                      maxLength={10}
+                      required
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
                     />
                   </div>
@@ -477,17 +490,13 @@ const CheckoutPage = () => {
                       </div>
                       <p className="text-xs text-gray-400">Works with GPay, PhonePe, Paytm, BHIM & all UPI apps</p>
 
-                      {/* Confirm after payment */}
+                      {/* Direct UPI verification notice */}
                       <div className="border-t pt-4">
-                        <p className="text-xs text-gray-500 mb-3">After completing payment in your UPI app, click below:</p>
+                        <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-lg p-3 text-xs text-left">
+                          Direct UPI transfers cannot be verified automatically. Save the UTR from your UPI app and contact support for manual confirmation, or use Card / UPI above for instant verified confirmation.
+                        </div>
                         <button
-                          onClick={handleUpiConfirm}
-                          className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-lg transition-colors text-sm"
-                        >
-                          ✅ I have completed the payment
-                        </button>
-                        <button
-                          onClick={() => { setUpiQrData(null); setUpiConfirmed(false); }}
+                          onClick={() => setUpiQrData(null)}
                           className="w-full mt-2 text-gray-500 hover:text-gray-700 text-xs py-1"
                         >
                           Regenerate QR
