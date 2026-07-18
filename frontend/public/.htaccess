@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Let real files/directories be served directly
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Keep API routes out of SPA rewrite
+  RewriteCond %{REQUEST_URI} !^/api/
+
+  # SPA fallback
+  RewriteRule ^ index.html [QSA,L]
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
