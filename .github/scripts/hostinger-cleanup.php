@@ -35,7 +35,6 @@ function removeDeploymentPath($path)
 
 $preserve = array_fill_keys(array(
     '.deployment-cleanup.php',
-    '.deployment-config-restore.php',
     '.ftp-deploy-domain-root-state.json',
     '.htaccess',
     '.well-known',

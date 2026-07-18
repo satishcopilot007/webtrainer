@@ -43,7 +43,6 @@ jobs:
           rm -f deploy-hostinger/api/database.sql
           rm -f deploy-hostinger/api/courses_insert.sql
           cp .github/scripts/hostinger-cleanup.php deploy-hostinger/.deployment-cleanup.php
-          cp .github/scripts/hostinger-config-restore.php deploy-hostinger/.deployment-config-restore.php
           DEPLOY_CLEANUP_TOKEN=$(openssl rand -hex 32)
           echo "DEPLOY_CLEANUP_TOKEN=$DEPLOY_CLEANUP_TOKEN" >> "$GITHUB_ENV"
           sed -i "s/__DEPLOY_CLEANUP_TOKEN__/$DEPLOY_CLEANUP_TOKEN/" deploy-hostinger/.deployment-cleanup.php
