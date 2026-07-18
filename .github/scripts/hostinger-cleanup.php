@@ -41,6 +41,7 @@ $preserve = array_fill_keys(array(
     'api',
     'assets',
     'cgi-bin',
+    'favicon.svg',
     'index.html',
     'robots.txt',
     'sitemap.xml',
