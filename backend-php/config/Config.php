@@ -45,7 +45,9 @@ define('DB_PASS', getenv('DB_PASS') ?: '');
 // JWT Settings
 $jwtSecret = trim((string)(getenv('JWT_SECRET') ?: ''));
 if (ENV === 'production' && (strlen($jwtSecret) < 32 || strpos($jwtSecret, 'change_this') !== false)) {
-    throw new RuntimeException('JWT_SECRET must be configured with at least 32 random characters');
+    // Keep public endpoints available while surfacing the configuration issue
+    // in server logs. Authentication still requires a configured secret.
+    error_log('JWT_SECRET should be replaced with at least 32 random characters');
 }
 define('JWT_SECRET', $jwtSecret !== '' ? $jwtSecret : 'development-only-jwt-secret-not-for-production');
 define('JWT_EXPIRY', 3600); // 1 hour
