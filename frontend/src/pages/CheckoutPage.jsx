@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaArrowLeft, FaTrash, FaCheck, FaTimes, FaCreditCard, FaQrcode, FaCopy } from 'react-icons/fa';
+import { QRCodeSVG } from 'qrcode.react';
 import useCartStore from '../store/useCartStore';
 import { createPaymentOrder, initiateRazorpayPayment } from '../services/paymentService';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/api$/, '')
+  : 'http://localhost:8000';
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -20,6 +25,15 @@ const CheckoutPage = () => {
   const [paymentMessage, setPaymentMessage] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [paymentData, setPaymentData] = useState(null);
+
+  // Payment method tabs: 'razorpay' | 'upi'
+  const [paymentMethod, setPaymentMethod] = useState('razorpay');
+
+  // UPI QR state
+  const [upiQrData, setUpiQrData] = useState(null);
+  const [upiLoading, setUpiLoading] = useState(false);
+  const [upiCopied, setUpiCopied] = useState(false);
+  const [upiConfirmed, setUpiConfirmed] = useState(false);
 
   const isAuthenticated = !!localStorage.getItem('access_token');
   const userFromStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -115,6 +129,50 @@ const CheckoutPage = () => {
   // Handle remove item
   const handleRemoveItem = (courseId) => {
     removeFromCart(courseId);
+  };
+
+  // Load UPI QR when switching to UPI tab
+  const handleShowUpiQr = async () => {
+    if (!validateForm()) return;
+    setUpiLoading(true);
+    setError('');
+    try {
+      const finalAmount = totalPrice * 1.18;
+      const response = await fetch(`${API_BASE_URL}/api/payment/upi-qr`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: parseFloat(finalAmount.toFixed(2)),
+          name: userName,
+          note: `Course Payment - ${validCartItems.map(c => c.title).join(', ').slice(0, 60)}`
+        })
+      });
+      const data = await response.json();
+      if (!data.success) throw new Error(data.message);
+      setUpiQrData(data.data);
+    } catch (err) {
+      setError(err.message || 'Could not load UPI QR. Please use Razorpay instead.');
+    } finally {
+      setUpiLoading(false);
+    }
+  };
+
+  const handleCopyUpiId = () => {
+    if (upiQrData?.upi_id) {
+      navigator.clipboard.writeText(upiQrData.upi_id);
+      setUpiCopied(true);
+      setTimeout(() => setUpiCopied(false), 2000);
+    }
+  };
+
+  const handleUpiConfirm = () => {
+    setShowSuccessModal(true);
+    setPaymentData({
+      orderId: `UPI-${Date.now()}`,
+      paymentId: 'Pending verification',
+      courses: validCartItems.map(c => c.title).join(', ')
+    });
+    clearCart();
   };
 
   if (showSuccessModal && paymentData) {
@@ -300,7 +358,7 @@ const CheckoutPage = () => {
             )}
           </div>
 
-          {/* Price Summary */}
+          {/* Price Summary + Payment */}
           {validCartItems.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -324,19 +382,121 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handlePayment}
-                disabled={loading || cartItems.length === 0}
-                className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Processing...' : 'Proceed to Payment'}
-              </motion.button>
+              {/* Payment Method Tabs */}
+              <div className="flex rounded-lg overflow-hidden border border-gray-200 mb-6">
+                <button
+                  onClick={() => { setPaymentMethod('razorpay'); setUpiQrData(null); setError(''); }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold transition-colors ${
+                    paymentMethod === 'razorpay'
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  <FaCreditCard size={14} /> Card / UPI
+                </button>
+                <button
+                  onClick={() => { setPaymentMethod('upi'); setError(''); }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold transition-colors ${
+                    paymentMethod === 'upi'
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  <FaQrcode size={14} /> UPI QR
+                </button>
+              </div>
 
-              <p className="text-xs text-gray-500 text-center mt-4">
-                💳 Secured by Razorpay Payment Gateway
-              </p>
+              {/* Razorpay Button */}
+              {paymentMethod === 'razorpay' && (
+                <>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handlePayment}
+                    disabled={loading || cartItems.length === 0}
+                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? 'Processing...' : 'Proceed to Payment'}
+                  </motion.button>
+                  <p className="text-xs text-gray-500 text-center mt-3">
+                    💳 Secured by Razorpay · Cards, UPI, Netbanking, Wallets
+                  </p>
+                </>
+              )}
+
+              {/* UPI QR Tab */}
+              {paymentMethod === 'upi' && (
+                <div className="text-center">
+                  {!upiQrData && (
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleShowUpiQr}
+                      disabled={upiLoading}
+                      className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                    >
+                      {upiLoading ? 'Generating QR...' : 'Generate UPI QR Code'}
+                    </motion.button>
+                  )}
+
+                  {upiQrData && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="space-y-4"
+                    >
+                      {/* QR Code */}
+                      <div className="flex justify-center">
+                        <div className="p-3 bg-white border-2 border-purple-200 rounded-xl inline-block shadow-md">
+                          <QRCodeSVG
+                            value={upiQrData.upi_string}
+                            size={180}
+                            level="H"
+                            includeMargin={false}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Amount */}
+                      <div className="bg-purple-50 rounded-lg py-2 px-3">
+                        <p className="text-xs text-gray-500">Scan & Pay</p>
+                        <p className="text-xl font-bold text-purple-700">₹{upiQrData.amount.toFixed(2)}</p>
+                        <p className="text-xs text-gray-500">to {upiQrData.merchant_name}</p>
+                      </div>
+
+                      {/* UPI ID with copy */}
+                      <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-200">
+                        <span className="text-sm text-gray-700 flex-1 font-mono truncate">{upiQrData.upi_id}</span>
+                        <button
+                          onClick={handleCopyUpiId}
+                          className="text-purple-600 hover:text-purple-800 flex-shrink-0"
+                          title="Copy UPI ID"
+                        >
+                          {upiCopied ? <FaCheck size={14} className="text-green-500" /> : <FaCopy size={14} />}
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-400">Works with GPay, PhonePe, Paytm, BHIM & all UPI apps</p>
+
+                      {/* Confirm after payment */}
+                      <div className="border-t pt-4">
+                        <p className="text-xs text-gray-500 mb-3">After completing payment in your UPI app, click below:</p>
+                        <button
+                          onClick={handleUpiConfirm}
+                          className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-lg transition-colors text-sm"
+                        >
+                          ✅ I have completed the payment
+                        </button>
+                        <button
+                          onClick={() => { setUpiQrData(null); setUpiConfirmed(false); }}
+                          className="w-full mt-2 text-gray-500 hover:text-gray-700 text-xs py-1"
+                        >
+                          Regenerate QR
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              )}
             </motion.div>
           )}
         </div>

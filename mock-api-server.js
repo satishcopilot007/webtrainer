@@ -4,13 +4,20 @@
  * Mimics PHP backend API with 139 Complete Course Catalog
  */
 
+require('dotenv').config();
+
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+
+// Load Razorpay SDK — only available when keys are configured
+let Razorpay;
+try { Razorpay = require('razorpay'); } catch (e) { console.warn('[WARN] razorpay package not found — payment endpoints will run in mock mode'); }
 
 // Import all courses from Excel catalog
 const ALL_COURSES = require('./courses_data.js');
@@ -1251,84 +1258,100 @@ app.post('/api/quick-chat', (req, res) => {
 
 // ===== PAYMENT ENDPOINTS (RAZORPAY) =====
 
-// Razorpay Configuration (Public Test Credentials)
+// Razorpay Configuration — reads from environment variables
 const RAZORPAY_CONFIG = {
-  KEY_ID: 'rzp_test_1Aa00000000001',
-  KEY_SECRET: 'test_secret_123456789',
-  MERCHANT_ID: 'TEST_MERCHANT_TRAINER'
+  KEY_ID: process.env.RAZORPAY_KEY_ID || 'rzp_test_1Aa00000000001',
+  KEY_SECRET: process.env.RAZORPAY_KEY_SECRET || '',
+  MERCHANT_ID: process.env.RAZORPAY_MERCHANT_ID || 'TEST_MERCHANT_TRAINER'
 };
+
+// Initialise Razorpay SDK instance when real keys are present
+const razorpayClient = (Razorpay && RAZORPAY_CONFIG.KEY_SECRET)
+  ? new Razorpay({ key_id: RAZORPAY_CONFIG.KEY_ID, key_secret: RAZORPAY_CONFIG.KEY_SECRET })
+  : null;
+
+if (razorpayClient) {
+  console.log(`[PAYMENT] Razorpay SDK initialised (key: ${RAZORPAY_CONFIG.KEY_ID.slice(0, 12)}...)`);
+} else {
+  console.warn('[PAYMENT] RAZORPAY_KEY_SECRET not set — payment endpoints will run in MOCK mode (no real charges).');
+}
 
 // Payment orders storage (in-memory)
 const paymentOrders = {};
 
 // Create payment order
-app.post('/api/payment/create-order', (req, res) => {
+app.post('/api/payment/create-order', async (req, res) => {
   const { courses, amount, email, name, phone } = req.body;
 
   // Validate required fields
   const errors = {};
-  if (!courses || !Array.isArray(courses) || courses.length === 0) {
-    errors.courses = 'At least one course is required';
-  }
-  if (!amount || amount <= 0) {
-    errors.amount = 'Valid amount is required';
-  }
-  if (!email) {
-    errors.email = 'Email is required';
-  }
-  if (!name) {
-    errors.name = 'Name is required';
-  }
-  if (!phone) {
-    errors.phone = 'Phone is required';
-  }
+  if (!courses || !Array.isArray(courses) || courses.length === 0) errors.courses = 'At least one course is required';
+  if (!amount || amount <= 0) errors.amount = 'Valid amount is required';
+  if (!email) errors.email = 'Email is required';
+  if (!name) errors.name = 'Name is required';
+  if (!phone) errors.phone = 'Phone is required';
 
   if (Object.keys(errors).length > 0) {
-    return res.status(422).json({
-      success: false,
-      message: 'Validation failed',
-      errors: errors
-    });
+    return res.status(422).json({ success: false, message: 'Validation failed', errors });
   }
 
-  // Create order
-  const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  const order = {
-    order_id: orderId,
-    courses: courses,
-    amount: amount,
-    email: email,
-    name: name,
-    phone: phone,
-    status: 'created',
-    created_at: new Date().toISOString(),
-    payment_id: null,
-    signature: null
-  };
+  try {
+    let orderId;
+    let rzpOrderId = null;
 
-  // Store order
-  paymentOrders[orderId] = order;
-
-  console.log('\n💳 ===== NEW PAYMENT ORDER CREATED =====');
-  console.log(`Order ID: ${orderId}`);
-  console.log(`Customer: ${name} (${email})`);
-  console.log(`Courses: ${courses.map(c => c.title).join(', ')}`);
-  console.log(`Amount: ₹${amount}`);
-  console.log(`Time: ${order.created_at}`);
-  console.log('======================================\n');
-
-  res.status(201).json({
-    success: true,
-    message: 'Payment order created successfully',
-    data: {
-      order_id: orderId,
-      amount: amount,
-      currency: 'INR',
-      customer_email: email,
-      customer_name: name,
-      razorpay_key: RAZORPAY_CONFIG.KEY_ID
+    if (razorpayClient) {
+      // ✅ REAL MODE: create order via Razorpay API
+      const rzpOrder = await razorpayClient.orders.create({
+        amount: Math.round(amount * 100), // paise
+        currency: 'INR',
+        receipt: `rcpt_${Date.now()}`,
+        notes: { customer_email: email, customer_name: name }
+      });
+      orderId = rzpOrder.id;   // e.g. order_XXXXXX
+      rzpOrderId = rzpOrder.id;
+    } else {
+      // 🔶 MOCK MODE: generate local ID (no real charge)
+      orderId = `mock_order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
-  });
+
+    const order = {
+      order_id: orderId,
+      rzp_order_id: rzpOrderId,
+      courses,
+      amount,
+      email,
+      name,
+      phone,
+      status: 'created',
+      created_at: new Date().toISOString(),
+      payment_id: null,
+      signature: null
+    };
+    paymentOrders[orderId] = order;
+
+    console.log('\n💳 ===== NEW PAYMENT ORDER CREATED =====');
+    console.log(`Order ID: ${orderId}${razorpayClient ? ' (REAL)' : ' (MOCK)'}`);
+    console.log(`Customer: ${name} (${email})`);
+    console.log(`Courses: ${courses.map(c => c.title).join(', ')}`);
+    console.log(`Amount: ₹${amount}`);
+    console.log('======================================\n');
+
+    res.status(201).json({
+      success: true,
+      message: 'Payment order created successfully',
+      data: {
+        order_id: orderId,
+        amount,
+        currency: 'INR',
+        customer_email: email,
+        customer_name: name,
+        razorpay_key: RAZORPAY_CONFIG.KEY_ID
+      }
+    });
+  } catch (err) {
+    console.error('[PAYMENT] create-order error:', err);
+    res.status(500).json({ success: false, message: 'Failed to create payment order', error: err.message });
+  }
 });
 
 // Verify payment signature
@@ -1337,36 +1360,30 @@ app.post('/api/payment/verify-signature', (req, res) => {
 
   // Validate inputs
   if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-    return res.status(422).json({
-      success: false,
-      message: 'Missing payment details'
-    });
+    return res.status(422).json({ success: false, message: 'Missing payment details' });
   }
 
-  // Get order from storage
   const order = paymentOrders[order_id];
   if (!order) {
-    return res.status(404).json({
-      success: false,
-      message: 'Order not found'
-    });
+    return res.status(404).json({ success: false, message: 'Order not found' });
   }
 
-  // In production, verify signature using crypto:
-  // const crypto = require('crypto');
-  // const expectedSignature = crypto
-  //   .createHmac('sha256', RAZORPAY_CONFIG.KEY_SECRET)
-  //   .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-  //   .digest('hex');
-  // 
-  // if (expectedSignature !== razorpay_signature) {
-  //   return res.status(400).json({
-  //     success: false,
-  //     message: 'Invalid payment signature'
-  //   });
-  // }
+  // ✅ REAL HMAC signature verification (production-safe)
+  if (RAZORPAY_CONFIG.KEY_SECRET) {
+    const expectedSignature = crypto
+      .createHmac('sha256', RAZORPAY_CONFIG.KEY_SECRET)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+      .digest('hex');
 
-  // For demo/test purposes, mark as verified
+    if (expectedSignature !== razorpay_signature) {
+      console.warn('[PAYMENT] Signature mismatch — possible tamper attempt');
+      return res.status(400).json({ success: false, message: 'Invalid payment signature' });
+    }
+  } else {
+    // MOCK MODE — no secret key, skip verification (dev only)
+    console.warn('[PAYMENT] KEY_SECRET not set — skipping signature verification (MOCK mode)');
+  }
+
   order.status = 'verified';
   order.payment_id = razorpay_payment_id;
   order.signature = razorpay_signature;
@@ -1375,7 +1392,6 @@ app.post('/api/payment/verify-signature', (req, res) => {
   console.log('\n✅ ===== PAYMENT VERIFIED =====');
   console.log(`Order ID: ${order_id}`);
   console.log(`Payment ID: ${razorpay_payment_id}`);
-  console.log(`Status: VERIFIED`);
   console.log(`Amount: ₹${order.amount}`);
   console.log(`Customer: ${order.name}`);
   console.log('==============================\n');
@@ -1384,7 +1400,7 @@ app.post('/api/payment/verify-signature', (req, res) => {
     success: true,
     message: 'Payment verified successfully',
     data: {
-      order_id: order_id,
+      order_id,
       payment_id: razorpay_payment_id,
       status: 'verified',
       amount: order.amount,
@@ -1417,6 +1433,41 @@ app.get('/api/payment/status/:orderId', (req, res) => {
       courses: order.courses,
       created_at: order.created_at,
       verified_at: order.verified_at
+    }
+  });
+});
+
+// ===== UPI QR ENDPOINT =====
+
+// Returns UPI payment string + metadata so the frontend can render the QR code
+app.post('/api/payment/upi-qr', (req, res) => {
+  const { amount, name, note } = req.body;
+
+  const upiId = process.env.UPI_ID || '';
+  const merchantName = process.env.UPI_MERCHANT_NAME || 'TrainerMentors';
+
+  if (!upiId) {
+    return res.status(503).json({
+      success: false,
+      message: 'UPI not configured on this server. Please set UPI_ID environment variable.'
+    });
+  }
+
+  if (!amount || amount <= 0) {
+    return res.status(422).json({ success: false, message: 'Valid amount is required' });
+  }
+
+  // Standard UPI deep link — works with GPay, PhonePe, Paytm, BHIM, etc.
+  const upiString = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(merchantName)}&am=${encodeURIComponent(amount.toFixed(2))}&cu=INR&tn=${encodeURIComponent(note || 'Course Payment')}`;
+
+  res.json({
+    success: true,
+    data: {
+      upi_id: upiId,
+      merchant_name: merchantName,
+      amount,
+      currency: 'INR',
+      upi_string: upiString
     }
   });
 });

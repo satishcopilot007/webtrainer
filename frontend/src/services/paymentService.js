@@ -4,7 +4,9 @@ import RAZORPAY_CONFIG from '../config/razorpayConfig';
  * Payment Service for Razorpay Integration
  */
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/api$/, '')
+  : 'http://localhost:8000';
 
 // Helper function to add timeout to fetch requests
 const fetchWithTimeout = (url, options = {}, timeout = 15000) => {
@@ -82,11 +84,16 @@ export const initiateRazorpayPayment = async (
       throw new Error('Razorpay script not loaded');
     }
 
+    // Only pass order_id when it's a real Razorpay order (starts with 'order_').
+    // Mock/local orders (mock_order_...) must NOT be sent — Razorpay validates
+    // order_id against their servers and rejects unknown IDs immediately.
+    const isRealRazorpayOrder = typeof orderId === 'string' && orderId.startsWith('order_');
+
     const razorpayOptions = {
       key: RAZORPAY_CONFIG.getKeyId(),
       amount: Math.round(amount * 100), // Convert to paise
       currency: 'INR',
-      order_id: orderId,
+      ...(isRealRazorpayOrder ? { order_id: orderId } : {}),
       name: 'TrainerMentors',
       description: 'Course Payment',
       image: 'https://via.placeholder.com/200x200?text=TrainerMentors',
@@ -100,12 +107,17 @@ export const initiateRazorpayPayment = async (
       },
       handler: async (response) => {
         try {
-          // Verify payment signature on backend
-          const verifyResponse = await verifyPaymentSignature(response, orderId);
-          if (verifyResponse.success) {
-            onSuccess(response, verifyResponse);
+          if (isRealRazorpayOrder) {
+            // Production: verify HMAC signature on backend
+            const verifyResponse = await verifyPaymentSignature(response, orderId);
+            if (verifyResponse.success) {
+              onSuccess(response, verifyResponse);
+            } else {
+              onError('Payment verification failed');
+            }
           } else {
-            onError('Payment verification failed');
+            // Mock/test mode: skip remote verify, treat payment as success
+            onSuccess(response, { success: true, mock: true });
           }
         } catch (error) {
           onError(error.message);
@@ -117,7 +129,7 @@ export const initiateRazorpayPayment = async (
         },
       },
       theme: {
-        color: '#7c3aed', // Purple color for theme
+        color: '#7c3aed',
       },
     };
 
