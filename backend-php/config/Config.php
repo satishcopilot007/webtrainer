@@ -50,6 +50,8 @@ define('SMTP_PASS', getenv('SMTP_PASS') ?: '');
 // Payment Settings (Razorpay)
 define('RAZORPAY_KEY', getenv('RAZORPAY_KEY') ?: '');
 define('RAZORPAY_SECRET', getenv('RAZORPAY_SECRET') ?: '');
+define('UPI_ID', getenv('UPI_ID') ?: '');
+define('UPI_MERCHANT_NAME', getenv('UPI_MERCHANT_NAME') ?: 'TrainerMentors');
 
 // Application
 define('APP_NAME', 'TrainerMentors');

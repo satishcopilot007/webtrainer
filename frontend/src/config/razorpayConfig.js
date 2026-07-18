@@ -5,22 +5,23 @@
  */
 
 export const RAZORPAY_CONFIG = {
-  // Test Mode Credentials (Public Test Keys - Safe to use)
+  // Test Mode Credentials
   TEST: {
-    KEY_ID: 'rzp_test_1Aa00000000001', // Razorpay official test key
-    KEY_SECRET: 'test_secret_123456789', // Razorpay official test secret
+    KEY_ID: import.meta.env.VITE_RAZORPAY_TEST_KEY_ID || 'rzp_test_1Aa00000000001',
     MERCHANT_ID: 'TEST_MERCHANT_TRAINER',
   },
 
-  // Live Mode Credentials (Will be provided later)
+  // Live Mode Credentials — set VITE_RAZORPAY_KEY_ID in .env.local for production
   LIVE: {
-    KEY_ID: 'rzp_live_YOUR_LIVE_KEY',
-    KEY_SECRET: 'YOUR_LIVE_SECRET_KEY',
-    MERCHANT_ID: 'YOUR_LIVE_MERCHANT_ID',
+    KEY_ID: import.meta.env.VITE_RAZORPAY_KEY_ID || '',
+    MERCHANT_ID: import.meta.env.VITE_RAZORPAY_MERCHANT_ID || '',
   },
 
-  // Current Environment
-  ENV: 'TEST', // Change to 'LIVE' in production
+  // Auto-detect mode: if VITE_RAZORPAY_KEY_ID starts with rzp_live_, use LIVE
+  get ENV() {
+    const liveKey = import.meta.env.VITE_RAZORPAY_KEY_ID || '';
+    return liveKey.startsWith('rzp_live_') ? 'LIVE' : 'TEST';
+  },
 
   // Get active configuration
   getConfig() {

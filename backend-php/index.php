@@ -16,6 +16,7 @@ require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/CourseController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/EnrollmentController.php';
+require_once __DIR__ . '/controllers/PaymentController.php';
 require_once __DIR__ . '/models/UserModel.php';
 require_once __DIR__ . '/models/CourseModel.php';
 require_once __DIR__ . '/models/EnrollmentModel.php';
@@ -54,6 +55,7 @@ try {
             '/courses' => ['CourseController', 'getAll'],
             '/courses/featured' => ['CourseController', 'getFeatured'],
             '/courses/{id}' => ['CourseController', 'getById'],
+            '/payment/status/{orderId}' => ['PaymentController', 'getStatus'],
             '/users' => ['UserController', 'getAll'],
             '/users/{id}' => ['UserController', 'getById'],
             '/users/{id}/courses' => ['UserController', 'getUserCourses'],
@@ -67,6 +69,9 @@ try {
             '/auth/change-password' => ['AuthController', 'changePassword'],
             '/courses' => ['CourseController', 'create'],
             '/enrollments' => ['EnrollmentController', 'create'],
+            '/payment/create-order' => ['PaymentController', 'createOrder'],
+            '/payment/verify-signature' => ['PaymentController', 'verifySignature'],
+            '/payment/upi-qr' => ['PaymentController', 'upiQr'],
             '/users/{id}/promote-mentor' => ['UserController', 'promoteMentor'],
             '/enrollments/{id}/complete' => ['EnrollmentController', 'markComplete'],
             '/enrollments/{id}/drop' => ['EnrollmentController', 'drop'],
