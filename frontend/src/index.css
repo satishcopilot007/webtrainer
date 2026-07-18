@@ -11,6 +11,20 @@
   }
 }
 
+/* Respect notches and gesture-navigation areas inside the native Android shell. */
+.capacitor-native body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-right: env(safe-area-inset-right);
+  padding-left: env(safe-area-inset-left);
+  overscroll-behavior-y: none;
+}
+
+.capacitor-native #root {
+  min-height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @layer components {
   .btn-primary {
     @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold

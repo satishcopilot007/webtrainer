@@ -1,0 +1,75 @@
+name: Build TrainerMentors Android App
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [android-app]
+    paths:
+      - 'frontend/android/**'
+      - 'frontend/assets/**'
+      - 'frontend/src/**'
+      - 'frontend/capacitor.config.json'
+      - 'frontend/package.json'
+      - 'frontend/.env.production'
+      - 'backend-php/config/Config.php'
+      - '.github/workflows/android-build.yml'
+  pull_request:
+    paths:
+      - 'frontend/android/**'
+      - 'frontend/assets/**'
+      - 'frontend/src/**'
+      - 'frontend/capacitor.config.json'
+      - 'frontend/package.json'
+      - 'frontend/.env.production'
+      - '.github/workflows/android-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-debug-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build and sync Android project
+        run: npm run android:sync
+
+      - name: Build installable test APK
+        working-directory: frontend/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload TrainerMentors APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrainerMentors-Android-Test-APK
+          path: frontend/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30

@@ -51,6 +51,12 @@ Thumbs.db
 *.o
 *.so
 *.dylib
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/**/build/
+frontend/android/captures/
+*.jks
+*.keystore
 
 # Misc
 .cache/

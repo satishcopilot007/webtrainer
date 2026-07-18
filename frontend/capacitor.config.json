@@ -1,0 +1,18 @@
+{
+  "appId": "com.trainermentors.app",
+  "appName": "TrainerMentors",
+  "webDir": "dist",
+  "backgroundColor": "#050816",
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "trainermentors.com",
+      "*.razorpay.com"
+    ]
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}

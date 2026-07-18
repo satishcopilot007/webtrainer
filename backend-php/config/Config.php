@@ -57,6 +57,8 @@ define('JWT_REFRESH_EXPIRY', 604800); // 7 days
 define('ALLOWED_ORIGINS', [
     'http://localhost:3000',
     'http://localhost:5173',
+    'https://localhost', // Capacitor Android application
+    'capacitor://localhost',
     getenv('FRONTEND_URL') ?: 'http://localhost:3000'
 ]);
 
