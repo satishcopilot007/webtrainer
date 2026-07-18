@@ -29,12 +29,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) UNIQUE NOT NULL,
+    `course_type` ENUM('tech', 'non-tech') NOT NULL DEFAULT 'tech',
     `description` TEXT,
     `image` VARCHAR(255),
     `is_active` BOOLEAN DEFAULT TRUE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    KEY `idx_active` (`is_active`)
+    KEY `idx_active` (`is_active`),
+    KEY `idx_course_type` (`course_type`, `is_active`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =============================================
@@ -59,12 +61,14 @@ CREATE TABLE IF NOT EXISTS `courses` (
     `thumbnail` VARCHAR(255),
     `rating` FLOAT DEFAULT 4.5,
     `total_reviews` INT DEFAULT 50,
+    `is_free_tutorial` BOOLEAN NOT NULL DEFAULT FALSE,
     `is_active` BOOLEAN DEFAULT TRUE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`),
     FOREIGN KEY (`mentor_id`) REFERENCES `users`(`id`),
     KEY `idx_active` (`is_active`),
+    KEY `idx_free_tutorial` (`is_free_tutorial`, `is_active`),
     KEY `idx_category` (`category_id`),
     KEY `idx_mentor` (`mentor_id`),
     KEY `idx_level` (`level`)
@@ -214,6 +218,46 @@ CREATE TABLE IF NOT EXISTS `leads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =============================================
+-- FEEDBACK REVIEW QUEUE
+-- Contains public submissions and administrator-managed feedback records.
+-- =============================================
+CREATE TABLE IF NOT EXISTS `admin_feedback` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `phone` VARCHAR(30),
+    `course_id` INT,
+    `subject` VARCHAR(255),
+    `message` TEXT NOT NULL,
+    `rating` TINYINT UNSIGNED,
+    `status` ENUM('new', 'reviewed', 'resolved') NOT NULL DEFAULT 'new',
+    `is_published` BOOLEAN NOT NULL DEFAULT FALSE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY `idx_admin_feedback_status` (`status`),
+    KEY `idx_admin_feedback_course` (`course_id`),
+    KEY `idx_admin_feedback_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =============================================
+-- ADMIN AUDIT LOG TABLE
+-- Intentionally has no foreign key so historical audit records survive user changes.
+-- =============================================
+CREATE TABLE IF NOT EXISTS `admin_audit_logs` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `admin_user_id` INT NOT NULL,
+    `action` VARCHAR(64) NOT NULL,
+    `entity_type` VARCHAR(64) NOT NULL,
+    `entity_id` INT,
+    `details` LONGTEXT,
+    `ip_address` VARCHAR(45),
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY `idx_admin_audit_admin` (`admin_user_id`),
+    KEY `idx_admin_audit_entity` (`entity_type`, `entity_id`),
+    KEY `idx_admin_audit_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =============================================
 -- PLACEMENTS TABLE
 -- =============================================
 CREATE TABLE IF NOT EXISTS `placements` (
@@ -228,11 +272,6 @@ CREATE TABLE IF NOT EXISTS `placements` (
     FOREIGN KEY (`student_id`) REFERENCES `users`(`id`),
     KEY `idx_verified` (`is_verified`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Create default admin user (password: admin123)
-INSERT INTO `users` (name, email, password, phone, role, is_active)
-VALUES ('Admin', 'admin@trainermentors.com', '$2y$10$H8S4RLB2WXPqXbE0C8h1pO6H9k5Q2R3L9V8S7M6N5P0Q9R8S7T', '+91-1234567890', 'admin', 1)
-ON DUPLICATE KEY UPDATE id=id;
 
 -- Create 3 main categories
 INSERT INTO `categories` (id, name, slug, description, is_active) VALUES

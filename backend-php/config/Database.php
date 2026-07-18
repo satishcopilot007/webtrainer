@@ -57,8 +57,9 @@ class Database {
 
             return $this->conn;
         } catch (Exception $e) {
+            error_log('Database connection failed: ' . $e->getMessage());
             http_response_code(500);
-            die(json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]));
+            die(json_encode(['success' => false, 'message' => 'Database connection failed']));
         }
     }
 

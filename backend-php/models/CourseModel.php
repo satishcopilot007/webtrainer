@@ -66,6 +66,12 @@ class CourseModel {
             $types .= 'i';
         }
 
+        if ($filters['is_free_tutorial'] !== null && $filters['is_free_tutorial'] !== '') {
+            $whereClause .= " AND c.is_free_tutorial = ?";
+            $params[] = filter_var($filters['is_free_tutorial'], FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+            $types .= 'i';
+        }
+
         // Get total count (with JOINs for category slug filter)
         $countQuery = "SELECT COUNT(*) as total FROM " . $this->table . " c
                        LEFT JOIN categories cat ON c.category_id = cat.id
@@ -79,7 +85,9 @@ class CourseModel {
         $countStmt->close();
 
         // Get paginated results
-        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name 
+        $query = "SELECT c.*, u.name as mentor_name, cat.name as category_name,
+                 (SELECT COUNT(*) FROM course_modules cm WHERE cm.course_id = c.id) AS module_count,
+                 (SELECT COUNT(*) FROM lessons l INNER JOIN course_modules cm ON cm.id = l.module_id WHERE cm.course_id = c.id) AS lesson_count
                   FROM " . $this->table . " c
                   LEFT JOIN users u ON c.mentor_id = u.id
                   LEFT JOIN categories cat ON c.category_id = cat.id
@@ -192,6 +200,14 @@ class CourseModel {
 
         $modules = [];
         while ($row = $result->fetch_assoc()) {
+            $lessonQuery = "SELECT id, title, description, content, video_url, sequence, duration_minutes FROM lessons WHERE module_id = ? ORDER BY sequence ASC, id ASC";
+            $lessonStmt = $this->conn->prepare($lessonQuery);
+            $lessonStmt->bind_param('i', $row['id']);
+            $lessonStmt->execute();
+            $lessonResult = $lessonStmt->get_result();
+            $row['lessons'] = [];
+            while ($lesson = $lessonResult->fetch_assoc()) $row['lessons'][] = $lesson;
+            $lessonStmt->close();
             $modules[] = $row;
         }
         $stmt->close();

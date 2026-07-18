@@ -48,6 +48,10 @@ const CourseCatalogPage = () => {
   }, [fetchCategories]);
 
   useEffect(() => {
+    setSearch(searchParams.get('search') || '');
+  }, [searchParams]);
+
+  useEffect(() => {
     const params = { page: currentPage };
     // When search is active, search across ALL courses regardless of category
     if (!search) {

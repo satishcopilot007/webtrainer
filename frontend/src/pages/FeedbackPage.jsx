@@ -1,8 +1,60 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { FaStar, FaComment } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import { getFeedbackCourseOptions, submitPublicFeedback } from '../api/feedbackApi';
+
+const initialForm = { name: '', email: '', course_id: '', rating: 0, message: '', website: '' };
 
 const FeedbackPage = () => {
+  const [form, setForm] = useState(initialForm);
+  const [courses, setCourses] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [coursesError, setCoursesError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    getFeedbackCourseOptions()
+      .then((response) => {
+        if (!active) return;
+        setCourses(Array.isArray(response.data.data) ? response.data.data : []);
+        setCoursesError('');
+      })
+      .catch(() => {
+        if (!active) return;
+        setCoursesError('Unable to load courses. Please refresh and try again.');
+      })
+      .finally(() => active && setCoursesLoading(false));
+    return () => { active = false; };
+  }, []);
+
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!form.rating) {
+      toast.error('Please select a rating');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const response = await submitPublicFeedback({
+        ...form,
+        course_id: Number(form.course_id),
+        rating: Number(form.rating),
+      });
+      toast.success(response.data.message || 'Thank you for your feedback');
+      setForm({ ...initialForm });
+    } catch (error) {
+      const errors = error.response?.data?.errors;
+      const detail = errors && typeof errors === 'object' ? Object.values(errors).flat()[0] : null;
+      toast.error(detail || error.response?.data?.message || 'Unable to submit feedback');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -29,12 +81,19 @@ const FeedbackPage = () => {
           <motion.form
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            onSubmit={submit}
             className="bg-gradient-to-br from-dark-800 to-dark-700 rounded-2xl p-8 shadow-2xl"
           >
             <div className="mb-6">
               <label className="block text-white font-semibold mb-2">Your Name</label>
               <input
                 type="text"
+                required
+                minLength={2}
+                maxLength={255}
+                autoComplete="name"
+                value={form.name}
+                onChange={(event) => setForm({ ...form, name: event.target.value })}
                 className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
                 placeholder="Enter your name"
               />
@@ -44,6 +103,11 @@ const FeedbackPage = () => {
               <label className="block text-white font-semibold mb-2">Email Address</label>
               <input
                 type="email"
+                required
+                maxLength={255}
+                autoComplete="email"
+                value={form.email}
+                onChange={(event) => setForm({ ...form, email: event.target.value })}
                 className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
                 placeholder="Enter your email"
               />
@@ -51,12 +115,18 @@ const FeedbackPage = () => {
 
             <div className="mb-6">
               <label className="block text-white font-semibold mb-2">Course/Program</label>
-              <select className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500">
-                <option>Select a course</option>
-                <option>Full Stack Development</option>
-                <option>Data Science Masters</option>
-                <option>Cloud AWS Architect</option>
+              <select
+                required
+                disabled={coursesLoading || Boolean(coursesError)}
+                value={form.course_id}
+                onChange={(event) => setForm({ ...form, course_id: event.target.value })}
+                className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <option value="">{coursesLoading ? 'Loading all courses…' : 'Select a course'}</option>
+                {courses.map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}
               </select>
+              {coursesError && <p role="alert" className="mt-2 text-sm text-red-300">{coursesError}</p>}
+              {!coursesLoading && !coursesError && <p className="mt-2 text-xs text-gray-400">{courses.length.toLocaleString('en-IN')} active courses available</p>}
             </div>
 
             <div className="mb-6">
@@ -66,7 +136,10 @@ const FeedbackPage = () => {
                   <button
                     key={star}
                     type="button"
-                    className="text-3xl text-gray-500 hover:text-yellow-400 transition"
+                    onClick={() => setForm({ ...form, rating: star })}
+                    aria-label={`Rate ${star} out of 5`}
+                    aria-pressed={form.rating === star}
+                    className={`text-3xl transition ${star <= form.rating ? 'text-yellow-400' : 'text-gray-500 hover:text-yellow-300'}`}
                   >
                     <FaStar />
                   </button>
@@ -77,16 +150,26 @@ const FeedbackPage = () => {
             <div className="mb-6">
               <label className="block text-white font-semibold mb-2">Your Feedback</label>
               <textarea
+                required
+                minLength={10}
+                maxLength={20000}
+                value={form.message}
+                onChange={(event) => setForm({ ...form, message: event.target.value })}
                 className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500 h-32"
                 placeholder="Share your thoughts and suggestions..."
               />
             </div>
 
+            <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label>Website<input type="text" tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => setForm({ ...form, website: event.target.value })} /></label>
+            </div>
+
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition"
+              disabled={submitting || coursesLoading || Boolean(coursesError)}
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Submit Feedback
+              {submitting ? 'Submitting…' : 'Submit Feedback'}
             </button>
           </motion.form>
         </div>

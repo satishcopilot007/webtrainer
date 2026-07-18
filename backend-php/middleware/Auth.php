@@ -16,15 +16,24 @@ class Auth {
      * Authenticate user from JWT token
      */
     public function authenticate() {
-        $headers = getallheaders();
+        $headers = function_exists('getallheaders') ? getallheaders() : [];
         $token = null;
+        $authorization = '';
+
+        foreach ($headers as $name => $value) {
+            if (strtolower($name) === 'authorization') {
+                $authorization = $value;
+                break;
+            }
+        }
+        if ($authorization === '') {
+            $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
+        }
 
         // Extract token from Authorization header
-        if (isset($headers['Authorization'])) {
-            $matches = [];
-            if (preg_match('/Bearer\s+(.+)/', $headers['Authorization'], $matches)) {
-                $token = $matches[1];
-            }
+        $matches = [];
+        if (preg_match('/^Bearer\s+([^\s]+)$/i', trim($authorization), $matches)) {
+            $token = $matches[1];
         }
 
         if (!$token) {
@@ -34,7 +43,7 @@ class Auth {
 
         // Verify token
         $payload = JWT::verifyToken($token);
-        if (!$payload) {
+        if (!$payload || isset($payload['type'])) {
             http_response_code(401);
             return false;
         }
@@ -47,6 +56,7 @@ class Auth {
         $result = $stmt->get_result();
 
         if ($result->num_rows === 0) {
+            $stmt->close();
             http_response_code(401);
             return false;
         }

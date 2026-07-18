@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Loader from './components/common/Loader';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import AdminGuard from './components/admin/AdminGuard';
 
 // Main Pages
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -31,6 +32,7 @@ const WebinarPage = lazy(() => import('./pages/WebinarPage'));
 const CorporatePage = lazy(() => import('./pages/CorporatePage'));
 const CSRPage = lazy(() => import('./pages/CSRPage'));
 const FreeCoursesPage = lazy(() => import('./pages/FreeCoursesPage'));
+const FreeCourseTopicPage = lazy(() => import('./pages/FreeCourseTopicPage'));
 const FeedbackPage = lazy(() => import('./pages/FeedbackPage'));
 const ReferralPage = lazy(() => import('./pages/ReferralPage'));
 const CareersPage = lazy(() => import('./pages/CareersPage'));
@@ -44,11 +46,33 @@ const NonITCoursesPage = lazy(() => import('./pages/NonITCoursesPage'));
 const CorporateCoursesListPage = lazy(() => import('./pages/CorporateCoursesListPage'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
 
+// Standalone Admin Portal
+const AdminLayout = lazy(() => import('./layouts/AdminLayout'));
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
+const AdminOverviewPage = lazy(() => import('./pages/admin/AdminOverviewPage'));
+const AdminTutorsPage = lazy(() => import('./pages/admin/AdminTutorsPage'));
+const AdminCategoriesPage = lazy(() => import('./pages/admin/AdminCategoriesPage'));
+const AdminCoursesPage = lazy(() => import('./pages/admin/AdminCoursesPage'));
+const AdminFeedbackPage = lazy(() => import('./pages/admin/AdminFeedbackPage'));
+const AdminRecordsPage = lazy(() => import('./pages/admin/AdminRecordsPage'));
+
 function App() {
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loader />}>
         <Routes>
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route element={<AdminGuard />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminOverviewPage />} />
+              <Route path="tutors" element={<AdminTutorsPage />} />
+              <Route path="categories" element={<AdminCategoriesPage />} />
+              <Route path="courses" element={<AdminCoursesPage />} />
+              <Route path="free-courses" element={<AdminCoursesPage freeTutorialOnly />} />
+              <Route path="feedback" element={<AdminFeedbackPage />} />
+              <Route path="records" element={<AdminRecordsPage />} />
+            </Route>
+          </Route>
           <Route element={<MainLayout />}>
             {/* Main Routes */}
             <Route path="/" element={<HomePage />} />
@@ -86,6 +110,7 @@ function App() {
             <Route path="/corporate-training" element={<CorporatePage />} />
             <Route path="/csr" element={<CSRPage />} />
             <Route path="/free-courses" element={<FreeCoursesPage />} />
+            <Route path="/free-courses/:topicSlug" element={<FreeCourseTopicPage />} />
             <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="/referral" element={<ReferralPage />} />
             <Route path="/careers" element={<CareersPage />} />

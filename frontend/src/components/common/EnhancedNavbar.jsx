@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useUIStore from '../../store/useUIStore';
 import useAuthStore from '../../store/useAuthStore';
 import useCartStore from '../../store/useCartStore';
-import { PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS, SITE_NAME } from '../../utils/constants';
+import { PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS } from '../../utils/constants';
+import { getFreeTutorialCourses } from '../../api/courseApi';
 import Logo from './Logo';
 import CourseDropdown from './CourseDropdown';
 
@@ -14,10 +15,17 @@ const EnhancedNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [adminFreeCourses, setAdminFreeCourses] = useState([]);
   const { toggleMobileMenu, closeMobileMenu } = useUIStore();
   const { isAuthenticated, user } = useAuthStore();
   const { cartItems } = useCartStore();
   const location = useLocation();
+
+  const isPrimaryLinkActive = (path) => {
+    const [pathname, query = ''] = path.split('?');
+    return location.pathname === pathname
+      && new URLSearchParams(location.search).toString() === new URLSearchParams(query).toString();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +35,24 @@ const EnhancedNavbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    getFreeTutorialCourses()
+      .then((response) => {
+        if (active) setAdminFreeCourses(Array.isArray(response.data?.data) ? response.data.data : []);
+      })
+      .catch(() => active && setAdminFreeCourses([]));
+    return () => { active = false; };
+  }, []);
+
+  const contactLink = PRIMARY_NAV_LINKS.find((link) => link.path === '/contact');
+  const fixedPrimaryLinks = PRIMARY_NAV_LINKS.filter((link) => link.path !== '/contact');
+  const fixedPaths = new Set(fixedPrimaryLinks.map((link) => link.path));
+  const dynamicPrimaryLinks = adminFreeCourses
+    .filter((course) => course.slug && !fixedPaths.has(`/free-courses/${course.slug}`))
+    .map((course) => ({ label: course.title, path: `/free-courses/${course.slug}` }));
+  const primaryNavLinks = [...fixedPrimaryLinks, ...dynamicPrimaryLinks, ...(contactLink ? [contactLink] : [])];
 
   const toggleCategoryExpand = (category) => {
     setExpandedCategories(prev => ({
@@ -52,13 +78,17 @@ const EnhancedNavbar = () => {
           {/* Desktop Top Navigation */}
           <div className="hidden lg:flex items-center justify-center py-2 px-6 overflow-x-auto">
             <div className="flex items-center space-x-6 whitespace-nowrap">
-              {PRIMARY_NAV_LINKS.map((link) => (
+              {primaryNavLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
-                  className={({ isActive }) =>
-                    `text-xs font-medium transition-colors ${topNavText} ${topNavHover} ${
-                      isActive ? 'text-orange-400 underline' : ''
+                  className={() =>
+                    `text-xs font-medium transition-colors ${link.highlighted
+                      ? 'rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-1.5 font-bold text-white shadow-md hover:from-orange-600 hover:to-amber-500'
+                      : `${topNavText} ${topNavHover}`} ${
+                      isPrimaryLinkActive(link.path)
+                        ? link.highlighted ? 'ring-2 ring-orange-200' : 'text-orange-400 underline'
+                        : ''
                     }`
                   }
                 >
@@ -208,14 +238,16 @@ const EnhancedNavbar = () => {
               {/* Primary Navigation */}
               <div className="mb-4">
                 <div className="text-xs font-bold text-gray-500 uppercase mb-2">Quick Links</div>
-                {PRIMARY_NAV_LINKS.map((link) => (
+                {primaryNavLinks.map((link) => (
                   <NavLink
                     key={link.path}
                     to={link.path}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${
-                        isActive
+                    className={() =>
+                      `block px-4 py-2 rounded-lg text-xs font-medium transition-colors ${link.highlighted
+                        ? 'bg-gradient-to-r from-orange-500 to-amber-400 font-bold text-white shadow-sm'
+                        :
+                        isPrimaryLinkActive(link.path)
                           ? 'bg-orange-50 text-orange-600'
                           : 'text-gray-700 hover:bg-gray-50'
                       }`

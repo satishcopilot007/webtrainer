@@ -5,6 +5,15 @@
  */
 
 class CourseController extends BaseController {
+    private function ensureFreeTutorialColumn() {
+        $column = $this->conn->query("SHOW COLUMNS FROM courses LIKE 'is_free_tutorial'");
+        if (!$column) throw new RuntimeException('Unable to inspect course storage');
+        if ($column->num_rows === 0 && !$this->conn->query(
+            "ALTER TABLE courses ADD COLUMN is_free_tutorial TINYINT(1) NOT NULL DEFAULT 0 AFTER total_reviews, ADD KEY idx_free_tutorial (is_free_tutorial, is_active)"
+        )) {
+            throw new RuntimeException('Unable to update course storage');
+        }
+    }
 
     /**
      * Get All Courses
@@ -15,6 +24,7 @@ class CourseController extends BaseController {
             Response::error('Method not allowed', null, 405);
         }
 
+        $this->ensureFreeTutorialColumn();
         $page = max(1, intval($_GET['page'] ?? 1));
         $pageSize = min(intval($_GET['pageSize'] ?? DEFAULT_PAGE_SIZE), MAX_PAGE_SIZE);
         
@@ -25,7 +35,8 @@ class CourseController extends BaseController {
             'main_category' => $_GET['main_category'] ?? '',
             'level' => $_GET['level'] ?? '',
             'mode' => $_GET['mode'] ?? '',
-            'mentor_id' => intval($_GET['mentor_id'] ?? 0)
+            'mentor_id' => intval($_GET['mentor_id'] ?? 0),
+            'is_free_tutorial' => $_GET['is_free_tutorial'] ?? null
         ];
 
         $courseModel = new CourseModel($this->conn);
@@ -43,6 +54,7 @@ class CourseController extends BaseController {
             Response::error('Method not allowed', null, 405);
         }
 
+        $this->ensureFreeTutorialColumn();
         $courseModel = new CourseModel($this->conn);
 
         // If numeric, look up by ID; otherwise look up by slug
@@ -78,6 +90,30 @@ class CourseController extends BaseController {
     }
 
     /**
+     * Get lightweight course options for public forms
+     * GET /api/courses/options
+     */
+    public function getOptions() {
+        if ($this->getMethod() !== 'GET') {
+            Response::error('Method not allowed', null, 405);
+        }
+
+        $result = $this->conn->query(
+            'SELECT id, title FROM courses WHERE is_active = 1 ORDER BY title ASC, id ASC'
+        );
+        if (!$result) {
+            throw new RuntimeException('Unable to load course options');
+        }
+
+        $courses = [];
+        while ($row = $result->fetch_assoc()) {
+            $courses[] = ['id' => (int)$row['id'], 'title' => $row['title']];
+        }
+
+        Response::success($courses, 'Course options retrieved successfully');
+    }
+
+    /**
      * Get All Categories
      * GET /api/categories
      */
@@ -102,6 +138,34 @@ class CourseController extends BaseController {
         }
 
         Response::success($categories, 'Categories retrieved successfully');
+    }
+
+    /**
+     * Get Active Mentors
+     * GET /api/mentors
+     */
+    public function getMentors() {
+        if ($this->getMethod() !== 'GET') {
+            Response::error('Method not allowed', null, 405);
+        }
+
+        $query = "SELECT u.id, u.name, u.profile_image, u.bio,
+                         COUNT(c.id) AS course_count
+                  FROM users u
+                  LEFT JOIN courses c
+                    ON c.mentor_id = u.id AND c.is_active = 1
+                  WHERE u.role = 'mentor' AND u.is_active = 1
+                  GROUP BY u.id, u.name, u.profile_image, u.bio
+                  ORDER BY u.created_at DESC, u.id DESC";
+        $result = $this->conn->query($query);
+
+        $mentors = [];
+        while ($row = $result->fetch_assoc()) {
+            $row['course_count'] = intval($row['course_count']);
+            $mentors[] = $row;
+        }
+
+        Response::success($mentors, 'Mentors retrieved successfully');
     }
 
     /**

@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-// API Base URL - Use local mock server in development
-const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://trainermentors.com/api'
-  : 'http://localhost:8000/api';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '');
 
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 20000,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -25,9 +22,11 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const requestUrl = originalRequest?.url || '';
+    const isAuthRequest = /\/(auth\/)?(login|register|refresh)$/.test(requestUrl);
     
     // Handle 401 - Try token refresh
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && originalRequest && !originalRequest._retry && !isAuthRequest) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -35,9 +34,13 @@ api.interceptors.response.use(
           throw new Error('No refresh token');
         }
 
-        const response = await axios.post(`${API_URL}/auth/refresh`, {
-          refreshToken,
-        });
+        let response;
+        try {
+          response = await axios.post(`${API_URL}/auth/refresh`, { refreshToken });
+        } catch (refreshError) {
+          if (refreshError.response?.status !== 404) throw refreshError;
+          response = await axios.post(`${API_URL}/refresh`, { refreshToken });
+        }
 
         if (response.data.success) {
           const { accessToken } = response.data.data;
@@ -45,10 +48,10 @@ api.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return api(originalRequest);
         }
-      } catch (err) {
+      } catch {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
+        window.location.href = window.location.pathname.startsWith('/admin') ? '/admin/login?expired=1' : '/login';
       }
     }
 

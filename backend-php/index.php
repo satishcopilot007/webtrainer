@@ -17,6 +17,8 @@ require_once __DIR__ . '/controllers/CourseController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/EnrollmentController.php';
 require_once __DIR__ . '/controllers/PaymentController.php';
+require_once __DIR__ . '/controllers/AdminController.php';
+require_once __DIR__ . '/controllers/FeedbackController.php';
 require_once __DIR__ . '/models/UserModel.php';
 require_once __DIR__ . '/models/CourseModel.php';
 require_once __DIR__ . '/models/EnrollmentModel.php';
@@ -51,9 +53,19 @@ try {
         // Auth routes
         'GET' => [
             '/auth/me' => ['AuthController', 'getCurrentUser'],
+            '/admin/overview' => ['AdminController', 'overview'],
+            '/admin/tutors' => ['AdminController', 'getTutors'],
+            '/admin/tutors/{id}' => ['AdminController', 'getTutor'],
+            '/admin/categories' => ['AdminController', 'getCategories'],
+            '/admin/courses' => ['AdminController', 'getCourses'],
+            '/admin/courses/{id}' => ['AdminController', 'getCourse'],
+            '/admin/feedback' => ['AdminController', 'getFeedback'],
+            '/admin/records/{type}' => ['AdminController', 'getRecords'],
             '/categories' => ['CourseController', 'getCategories'],
+            '/mentors' => ['CourseController', 'getMentors'],
             '/courses' => ['CourseController', 'getAll'],
             '/courses/featured' => ['CourseController', 'getFeatured'],
+            '/courses/options' => ['CourseController', 'getOptions'],
             '/courses/{id}' => ['CourseController', 'getById'],
             '/payment/status/{orderId}' => ['PaymentController', 'getStatus'],
             '/users' => ['UserController', 'getAll'],
@@ -67,6 +79,12 @@ try {
             '/auth/login' => ['AuthController', 'login'],
             '/auth/refresh' => ['AuthController', 'refreshToken'],
             '/auth/change-password' => ['AuthController', 'changePassword'],
+            '/admin/tutors/profile-image' => ['AdminController', 'uploadTutorProfileImage'],
+            '/admin/tutors' => ['AdminController', 'createTutor'],
+            '/admin/categories' => ['AdminController', 'createCategory'],
+            '/admin/courses' => ['AdminController', 'createCourse'],
+            '/admin/feedback' => ['AdminController', 'createFeedback'],
+            '/feedback' => ['FeedbackController', 'submit'],
             '/courses' => ['CourseController', 'create'],
             '/enrollments' => ['EnrollmentController', 'create'],
             '/payment/create-order' => ['PaymentController', 'createOrder'],
@@ -78,10 +96,18 @@ try {
         ],
         'PUT' => [
             '/auth/profile' => ['AuthController', 'updateProfile'],
+            '/admin/tutors/{id}' => ['AdminController', 'updateTutor'],
+            '/admin/categories/{id}' => ['AdminController', 'updateCategory'],
+            '/admin/courses/{id}' => ['AdminController', 'updateCourse'],
+            '/admin/feedback/{id}' => ['AdminController', 'updateFeedback'],
             '/courses/{id}' => ['CourseController', 'update'],
             '/enrollments/{id}/progress' => ['EnrollmentController', 'updateProgress'],
         ],
         'DELETE' => [
+            '/admin/tutors/{id}' => ['AdminController', 'deleteTutor'],
+            '/admin/categories/{id}' => ['AdminController', 'deleteCategory'],
+            '/admin/courses/{id}' => ['AdminController', 'deleteCourse'],
+            '/admin/feedback/{id}' => ['AdminController', 'deleteFeedback'],
             '/courses/{id}' => ['CourseController', 'delete'],
             '/users/{id}' => ['UserController', 'delete'],
         ],
@@ -122,9 +148,10 @@ try {
         $controller->$methodName();
     }
 
-} catch (Exception $e) {
+} catch (Throwable $e) {
+    error_log('API request failed: ' . $e->getMessage());
     http_response_code(500);
-    Response::error('Internal server error', ['error' => $e->getMessage()], 500);
+    Response::error('Internal server error', DEBUG ? ['error' => $e->getMessage()] : null, 500);
 } finally {
     $db->closeConnection();
 }

@@ -12,7 +12,10 @@ class BaseController {
     public function __construct($conn) {
         $this->conn = $conn;
         $this->auth = new Auth($conn);
-        $this->requestData = json_decode(file_get_contents('php://input'), true) ?? [];
+        $contentType = strtolower((string)($_SERVER['CONTENT_TYPE'] ?? ''));
+        $this->requestData = strpos($contentType, 'application/json') === 0
+            ? (json_decode(file_get_contents('php://input'), true) ?? [])
+            : [];
     }
 
     /**

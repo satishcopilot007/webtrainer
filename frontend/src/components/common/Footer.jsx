@@ -11,7 +11,20 @@ import {
   FaPhone,
   FaMapMarkerAlt,
 } from 'react-icons/fa';
-import { SOCIAL_LINKS, NAV_LINKS, SITE_NAME } from '../../utils/constants';
+import { SOCIAL_LINKS, SITE_NAME } from '../../utils/constants';
+
+const FOOTER_QUICK_LINKS = [
+  { label: 'Home', path: '/' },
+  { label: 'Certificate', path: '/certificate' },
+  { label: 'Webinar', path: '/webinar' },
+  { label: 'Corporate', path: '/corporate' },
+  { label: 'CSR', path: '/csr' },
+  { label: 'Blogs', path: '/blog' },
+  { label: 'Students Reviews', path: '/testimonials' },
+  { label: 'Referral', path: '/referral' },
+  { label: 'Feedback', path: '/feedback' },
+  { label: 'Careers', path: '/careers' },
+];
 
 const COURSE_CATEGORIES = [
   { label: 'Corporate Courses', path: '/courses/corporate' },
@@ -77,7 +90,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2.5">
-              {NAV_LINKS.map((link) => (
+              {FOOTER_QUICK_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
@@ -87,22 +100,6 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  to="/placements"
-                  className="text-sm text-gray-400 hover:text-primary-400 transition-colors duration-200"
-                >
-                  Placements
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/testimonials"
-                  className="text-sm text-gray-400 hover:text-primary-400 transition-colors duration-200"
-                >
-                  Testimonials
-                </Link>
-              </li>
             </ul>
           </div>
 

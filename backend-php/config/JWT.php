@@ -41,13 +41,17 @@ class JWT {
             $signature = hash_hmac('sha256', "$header_encoded.$payload_encoded", self::$secret, true);
             $signature_expected = self::base64url_encode($signature);
 
-            if ($signature_encoded !== $signature_expected) {
+            if (!hash_equals($signature_expected, $signature_encoded)) {
                 throw new Exception('Invalid signature');
             }
 
             $payload = json_decode(self::base64url_decode($payload_encoded), true);
 
-            if ($payload['exp'] < time()) {
+            if (!is_array($payload) || !isset($payload['user_id'], $payload['exp']) || !is_numeric($payload['user_id'])) {
+                throw new Exception('Invalid token payload');
+            }
+
+            if (!is_numeric($payload['exp']) || $payload['exp'] < time()) {
                 throw new Exception('Token expired');
             }
 

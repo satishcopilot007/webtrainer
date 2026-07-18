@@ -15,7 +15,7 @@ const useAuthStore = create((set) => ({
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       set({ user, isAuthenticated: true, isLoading: false });
-      return { success: true };
+      return { success: true, user };
     } catch (error) {
       set({ isLoading: false });
       return { success: false, error: error.response?.data?.message || 'Login failed' };
@@ -63,9 +63,10 @@ const useAuthStore = create((set) => ({
       const response = await getProfile();
       const { data: user } = response.data;
       set({ user, isAuthenticated: true });
+      return { success: true, user };
     } catch (error) {
-      console.error('Error fetching profile:', error);
       set({ user: null, isAuthenticated: false });
+      return { success: false, error: error.response?.data?.message || 'Unable to load profile' };
     }
   },
 

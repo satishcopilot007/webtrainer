@@ -129,7 +129,7 @@ const AboutPage = () => {
     const fetchMentors = async () => {
       try {
         const { data } = await getMentors();
-        setMentors(data.results || data);
+        setMentors(data.results || data.data || data);
       } catch { /* silent */ }
     };
     fetchMentors();
@@ -407,7 +407,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── Meet Our Mentors ──────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section id="mentors" className="scroll-mt-20 py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -425,10 +425,10 @@ const AboutPage = () => {
             {teamList.map((mentor, i) => {
               /* support both API shape and static TEAM shape */
               const name = mentor.name || mentor.full_name;
-              const role = mentor.designation || mentor.role_title || mentor.title || mentor.role;
+              const role = mentor.designation || mentor.role_title || mentor.title || mentor.role || 'Industry Mentor';
               const spec = mentor.specialization || mentor.spec;
               const exp  = mentor.experience || mentor.experience_years || mentor.exp;
-              const quote = mentor.quote_text || mentor.quote;
+              const quote = mentor.quote_text || mentor.quote || mentor.bio;
               return (
                 <motion.div
                   key={mentor.id || i}
@@ -439,8 +439,8 @@ const AboutPage = () => {
                   className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-md transition-shadow border border-gray-100"
                 >
                   <div className="relative mx-auto mb-4 w-24 h-24">
-                    {(mentor.image || mentor.photo)
-                      ? <img src={mentor.image || mentor.photo} alt={name} className="w-24 h-24 rounded-full mx-auto object-cover shadow-md" />
+                    {(mentor.image || mentor.photo || mentor.profile_image)
+                      ? <img src={mentor.image || mentor.photo || mentor.profile_image} alt={name} className="w-24 h-24 rounded-full mx-auto object-cover shadow-md" />
                       : <AvatarGenerator name={name} size={96} />
                     }
                     {(mentor.country) && (

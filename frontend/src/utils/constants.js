@@ -5,16 +5,10 @@ export const SITE_URL = 'https://trainermentors.com';
 
 // Primary Navigation (Top Row)
 export const PRIMARY_NAV_LINKS = [
-  { label: 'Certificate', path: '/certificate' },
-  { label: 'Webinar', path: '/webinar' },
-  { label: 'Corporate', path: '/corporate' },
-  { label: 'CSR', path: '/csr' },
-  { label: 'Blogs', path: '/blog' },
-  { label: 'Students Reviews', path: '/testimonials' },
-  { label: 'Referral', path: '/referral' },
-  { label: 'Free Courses', path: '/free-courses' },
-  { label: 'Feedback', path: '/feedback' },
-  { label: 'Careers', path: '/careers' },
+  { label: 'Free Courses', path: '/free-courses', highlighted: true },
+  { label: 'GenAI', path: '/free-courses/genai' },
+  { label: 'AIML', path: '/free-courses/aiml' },
+  { label: 'Cloud', path: '/free-courses/cloud' },
   { label: 'Contact Us', path: '/contact' },
 ];
 

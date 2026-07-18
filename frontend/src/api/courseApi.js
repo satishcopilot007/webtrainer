@@ -4,6 +4,9 @@ import { COURSE_CATEGORIES, COURSE_DETAILS } from '../utils/constants';
 
 export const getCourses = (params) => api.get('/courses', { params });
 export const getCourseById = (id) => api.get(`/courses/${id}`);
+export const getFreeTutorialCourses = (params = {}) => api.get('/courses', {
+  params: { pageSize: 100, ...params, is_free_tutorial: 1 },
+});
 
 const parsePrice = (value) => {
   const num = Number(value);
@@ -191,48 +194,16 @@ export const getCourseBySlug = async (slug) => {
     });
   }
 };
+
+export const getFreeTutorialBySlug = async (slug) => {
+  const response = await api.get(`/courses/${slug}`);
+  const course = response.data?.data || response.data;
+  if (Number(course?.is_free_tutorial) !== 1) throw new Error('Free course not found');
+  return course;
+};
 export const createCourse = (data) => api.post('/courses', data);
 export const updateCourse = (id, data) => api.put(`/courses/${id}`, data);
 export const deleteCourse = (id) => api.delete(`/courses/${id}`);
 export const getFeaturedCourses = () => api.get('/courses/featured');
 export const getCategories = () => api.get('/categories');
-
-// Mock mentors data for About page
-export const getMentors = async () => {
-  return Promise.resolve({
-    data: [
-      {
-        id: 1,
-        name: 'Rajesh Kumar',
-        title: 'Lead Architect',
-        company: 'Google',
-        image: 'https://via.placeholder.com/150?text=Rajesh',
-        specialization: 'Cloud & DevOps',
-      },
-      {
-        id: 2,
-        name: 'Priya Sharma',
-        title: 'Senior Data Scientist',
-        company: 'Amazon',
-        image: 'https://via.placeholder.com/150?text=Priya',
-        specialization: 'AI & ML',
-      },
-      {
-        id: 3,
-        name: 'Amit Patel',
-        title: 'Full Stack Lead',
-        company: 'Microsoft',
-        image: 'https://via.placeholder.com/150?text=Amit',
-        specialization: 'Web Development',
-      },
-      {
-        id: 4,
-        name: 'Neha Desai',
-        title: 'Security Expert',
-        company: 'Cisco',
-        image: 'https://via.placeholder.com/150?text=Neha',
-        specialization: 'Cybersecurity',
-      },
-    ]
-  });
-};
+export const getMentors = () => api.get('/mentors');

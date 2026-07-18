@@ -43,7 +43,11 @@ define('DB_USER', getenv('DB_USER') ?: 'root');
 define('DB_PASS', getenv('DB_PASS') ?: '');
 
 // JWT Settings
-define('JWT_SECRET', getenv('JWT_SECRET') ?: 'your-secret-key-change-in-production');
+$jwtSecret = trim((string)(getenv('JWT_SECRET') ?: ''));
+if (ENV === 'production' && (strlen($jwtSecret) < 32 || strpos($jwtSecret, 'change_this') !== false)) {
+    throw new RuntimeException('JWT_SECRET must be configured with at least 32 random characters');
+}
+define('JWT_SECRET', $jwtSecret !== '' ? $jwtSecret : 'development-only-jwt-secret-not-for-production');
 define('JWT_EXPIRY', 3600); // 1 hour
 define('JWT_REFRESH_EXPIRY', 604800); // 7 days
 

@@ -158,12 +158,18 @@ class AuthController extends BaseController {
 
         // Verify refresh token
         $payload = JWT::verifyToken($data['refreshToken']);
-        if (!$payload || $payload['type'] !== 'refresh') {
+        if (!$payload || ($payload['type'] ?? null) !== 'refresh') {
+            Response::error('Invalid refresh token', null, 401);
+        }
+
+        $userModel = new UserModel($this->conn);
+        $user = $userModel->getById($payload['user_id']);
+        if (!$user) {
             Response::error('Invalid refresh token', null, 401);
         }
 
         // Generate new access token
-        $accessToken = JWT::generateToken(['user_id' => $payload['user_id']]);
+        $accessToken = JWT::generateToken(['user_id' => $user['id'], 'email' => $user['email']]);
 
         Response::success([
             'accessToken' => $accessToken
