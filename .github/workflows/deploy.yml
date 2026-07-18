@@ -12,6 +12,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -54,13 +55,15 @@ jobs:
           find deploy-hostinger/api -maxdepth 2 -type f -printf '%P\n' | sort
 
       - name: Clean deploy to Hostinger web root
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.HOSTINGER_FTP_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           protocol: ftps
           port: 21
+          timeout: 600000
+          log-level: standard
           local-dir: deploy-hostinger/
           # This FTP account is already rooted at Hostinger's public_html.
           server-dir: /
