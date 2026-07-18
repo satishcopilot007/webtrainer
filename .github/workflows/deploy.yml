@@ -30,14 +30,30 @@ jobs:
         working-directory: frontend
         run: npm run build
 
-      - name: Verify build output
+      - name: Prepare Hostinger deploy package
         run: |
-          echo "Frontend build contents"
-          ls -la frontend/dist
-          echo "Asset files"
-          ls -la frontend/dist/assets
+          rm -rf deploy-hostinger
+          mkdir -p deploy-hostinger/api
+          cp -R frontend/dist/. deploy-hostinger/
+          cp -R backend-php/. deploy-hostinger/api/
+          rm -f deploy-hostinger/api/.env
+          rm -f deploy-hostinger/api/.env.example
+          rm -f deploy-hostinger/api/README.md
+          rm -f deploy-hostinger/api/database.sql
+          rm -f deploy-hostinger/api/courses_insert.sql
 
-      - name: Deploy frontend root files
+      - name: Verify deploy package
+        run: |
+          test -f deploy-hostinger/index.html
+          test -d deploy-hostinger/assets
+          test -f deploy-hostinger/.htaccess
+          test -f deploy-hostinger/api/index.php
+          echo "Top-level deploy files"
+          find deploy-hostinger -maxdepth 1 -mindepth 1 -printf '%f\n' | sort
+          echo "API deploy files"
+          find deploy-hostinger/api -maxdepth 2 -type f -printf '%P\n' | sort
+
+      - name: Clean deploy to Hostinger public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.HOSTINGER_FTP_HOST }}
@@ -45,42 +61,9 @@ jobs:
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: frontend/dist/
-          server-dir: /
-          dangerous-clean-slate: false
-          exclude: |
-            **/assets/**
-            **/.git*
-            **/.git*/**
-
-      - name: Deploy frontend assets (force refresh)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_HOST }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: frontend/dist/assets/
-          server-dir: /assets/
+          local-dir: deploy-hostinger/
+          server-dir: /public_html/
           dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.git*/**
-
-      - name: Deploy backend API to public_html/api
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_HOST }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: backend-php/
-          server-dir: /api/
-          dangerous-clean-slate: false
-          exclude: |
-            **/.env
-            **/.git*
-            **/.git*/**
-            **/uploads/**
