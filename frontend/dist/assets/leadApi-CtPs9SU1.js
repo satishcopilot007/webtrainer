@@ -1,1 +1,0 @@
-import{g as e}from"./index-Bwxf4h9Z.js";var t=t=>e.post(`/leads`,t);export{t};

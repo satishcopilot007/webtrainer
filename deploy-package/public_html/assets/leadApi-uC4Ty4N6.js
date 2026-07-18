@@ -1,0 +1,1 @@
+import{g as e}from"./index-DRUFEqc4.js";var t=t=>e.post(`/leads`,t);export{t};
