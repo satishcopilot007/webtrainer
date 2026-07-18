@@ -1,8 +1,12 @@
-$FtpHost = "82.25.120.90"
-$FtpUser = "u349450845"
-$FtpPass = "Hybris@2026"
+$FtpHost = $env:HOSTINGER_FTP_HOST
+$FtpUser = $env:HOSTINGER_FTP_USERNAME
+$FtpPass = $env:HOSTINGER_FTP_PASSWORD
 $LocalPath = "c:\Users\a160071\OneDrive - AmerisourceBergen(ABC)\Documents\Workspace\Trainerment"
 $RemotePath = "/public_html"
+
+if ([string]::IsNullOrWhiteSpace($FtpHost) -or [string]::IsNullOrWhiteSpace($FtpUser) -or [string]::IsNullOrWhiteSpace($FtpPass)) {
+    throw "Set HOSTINGER_FTP_HOST, HOSTINGER_FTP_USERNAME, and HOSTINGER_FTP_PASSWORD environment variables before running this script."
+}
 
 Write-Host "Uploading to Hostinger..." -ForegroundColor Cyan
 
