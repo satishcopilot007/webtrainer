@@ -39,7 +39,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: frontend/dist/
-          server-dir: /public_html/
+          server-dir: /
           dangerous-clean-slate: false
           exclude: |
             **/.git*
@@ -54,7 +54,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: backend-php/
-          server-dir: /public_html/api/
+          server-dir: /api/
           dangerous-clean-slate: false
           exclude: |
             **/.env
