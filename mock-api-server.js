@@ -1441,16 +1441,33 @@ app.get('/api/payment/status/:orderId', (req, res) => {
 
 // Returns UPI payment string + metadata so the frontend can render the QR code
 app.post('/api/payment/upi-qr', (req, res) => {
-  const { amount, name, note } = req.body;
+  const { amount, name, email, phone, note } = req.body;
 
-  const upiId = process.env.UPI_ID || '';
+  const upiId = (process.env.UPI_ID || '').trim();
   const merchantName = process.env.UPI_MERCHANT_NAME || 'TrainerMentors';
+  const placeholderUpiPattern = /^(your(phone|-upi-id|-real-upi-id)|example)@/i;
 
-  if (!upiId) {
+  if (!upiId || placeholderUpiPattern.test(upiId)) {
     return res.status(503).json({
       success: false,
-      message: 'UPI not configured on this server. Please set UPI_ID environment variable.'
+      message: 'UPI is not configured with a real recipient address on this server.'
     });
+  }
+
+  const normalizedName = String(name || '').trim().replace(/\s+/g, ' ');
+  const normalizedEmail = String(email || '').trim();
+  const normalizedPhone = String(phone || '').replace(/\D/g, '');
+
+  if (normalizedName.length < 5 || !/^[\p{L}][\p{L}'-]*(?:\s+[\p{L}][\p{L}'-]*)+$/u.test(normalizedName)) {
+    return res.status(422).json({ success: false, message: 'Please enter a valid full name using at least two words' });
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(normalizedEmail)) {
+    return res.status(422).json({ success: false, message: 'Please enter a valid email address' });
+  }
+
+  if (!/^[6-9]\d{9}$/.test(normalizedPhone)) {
+    return res.status(422).json({ success: false, message: 'Please enter a valid 10-digit Indian mobile number' });
   }
 
   if (!amount || amount <= 0) {
