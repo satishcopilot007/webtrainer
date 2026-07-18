@@ -40,8 +40,10 @@ jobs:
           port: 21
           local-dir: frontend/dist/
           server-dir: /
-          dangerous-clean-slate: false
+          dangerous-clean-slate: true
           exclude: |
+            **/.well-known/**
+            **/api/**
             **/.git*
             **/.git*/**
 
