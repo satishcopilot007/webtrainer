@@ -38,7 +38,7 @@ const AlumniSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-dark-900 to-dark-800">
+    <section className="border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
       <div className="max-w-7xl mx-auto px-6">
         {/* Title */}
         <motion.div
@@ -67,13 +67,13 @@ const AlumniSection = () => {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="bg-white rounded-xl p-6 flex items-center justify-center hover:shadow-lg transition-all duration-300 group cursor-pointer min-h-24 border-2 border-primary-500/20 hover:border-primary-500"
+              className="group flex min-h-24 cursor-pointer items-center justify-center rounded-xl border border-[#30363d] bg-[#161b22] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#58a6ff] hover:shadow-lg hover:shadow-blue-950/20"
             >
               <div className="text-center">
                 <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">
                   {company.logo}
                 </div>
-                <p className="text-sm font-semibold text-dark-900 group-hover:text-primary-600 transition-colors">
+                <p className="text-sm font-semibold text-[#c9d1d9] transition-colors group-hover:text-[#58a6ff]">
                   {company.name}
                 </p>
               </div>

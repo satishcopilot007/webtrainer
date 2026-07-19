@@ -7,7 +7,7 @@ const BlogListing = ({ limit = 6 }) => {
   const displayedPosts = BLOG_POSTS.slice(0, limit);
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 to-orange-50">
+    <section className="border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-20">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -17,10 +17,10 @@ const BlogListing = ({ limit = 6 }) => {
           className="text-center mb-12"
         >
           <span className="text-orange-600 font-semibold">Our Blog</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">
+          <h2 className="mt-2 text-4xl font-bold text-[#f0f6fc] md:text-5xl">
             Latest Articles & Insights
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#8b949e]">
             Stay updated with industry trends, career tips, and expert insights
           </p>
         </motion.div>
@@ -35,7 +35,7 @@ const BlogListing = ({ limit = 6 }) => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8 }}
-              className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
+              className="group overflow-hidden rounded-xl border border-[#30363d] bg-[#161b22] shadow-lg shadow-black/20 transition-all duration-300 hover:border-[#58a6ff]/60 hover:shadow-2xl"
             >
               {/* Feature Image */}
               <div className="h-48 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center relative overflow-hidden">
@@ -52,17 +52,17 @@ const BlogListing = ({ limit = 6 }) => {
               {/* Content */}
               <div className="p-6">
                 {/* Title */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                <h3 className="mb-3 line-clamp-2 text-xl font-bold text-[#f0f6fc] transition-colors group-hover:text-orange-500">
                   {post.title}
                 </h3>
 
                 {/* Excerpt */}
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                <p className="mb-4 line-clamp-2 text-sm text-[#8b949e]">
                   {post.excerpt}
                 </p>
 
                 {/* Meta Info */}
-                <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-4 pb-4 border-b border-gray-200">
+                <div className="mb-4 flex flex-wrap gap-3 border-b border-[#30363d] pb-4 text-xs text-[#8b949e]">
                   <div className="flex items-center gap-1">
                     <FaCalendar size={12} />
                     {new Date(post.date).toLocaleDateString()}
@@ -75,7 +75,7 @@ const BlogListing = ({ limit = 6 }) => {
 
                 {/* Author & CTA */}
                 <div className="flex items-center justify-between">
-                  <p className="text-xs text-gray-500">By {post.author}</p>
+                  <p className="text-xs text-[#8b949e]">By {post.author}</p>
                   <Link
                     to={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold text-sm transition-colors group/cta"

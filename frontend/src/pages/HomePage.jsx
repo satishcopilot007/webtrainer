@@ -15,7 +15,6 @@ import EnhancedTestimonials from '../components/home/EnhancedTestimonials';
 import SuccessStories from '../components/home/SuccessStories';
 import BlogListing from '../components/blog/BlogListing';
 import StickyFooterCTA from '../components/common/StickyFooterCTA';
-import DemoBookingForm from '../components/forms/DemoBookingForm';
 import useUIStore from '../store/useUIStore';
 import { SITE_NAME, SITE_TAGLINE } from '../utils/constants';
 
@@ -39,12 +38,13 @@ const HomePage = () => {
         <link rel="canonical" href="https://trainermentors.com/" />
       </Helmet>
 
+      <div className="bg-[#0d1117] text-[#f0f6fc]">
       <HeroSection />
 
       <StatsCounter />
 
       {/* Google Ratings Banner */}
-      <section className="py-8 bg-white border-t border-b border-gray-200 flex justify-center">
+      <section className="flex justify-center border-y border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-8">
         <GoogleRatings />
       </section>
 
@@ -74,7 +74,8 @@ const HomePage = () => {
 
       {/* CTA Section */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#461E96] to-[#00B4E6]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409]" />
+        <div className="absolute left-1/2 top-0 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-[#1f6feb]/20 blur-3xl" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=')] opacity-30" />
 
         <motion.div
@@ -95,7 +96,7 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={openDemoModal}
-              className="px-8 py-4 bg-white text-[#461E96] font-bold rounded-full hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl text-lg"
+              className="rounded-full bg-[#f0f6fc] px-8 py-4 text-lg font-bold text-[#0d1117] shadow-lg transition-colors hover:bg-white"
             >
               Book Free Demo
             </button>
@@ -109,10 +110,9 @@ const HomePage = () => {
         </motion.div>
       </section>
 
-      <DemoBookingForm />
-
       {/* Sticky Footer CTA */}
       <StickyFooterCTA />
+      </div>
     </>
   );
 };

@@ -73,7 +73,7 @@ const WhyChooseSection = () => {
   };
 
   return (
-    <section className="py-20 bg-dark-900 relative overflow-hidden">
+    <section className="relative overflow-hidden border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-20">
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl" />
@@ -112,7 +112,7 @@ const WhyChooseSection = () => {
               <motion.div
                 key={feature.id}
                 variants={itemVariants}
-                className="bg-gradient-to-br from-dark-800 to-dark-700 rounded-2xl p-8 hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-300 group"
+                className="group rounded-2xl border border-[#30363d] bg-gradient-to-br from-[#161b22] to-[#0d1117] p-8 transition-all duration-300 hover:border-[#58a6ff]/60 hover:shadow-2xl hover:shadow-blue-950/20"
               >
                 {/* Icon */}
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">

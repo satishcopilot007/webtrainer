@@ -9,7 +9,7 @@ import 'swiper/css/pagination';
 
 const SuccessStories = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+    <section className="border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-20 text-white">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -48,7 +48,7 @@ const SuccessStories = () => {
             <SwiperSlide key={story.id}>
               <motion.div
                 whileHover={{ y: -8 }}
-                className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden border border-orange-400/30 hover:border-orange-400/60 transition-all duration-300 h-full"
+                className="h-full overflow-hidden rounded-xl border border-[#30363d] bg-gradient-to-br from-[#161b22] to-[#0d1117] transition-all duration-300 hover:border-orange-400/60"
               >
                 {/* Top - Student Info */}
                 <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-center">

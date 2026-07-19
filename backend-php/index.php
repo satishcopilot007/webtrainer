@@ -19,6 +19,7 @@ require_once __DIR__ . '/controllers/EnrollmentController.php';
 require_once __DIR__ . '/controllers/PaymentController.php';
 require_once __DIR__ . '/controllers/AdminController.php';
 require_once __DIR__ . '/controllers/FeedbackController.php';
+require_once __DIR__ . '/controllers/LeadController.php';
 require_once __DIR__ . '/models/UserModel.php';
 require_once __DIR__ . '/models/CourseModel.php';
 require_once __DIR__ . '/models/EnrollmentModel.php';
@@ -59,10 +60,15 @@ try {
             '/admin/categories' => ['AdminController', 'getCategories'],
             '/admin/courses' => ['AdminController', 'getCourses'],
             '/admin/courses/{id}' => ['AdminController', 'getCourse'],
+            '/admin/founders' => ['AdminController', 'getFounders'],
+            '/admin/blogs' => ['AdminController', 'getBlogs'],
             '/admin/feedback' => ['AdminController', 'getFeedback'],
             '/admin/records/{type}' => ['AdminController', 'getRecords'],
             '/categories' => ['CourseController', 'getCategories'],
             '/mentors' => ['CourseController', 'getMentors'],
+            '/founders' => ['AdminController', 'publicFounders'],
+            '/blogs' => ['AdminController', 'publicBlogs'],
+            '/blogs/{slug}' => ['AdminController', 'publicBlogs'],
             '/courses' => ['CourseController', 'getAll'],
             '/courses/featured' => ['CourseController', 'getFeatured'],
             '/courses/options' => ['CourseController', 'getOptions'],
@@ -83,8 +89,11 @@ try {
             '/admin/tutors' => ['AdminController', 'createTutor'],
             '/admin/categories' => ['AdminController', 'createCategory'],
             '/admin/courses' => ['AdminController', 'createCourse'],
+            '/admin/founders' => ['AdminController', 'createFounder'],
+            '/admin/blogs' => ['AdminController', 'createBlog'],
             '/admin/feedback' => ['AdminController', 'createFeedback'],
             '/feedback' => ['FeedbackController', 'submit'],
+            '/leads' => ['LeadController', 'submit'],
             '/courses' => ['CourseController', 'create'],
             '/enrollments' => ['EnrollmentController', 'create'],
             '/payment/create-order' => ['PaymentController', 'createOrder'],
@@ -99,6 +108,8 @@ try {
             '/admin/tutors/{id}' => ['AdminController', 'updateTutor'],
             '/admin/categories/{id}' => ['AdminController', 'updateCategory'],
             '/admin/courses/{id}' => ['AdminController', 'updateCourse'],
+            '/admin/founders/{id}' => ['AdminController', 'updateFounder'],
+            '/admin/blogs/{id}' => ['AdminController', 'updateBlog'],
             '/admin/feedback/{id}' => ['AdminController', 'updateFeedback'],
             '/courses/{id}' => ['CourseController', 'update'],
             '/enrollments/{id}/progress' => ['EnrollmentController', 'updateProgress'],
@@ -107,6 +118,8 @@ try {
             '/admin/tutors/{id}' => ['AdminController', 'deleteTutor'],
             '/admin/categories/{id}' => ['AdminController', 'deleteCategory'],
             '/admin/courses/{id}' => ['AdminController', 'deleteCourse'],
+            '/admin/founders/{id}' => ['AdminController', 'deleteFounder'],
+            '/admin/blogs/{id}' => ['AdminController', 'deleteBlog'],
             '/admin/feedback/{id}' => ['AdminController', 'deleteFeedback'],
             '/courses/{id}' => ['CourseController', 'delete'],
             '/users/{id}' => ['UserController', 'delete'],

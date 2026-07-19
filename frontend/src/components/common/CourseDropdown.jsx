@@ -5,7 +5,7 @@ import { FaChevronRight, FaImage } from 'react-icons/fa';
 import { COURSE_CATEGORIES } from '../../utils/constants';
 import { generateSlug } from '../../utils/courseUtils';
 
-const CourseDropdown = ({ categorySlug, dropdownType, scrolled }) => {
+const CourseDropdown = ({ categorySlug, dropdownType }) => {
   const category = COURSE_CATEGORIES.find(c => c.slug === categorySlug);
   
   if (!category) return null;

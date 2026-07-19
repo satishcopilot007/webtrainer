@@ -25,6 +25,7 @@ class AdminController extends BaseController {
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
+            role VARCHAR(100) NULL,
             phone VARCHAR(30) NULL,
             course_id INT NULL,
             subject VARCHAR(255) NULL,
@@ -53,8 +54,55 @@ class AdminController extends BaseController {
             KEY idx_admin_audit_created (created_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 
-        if (!$this->conn->query($feedbackSql) || !$this->conn->query($auditSql)) {
+        $foundersSql = "CREATE TABLE IF NOT EXISTS admin_founders (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            role VARCHAR(255) NOT NULL,
+            expertise VARCHAR(500) NULL,
+            experience VARCHAR(100) NULL,
+            location VARCHAR(255) NULL,
+            country CHAR(2) NULL,
+            photo_url VARCHAR(1000) NULL,
+            linkedin_url VARCHAR(1000) NULL,
+            bio TEXT NULL,
+            quote VARCHAR(1000) NULL,
+            sort_order INT NOT NULL DEFAULT 0,
+            is_active TINYINT(1) NOT NULL DEFAULT 1,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            KEY idx_founders_active_order (is_active, sort_order)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+
+        $blogsSql = "CREATE TABLE IF NOT EXISTS admin_blogs (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            slug VARCHAR(255) NOT NULL UNIQUE,
+            excerpt VARCHAR(1000) NOT NULL,
+            content LONGTEXT NULL,
+            image_url VARCHAR(1000) NULL,
+            author VARCHAR(255) NOT NULL,
+            category VARCHAR(100) NOT NULL,
+            read_time VARCHAR(50) NULL,
+            source_platform VARCHAR(30) NOT NULL DEFAULT 'website',
+            external_url VARCHAR(1000) NULL,
+            reference_url VARCHAR(1000) NULL,
+            published_at DATE NOT NULL,
+            is_published TINYINT(1) NOT NULL DEFAULT 0,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            KEY idx_blogs_public (is_published, published_at),
+            KEY idx_blogs_category (category)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+
+        if (!$this->conn->query($feedbackSql) || !$this->conn->query($auditSql) || !$this->conn->query($foundersSql) || !$this->conn->query($blogsSql)) {
             throw new RuntimeException('Unable to initialize admin data tables');
+        }
+
+        $feedbackRoleColumn = $this->conn->query("SHOW COLUMNS FROM admin_feedback LIKE 'role'");
+        if (!$feedbackRoleColumn || ($feedbackRoleColumn->num_rows === 0 && !$this->conn->query(
+            "ALTER TABLE admin_feedback ADD COLUMN role VARCHAR(100) NULL AFTER email"
+        ))) {
+            throw new RuntimeException('Unable to update feedback data table');
         }
 
         $freeTutorialColumn = $this->conn->query("SHOW COLUMNS FROM courses LIKE 'is_free_tutorial'");
@@ -181,6 +229,7 @@ class AdminController extends BaseController {
             'users.email' => true,
             'categories.slug' => true,
             'courses.slug' => true,
+            'admin_blogs.slug' => true,
         ];
         if (!isset($allowed[$table . '.' . $column])) {
             throw new LogicException('Invalid uniqueness check');
@@ -951,6 +1000,157 @@ class AdminController extends BaseController {
         Response::success(null, 'Course deactivated successfully');
     }
 
+    public function publicFounders() {
+        $this->ensureAdminTables();
+        $result = $this->conn->query('SELECT * FROM admin_founders WHERE is_active = 1 ORDER BY sort_order ASC, id ASC');
+        $rows = [];
+        while ($result && $row = $result->fetch_assoc()) $rows[] = $row;
+        Response::success($rows, 'Founders retrieved successfully');
+    }
+
+    public function getFounders() {
+        $this->requireAdmin();
+        [$page, $pageSize, $offset] = $this->pageParams();
+        $search = $this->searchTerm();
+        $where = '';
+        $like = '%' . $search . '%';
+        if ($search !== '') $where = 'WHERE name LIKE ? OR role LIKE ? OR expertise LIKE ? OR location LIKE ?';
+        $countStmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM admin_founders {$where}");
+        if ($search !== '') $countStmt->bind_param('ssss', $like, $like, $like, $like);
+        $countStmt->execute();
+        $total = (int)$countStmt->get_result()->fetch_assoc()['total'];
+        $countStmt->close();
+        $stmt = $this->conn->prepare("SELECT * FROM admin_founders {$where} ORDER BY sort_order ASC, id ASC LIMIT ? OFFSET ?");
+        if ($search !== '') $stmt->bind_param('ssssii', $like, $like, $like, $like, $pageSize, $offset); else $stmt->bind_param('ii', $pageSize, $offset);
+        $stmt->execute();
+        $rows = [];
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) $rows[] = $row;
+        $stmt->close();
+        Response::paginated($rows, $total, $page, $pageSize, 'Founders retrieved successfully');
+    }
+
+    private function founderPayload($data, $existing = null) {
+        $this->rejectUnknownFields($data, ['name', 'role', 'expertise', 'experience', 'location', 'country', 'photo_url', 'linkedin_url', 'bio', 'quote', 'sort_order', 'is_active']);
+        $value = function ($field, $default = null) use ($data, $existing) {
+            if (array_key_exists($field, $data)) return $data[$field];
+            if ($existing && array_key_exists($field, $existing)) return $existing[$field];
+            return $default;
+        };
+        $sortOrder = filter_var($value('sort_order', 0), FILTER_VALIDATE_INT, ['options' => ['min_range' => 0, 'max_range' => 9999]]);
+        if ($sortOrder === false) Response::error('Validation failed', ['sort_order' => 'Must be between 0 and 9999'], 422);
+        $country = strtoupper($this->cleanString($value('country', ''), 2));
+        return [
+            'name' => $this->cleanString($value('name', ''), 255, true), 'role' => $this->cleanString($value('role', ''), 255, true),
+            'expertise' => $this->cleanString($value('expertise', ''), 500), 'experience' => $this->cleanString($value('experience', ''), 100),
+            'location' => $this->cleanString($value('location', ''), 255), 'country' => $country,
+            'photo_url' => $this->cleanString($value('photo_url', ''), 1000), 'linkedin_url' => $this->cleanString($value('linkedin_url', ''), 1000),
+            'bio' => $this->cleanString($value('bio', ''), 5000), 'quote' => $this->cleanString($value('quote', ''), 1000),
+            'sort_order' => (int)$sortOrder, 'is_active' => $this->boolValue($value('is_active', true), true),
+        ];
+    }
+
+    public function createFounder() {
+        $this->requireAdmin();
+        $item = $this->founderPayload($this->body());
+        $stmt = $this->conn->prepare('INSERT INTO admin_founders (name, role, expertise, experience, location, country, photo_url, linkedin_url, bio, quote, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssssssssii', $item['name'], $item['role'], $item['expertise'], $item['experience'], $item['location'], $item['country'], $item['photo_url'], $item['linkedin_url'], $item['bio'], $item['quote'], $item['sort_order'], $item['is_active']);
+        if (!$stmt->execute()) Response::error('Unable to create founder', null, 500);
+        $id = $this->conn->insert_id; $stmt->close(); $this->audit('create', 'founder', $id);
+        Response::success(['id' => $id], 'Founder created successfully', 201);
+    }
+
+    public function updateFounder($id) {
+        $this->requireAdmin(); $id = $this->positiveId($id);
+        $stmt = $this->conn->prepare('SELECT * FROM admin_founders WHERE id = ?'); $stmt->bind_param('i', $id); $stmt->execute();
+        $existing = $stmt->get_result()->fetch_assoc(); $stmt->close();
+        if (!$existing) Response::error('Founder not found', null, 404);
+        $item = $this->founderPayload($this->body(), $existing);
+        $stmt = $this->conn->prepare('UPDATE admin_founders SET name=?, role=?, expertise=?, experience=?, location=?, country=?, photo_url=?, linkedin_url=?, bio=?, quote=?, sort_order=?, is_active=?, updated_at=NOW() WHERE id=?');
+        $stmt->bind_param('ssssssssssiii', $item['name'], $item['role'], $item['expertise'], $item['experience'], $item['location'], $item['country'], $item['photo_url'], $item['linkedin_url'], $item['bio'], $item['quote'], $item['sort_order'], $item['is_active'], $id);
+        if (!$stmt->execute()) Response::error('Unable to update founder', null, 500);
+        $stmt->close(); $this->audit('update', 'founder', $id); Response::success(['id' => $id], 'Founder updated successfully');
+    }
+
+    public function deleteFounder($id) {
+        $this->requireAdmin(); $id = $this->positiveId($id);
+        $stmt = $this->conn->prepare('DELETE FROM admin_founders WHERE id = ?'); $stmt->bind_param('i', $id); $stmt->execute();
+        if ($stmt->affected_rows === 0) Response::error('Founder not found', null, 404);
+        $stmt->close(); $this->audit('delete', 'founder', $id); Response::success(null, 'Founder deleted successfully');
+    }
+
+    public function publicBlogs($slug = null) {
+        $this->ensureAdminTables();
+        if ($slug !== null) {
+            $stmt = $this->conn->prepare('SELECT * FROM admin_blogs WHERE slug = ? AND is_published = 1 LIMIT 1');
+            $stmt->bind_param('s', $slug); $stmt->execute(); $row = $stmt->get_result()->fetch_assoc(); $stmt->close();
+            if (!$row) Response::error('Blog not found', null, 404);
+            Response::success($row, 'Blog retrieved successfully');
+        }
+        $result = $this->conn->query('SELECT * FROM admin_blogs WHERE is_published = 1 ORDER BY published_at DESC, id DESC');
+        $rows = []; while ($result && $row = $result->fetch_assoc()) $rows[] = $row;
+        Response::success($rows, 'Blogs retrieved successfully');
+    }
+
+    public function getBlogs() {
+        $this->requireAdmin(); [$page, $pageSize, $offset] = $this->pageParams(); $search = $this->searchTerm();
+        $where = ''; $like = '%' . $search . '%';
+        if ($search !== '') $where = 'WHERE title LIKE ? OR category LIKE ? OR author LIKE ? OR excerpt LIKE ? OR content LIKE ?';
+        $countStmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM admin_blogs {$where}");
+        if ($search !== '') $countStmt->bind_param('sssss', $like, $like, $like, $like, $like);
+        $countStmt->execute(); $total = (int)$countStmt->get_result()->fetch_assoc()['total']; $countStmt->close();
+        $stmt = $this->conn->prepare("SELECT * FROM admin_blogs {$where} ORDER BY published_at DESC, id DESC LIMIT ? OFFSET ?");
+        if ($search !== '') $stmt->bind_param('sssssii', $like, $like, $like, $like, $like, $pageSize, $offset); else $stmt->bind_param('ii', $pageSize, $offset);
+        $stmt->execute(); $rows = []; $result = $stmt->get_result(); while ($row = $result->fetch_assoc()) $rows[] = $row; $stmt->close();
+        Response::paginated($rows, $total, $page, $pageSize, 'Blogs retrieved successfully');
+    }
+
+    private function blogPayload($data, $existing = null) {
+        $this->rejectUnknownFields($data, ['title', 'slug', 'excerpt', 'content', 'image_url', 'author', 'category', 'read_time', 'source_platform', 'external_url', 'reference_url', 'published_at', 'is_published']);
+        $value = function ($field, $default = null) use ($data, $existing) { if (array_key_exists($field, $data)) return $data[$field]; if ($existing && array_key_exists($field, $existing)) return $existing[$field]; return $default; };
+        $title = $this->cleanString($value('title', ''), 255, true);
+        $content = $this->cleanString($value('content', ''), 50000); $externalUrl = $this->cleanString($value('external_url', ''), 1000);
+        if ($content === '' && $externalUrl === '') Response::error('Validation failed', ['content' => 'Add website content or an external post link'], 422);
+        $source = $this->cleanString($value('source_platform', 'website'), 30, true);
+        if (!in_array($source, ['website', 'linkedin', 'facebook', 'instagram', 'youtube', 'other'], true)) Response::error('Validation failed', ['source_platform' => 'Invalid platform'], 422);
+        $publishedAt = $this->cleanString($value('published_at', date('Y-m-d')), 30, true);
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $publishedAt)) Response::error('Validation failed', ['published_at' => 'Use YYYY-MM-DD'], 422);
+        return [
+            'title' => $title, 'slug' => $this->slugValue($value('slug', ''), $title),
+            'excerpt' => $this->cleanString($value('excerpt', ''), 1000, true), 'content' => $content,
+            'image_url' => $this->cleanString($value('image_url', ''), 1000), 'author' => $this->cleanString($value('author', ''), 255, true),
+            'category' => $this->cleanString($value('category', ''), 100, true), 'read_time' => $this->cleanString($value('read_time', ''), 50),
+            'source_platform' => $source, 'external_url' => $externalUrl, 'reference_url' => $this->cleanString($value('reference_url', ''), 1000),
+            'published_at' => $publishedAt, 'is_published' => $this->boolValue($value('is_published', false)),
+        ];
+    }
+
+    public function createBlog() {
+        $this->requireAdmin(); $item = $this->blogPayload($this->body()); $this->assertUnique('admin_blogs', 'slug', $item['slug']);
+        $stmt = $this->conn->prepare('INSERT INTO admin_blogs (title, slug, excerpt, content, image_url, author, category, read_time, source_platform, external_url, reference_url, published_at, is_published) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssssssssssi', $item['title'], $item['slug'], $item['excerpt'], $item['content'], $item['image_url'], $item['author'], $item['category'], $item['read_time'], $item['source_platform'], $item['external_url'], $item['reference_url'], $item['published_at'], $item['is_published']);
+        if (!$stmt->execute()) Response::error('Unable to create blog', null, 500);
+        $id = $this->conn->insert_id; $stmt->close(); $this->audit('create', 'blog', $id); Response::success(['id' => $id], 'Blog created successfully', 201);
+    }
+
+    public function updateBlog($id) {
+        $this->requireAdmin(); $id = $this->positiveId($id);
+        $stmt = $this->conn->prepare('SELECT * FROM admin_blogs WHERE id = ?'); $stmt->bind_param('i', $id); $stmt->execute(); $existing = $stmt->get_result()->fetch_assoc(); $stmt->close();
+        if (!$existing) Response::error('Blog not found', null, 404);
+        $item = $this->blogPayload($this->body(), $existing); $this->assertUnique('admin_blogs', 'slug', $item['slug'], $id);
+        $stmt = $this->conn->prepare('UPDATE admin_blogs SET title=?, slug=?, excerpt=?, content=?, image_url=?, author=?, category=?, read_time=?, source_platform=?, external_url=?, reference_url=?, published_at=?, is_published=?, updated_at=NOW() WHERE id=?');
+        $stmt->bind_param('ssssssssssssii', $item['title'], $item['slug'], $item['excerpt'], $item['content'], $item['image_url'], $item['author'], $item['category'], $item['read_time'], $item['source_platform'], $item['external_url'], $item['reference_url'], $item['published_at'], $item['is_published'], $id);
+        if (!$stmt->execute()) Response::error('Unable to update blog', null, 500);
+        $stmt->close(); $this->audit('update', 'blog', $id); Response::success(['id' => $id], 'Blog updated successfully');
+    }
+
+    public function deleteBlog($id) {
+        $this->requireAdmin(); $id = $this->positiveId($id);
+        $stmt = $this->conn->prepare('DELETE FROM admin_blogs WHERE id = ?'); $stmt->bind_param('i', $id); $stmt->execute();
+        if ($stmt->affected_rows === 0) Response::error('Blog not found', null, 404);
+        $stmt->close(); $this->audit('delete', 'blog', $id); Response::success(null, 'Blog deleted successfully');
+    }
+
     public function getFeedback() {
         $this->requireAdmin();
         [$page, $pageSize, $offset] = $this->pageParams();
@@ -961,10 +1161,10 @@ class AdminController extends BaseController {
         $params = [];
         $types = '';
         if ($search !== '') {
-            $where .= ' AND (f.name LIKE ? OR f.email LIKE ? OR f.subject LIKE ? OR f.message LIKE ?)';
+            $where .= ' AND (f.name LIKE ? OR f.email LIKE ? OR f.role LIKE ? OR f.subject LIKE ? OR f.message LIKE ?)';
             $like = '%' . $search . '%';
-            array_push($params, $like, $like, $like, $like);
-            $types .= 'ssss';
+            array_push($params, $like, $like, $like, $like, $like);
+            $types .= 'sssss';
         }
         if ($status !== 'all') {
             $where .= ' AND f.status = ?';
@@ -991,7 +1191,7 @@ class AdminController extends BaseController {
     }
 
     private function feedbackPayload($data, $existing = null) {
-        $this->rejectUnknownFields($data, ['name', 'email', 'phone', 'course_id', 'subject', 'message', 'rating', 'status', 'is_published']);
+        $this->rejectUnknownFields($data, ['name', 'email', 'role', 'phone', 'course_id', 'subject', 'message', 'rating', 'status', 'is_published']);
         $value = function ($field, $default = null) use ($data, $existing) {
             if (array_key_exists($field, $data)) return $data[$field];
             if ($existing && array_key_exists($field, $existing)) return $existing[$field];
@@ -1009,6 +1209,7 @@ class AdminController extends BaseController {
         return [
             'name' => $this->cleanString($value('name', ''), 255, true),
             'email' => $this->emailValue($value('email', '')),
+            'role' => $this->cleanString($value('role', ''), 100),
             'phone' => $this->cleanString($value('phone', ''), 30),
             'course_id' => $courseId,
             'subject' => $this->cleanString($value('subject', ''), 255),
@@ -1023,9 +1224,9 @@ class AdminController extends BaseController {
         $this->requireAdmin();
         $feedback = $this->feedbackPayload($this->body());
         $stmt = $this->conn->prepare(
-            'INSERT INTO admin_feedback (name, email, phone, course_id, subject, message, rating, status, is_published, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())'
+            'INSERT INTO admin_feedback (name, email, role, phone, course_id, subject, message, rating, status, is_published, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())'
         );
-        $stmt->bind_param('sssissisi', $feedback['name'], $feedback['email'], $feedback['phone'], $feedback['course_id'], $feedback['subject'], $feedback['message'], $feedback['rating'], $feedback['status'], $feedback['is_published']);
+        $stmt->bind_param('ssssissisi', $feedback['name'], $feedback['email'], $feedback['role'], $feedback['phone'], $feedback['course_id'], $feedback['subject'], $feedback['message'], $feedback['rating'], $feedback['status'], $feedback['is_published']);
         if (!$stmt->execute()) Response::error('Unable to create feedback', null, 500);
         $id = $this->conn->insert_id;
         $stmt->close();
@@ -1046,9 +1247,9 @@ class AdminController extends BaseController {
         if (empty($data)) Response::error('No fields to update', null, 422);
         $feedback = $this->feedbackPayload($data, $existing);
         $stmt = $this->conn->prepare(
-            'UPDATE admin_feedback SET name = ?, email = ?, phone = ?, course_id = ?, subject = ?, message = ?, rating = ?, status = ?, is_published = ?, updated_at = NOW() WHERE id = ?'
+            'UPDATE admin_feedback SET name = ?, email = ?, role = ?, phone = ?, course_id = ?, subject = ?, message = ?, rating = ?, status = ?, is_published = ?, updated_at = NOW() WHERE id = ?'
         );
-        $stmt->bind_param('sssissisii', $feedback['name'], $feedback['email'], $feedback['phone'], $feedback['course_id'], $feedback['subject'], $feedback['message'], $feedback['rating'], $feedback['status'], $feedback['is_published'], $id);
+        $stmt->bind_param('ssssissisii', $feedback['name'], $feedback['email'], $feedback['role'], $feedback['phone'], $feedback['course_id'], $feedback['subject'], $feedback['message'], $feedback['rating'], $feedback['status'], $feedback['is_published'], $id);
         $ok = $stmt->execute();
         $stmt->close();
         if (!$ok) Response::error('Unable to update feedback', null, 500);
@@ -1085,7 +1286,7 @@ class AdminController extends BaseController {
             ],
             'leads' => [
                 'from' => 'leads r',
-                'select' => 'r.id, r.name, r.email, r.phone, r.course_interested, r.source, r.status, r.created_at',
+                'select' => 'r.id, r.name, r.email, r.phone, r.course_interested, r.message, r.source, r.status, r.created_at',
                 'search' => ['r.name', 'r.email', 'r.phone', 'r.course_interested', 'r.status'],
                 'order' => 'r.created_at DESC',
             ],

@@ -9,7 +9,7 @@ import {
   Pagination, SearchToolbar, StatusBadge, formatDate, inputClass, textareaClass,
 } from '../../components/admin/AdminUI';
 
-const initialForm = { name: '', email: '', phone: '', course_id: '', subject: '', message: '', rating: '', status: 'new', is_published: false };
+const initialForm = { name: '', email: '', role: '', phone: '', course_id: '', subject: '', message: '', rating: '', status: 'new', is_published: false };
 
 const AdminFeedbackPage = () => {
   const [rows, setRows] = useState([]);
@@ -46,7 +46,7 @@ const AdminFeedbackPage = () => {
   const openForm = (feedback = null) => {
     setEditing(feedback);
     setForm(feedback ? {
-      name: feedback.name || '', email: feedback.email || '', phone: feedback.phone || '', course_id: feedback.course_id || '',
+      name: feedback.name || '', email: feedback.email || '', role: feedback.role || '', phone: feedback.phone || '', course_id: feedback.course_id || '',
       subject: feedback.subject || '', message: feedback.message || '', rating: feedback.rating || '', status: feedback.status || 'new',
       is_published: Boolean(Number(feedback.is_published)),
     } : { ...initialForm });
@@ -74,7 +74,7 @@ const AdminFeedbackPage = () => {
   return (
     <div className="space-y-6">
       <AdminPageHeader eyebrow="Voice of customer" title="Feedback records" description="Review new website submissions, create managed feedback, publish approved entries, or mark them resolved." action={<button type="button" onClick={() => openForm()} className="inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-200 hover:bg-violet-700"><FiPlus /> Add feedback</button>} />
-      <SearchToolbar value={query} onChange={setQuery} onSubmit={() => { setPage(1); setSearch(query.trim()); }} placeholder="Search name, email, subject, or message…">
+      <SearchToolbar value={query} onChange={setQuery} onSubmit={() => { setPage(1); setSearch(query.trim()); }} placeholder="Search name, email, role, subject, or message…">
         <select value={status} onChange={(event) => { setPage(1); setStatus(event.target.value); }} className={`${inputClass} sm:w-40`} aria-label="Filter feedback status"><option value="all">All statuses</option><option value="new">New</option><option value="reviewed">Reviewed</option><option value="resolved">Resolved</option></select>
       </SearchToolbar>
 
@@ -88,7 +88,7 @@ const AdminFeedbackPage = () => {
                     <div className="flex flex-wrap items-center gap-2"><StatusBadge status={feedback.status} />{Number(feedback.is_published) === 1 && <span className="rounded-full bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 ring-1 ring-cyan-600/20">Published</span>}{feedback.rating && <span className="inline-flex items-center gap-1 text-sm font-semibold text-amber-600"><FiStar className="fill-current" /> {feedback.rating}/5</span>}</div>
                     <h2 className="mt-3 font-display text-lg font-bold text-slate-900">{feedback.subject || `Feedback from ${feedback.name}`}</h2>
                     <p className="mt-2 max-w-4xl whitespace-pre-wrap text-sm leading-6 text-slate-600">{feedback.message}</p>
-                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-400"><span><strong className="text-slate-600">{feedback.name}</strong> · {feedback.email}</span><span>{feedback.course_title || 'General feedback'}</span><span>{formatDate(feedback.created_at)}</span></div>
+                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-400"><span><strong className="text-slate-600">{feedback.name}</strong> · {feedback.email}</span>{feedback.role && <span>Role: <strong className="text-slate-600">{feedback.role}</strong></span>}<span>{feedback.course_title || 'General feedback'}</span><span>{formatDate(feedback.created_at)}</span></div>
                   </div>
                   <div className="flex shrink-0 gap-2"><button type="button" onClick={() => openForm(feedback)} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-violet-50 hover:text-violet-700"><FiEdit2 /> Edit</button><button type="button" onClick={() => setTarget(feedback)} className="rounded-lg border border-slate-200 p-2.5 text-slate-600 hover:bg-rose-50 hover:text-rose-700" aria-label="Delete feedback"><FiTrash2 /></button></div>
                 </div>
@@ -104,6 +104,7 @@ const AdminFeedbackPage = () => {
           <div className="grid gap-5 sm:grid-cols-2">
             <Field label="Name" required><input required maxLength={255} className={inputClass} value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} /></Field>
             <Field label="Email" required><input required type="email" maxLength={255} className={inputClass} value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} /></Field>
+            <Field label="Role / I am"><input maxLength={100} className={inputClass} value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })} placeholder="Student, Trainer, Job Support, or other" /></Field>
             <Field label="Phone"><input maxLength={30} className={inputClass} value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} /></Field>
             <Field label="Course"><select className={inputClass} value={form.course_id} onChange={(event) => setForm({ ...form, course_id: event.target.value })}><option value="">General / no course</option>{courses.map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}</select></Field>
             <Field label="Subject"><input maxLength={255} className={inputClass} value={form.subject} onChange={(event) => setForm({ ...form, subject: event.target.value })} /></Field>

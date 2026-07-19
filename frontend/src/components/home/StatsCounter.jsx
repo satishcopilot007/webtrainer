@@ -42,7 +42,7 @@ const StatItem = ({ stat, icon: Icon, isVisible }) => {
   );
 };
 
-const StatsCounter = () => {
+const StatsCounter = ({ tone = 'black' }) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -59,7 +59,9 @@ const StatsCounter = () => {
   return (
     <section
       ref={ref}
-      className="py-16 bg-gradient-to-r from-primary-800 via-primary-900 to-dark-900"
+      className={`border-b border-[#21262d] py-16 ${tone === 'blue'
+        ? 'bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240]'
+        : 'bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409]'}`}
     >
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

@@ -25,7 +25,7 @@ const FeaturedCourses = () => {
   }, [fetchFeaturedCourses]);
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
       <div className="container mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-14">
@@ -42,7 +42,7 @@ const FeaturedCourses = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-display text-3xl md:text-4xl font-bold text-dark-800"
+            className="font-display text-3xl font-bold text-[#f0f6fc] md:text-4xl"
           >
             Our Popular Courses
           </motion.h2>
@@ -63,13 +63,13 @@ const FeaturedCourses = () => {
           >
             {featuredCourses.slice(0, 6).map((course) => (
               <motion.div key={course.id || course.slug} variants={itemVariants}>
-                <CourseCard course={course} />
+                <CourseCard course={course} darkTheme />
               </motion.div>
             ))}
           </motion.div>
         ) : (
-          <div className="text-center py-12 bg-white rounded-lg">
-            <p className="text-gray-600 text-lg">Featured courses loading... Refresh if they don't appear.</p>
+          <div className="rounded-lg border border-[#30363d] bg-[#161b22] py-12 text-center">
+            <p className="text-lg text-[#8b949e]">Featured courses loading... Refresh if they don't appear.</p>
           </div>
         )}
 

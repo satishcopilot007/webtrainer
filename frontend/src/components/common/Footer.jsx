@@ -20,7 +20,6 @@ const FOOTER_QUICK_LINKS = [
   { label: 'Corporate', path: '/corporate' },
   { label: 'CSR', path: '/csr' },
   { label: 'Blogs', path: '/blog' },
-  { label: 'Students Reviews', path: '/testimonials' },
   { label: 'Referral', path: '/referral' },
   { label: 'Feedback', path: '/feedback' },
   { label: 'Careers', path: '/careers' },

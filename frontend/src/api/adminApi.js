@@ -22,6 +22,16 @@ export const createAdminCourse = (data) => api.post('/admin/courses', data);
 export const updateAdminCourse = (id, data) => api.put(`/admin/courses/${id}`, data);
 export const deactivateAdminCourse = (id) => api.delete(`/admin/courses/${id}`);
 
+export const getAdminFounders = (params) => api.get('/admin/founders', { params });
+export const createFounder = (data) => api.post('/admin/founders', data);
+export const updateFounder = (id, data) => api.put(`/admin/founders/${id}`, data);
+export const deleteFounder = (id) => api.delete(`/admin/founders/${id}`);
+
+export const getAdminBlogs = (params) => api.get('/admin/blogs', { params });
+export const createBlog = (data) => api.post('/admin/blogs', data);
+export const updateBlog = (id, data) => api.put(`/admin/blogs/${id}`, data);
+export const deleteBlog = (id) => api.delete(`/admin/blogs/${id}`);
+
 export const getFeedback = (params) => api.get('/admin/feedback', { params });
 export const createFeedback = (data) => api.post('/admin/feedback', data);
 export const updateFeedback = (id, data) => api.put(`/admin/feedback/${id}`, data);

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
-  FiBookOpen, FiChevronRight, FiGift, FiGrid, FiHome, FiLayers, FiLogOut,
-  FiMenu, FiMessageSquare, FiUsers, FiX,
+  FiBell, FiBookOpen, FiChevronRight, FiEdit3, FiGift, FiGrid, FiHome, FiLayers, FiLogOut,
+  FiMenu, FiMessageSquare, FiStar, FiUsers, FiX,
 } from 'react-icons/fi';
 import useAuthStore from '../store/useAuthStore';
 
@@ -13,7 +13,10 @@ const navItems = [
   { to: '/admin/categories', label: 'Categories', icon: FiLayers },
   { to: '/admin/courses', label: 'Courses', icon: FiBookOpen },
   { to: '/admin/free-courses', label: 'Free Courses', icon: FiGift },
+  { to: '/admin/founders', label: 'Founders', icon: FiStar },
+  { to: '/admin/blogs', label: 'Blogs', icon: FiEdit3 },
   { to: '/admin/feedback', label: 'Feedback', icon: FiMessageSquare },
+  { to: '/admin/notifications', label: 'Notifications', icon: FiBell },
   { to: '/admin/records', label: 'Operations', icon: FiHome },
 ];
 

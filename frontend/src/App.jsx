@@ -53,7 +53,10 @@ const AdminOverviewPage = lazy(() => import('./pages/admin/AdminOverviewPage'));
 const AdminTutorsPage = lazy(() => import('./pages/admin/AdminTutorsPage'));
 const AdminCategoriesPage = lazy(() => import('./pages/admin/AdminCategoriesPage'));
 const AdminCoursesPage = lazy(() => import('./pages/admin/AdminCoursesPage'));
+const AdminFoundersPage = lazy(() => import('./pages/admin/AdminFoundersPage'));
+const AdminBlogsPage = lazy(() => import('./pages/admin/AdminBlogsPage'));
 const AdminFeedbackPage = lazy(() => import('./pages/admin/AdminFeedbackPage'));
+const AdminNotificationsPage = lazy(() => import('./pages/admin/AdminNotificationsPage'));
 const AdminRecordsPage = lazy(() => import('./pages/admin/AdminRecordsPage'));
 
 function App() {
@@ -69,7 +72,10 @@ function App() {
               <Route path="categories" element={<AdminCategoriesPage />} />
               <Route path="courses" element={<AdminCoursesPage />} />
               <Route path="free-courses" element={<AdminCoursesPage freeTutorialOnly />} />
+              <Route path="founders" element={<AdminFoundersPage />} />
+              <Route path="blogs" element={<AdminBlogsPage />} />
               <Route path="feedback" element={<AdminFeedbackPage />} />
+              <Route path="notifications" element={<AdminNotificationsPage />} />
               <Route path="records" element={<AdminRecordsPage />} />
             </Route>
           </Route>

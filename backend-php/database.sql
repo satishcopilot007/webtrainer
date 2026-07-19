@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS `admin_feedback` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
+    `role` VARCHAR(100),
     `phone` VARCHAR(30),
     `course_id` INT,
     `subject` VARCHAR(255),
@@ -237,6 +238,52 @@ CREATE TABLE IF NOT EXISTS `admin_feedback` (
     KEY `idx_admin_feedback_status` (`status`),
     KEY `idx_admin_feedback_course` (`course_id`),
     KEY `idx_admin_feedback_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =============================================
+-- PUBLIC FOUNDERS / LEADERSHIP PROFILES
+-- =============================================
+CREATE TABLE IF NOT EXISTS `admin_founders` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `role` VARCHAR(255) NOT NULL,
+    `expertise` VARCHAR(500),
+    `experience` VARCHAR(100),
+    `location` VARCHAR(255),
+    `country` CHAR(2),
+    `photo_url` VARCHAR(1000),
+    `linkedin_url` VARCHAR(1000),
+    `bio` TEXT,
+    `quote` VARCHAR(1000),
+    `sort_order` INT NOT NULL DEFAULT 0,
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY `idx_founders_active_order` (`is_active`, `sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =============================================
+-- MANAGED BLOGS AND EXTERNAL SOCIAL POSTS
+-- =============================================
+CREATE TABLE IF NOT EXISTS `admin_blogs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `slug` VARCHAR(255) NOT NULL UNIQUE,
+    `excerpt` VARCHAR(1000) NOT NULL,
+    `content` LONGTEXT,
+    `image_url` VARCHAR(1000),
+    `author` VARCHAR(255) NOT NULL,
+    `category` VARCHAR(100) NOT NULL,
+    `read_time` VARCHAR(50),
+    `source_platform` VARCHAR(30) NOT NULL DEFAULT 'website',
+    `external_url` VARCHAR(1000),
+    `reference_url` VARCHAR(1000),
+    `published_at` DATE NOT NULL,
+    `is_published` BOOLEAN NOT NULL DEFAULT FALSE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY `idx_blogs_public` (`is_published`, `published_at`),
+    KEY `idx_blogs_category` (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =============================================

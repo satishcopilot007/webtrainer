@@ -16,22 +16,38 @@ const nodemailer = require('nodemailer');
 const EMAIL_CONFIG = {
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER || 'your-email@gmail.com',
-    pass: process.env.EMAIL_PASSWORD || 'your-app-password'
+    user: String(process.env.EMAIL_USER || '').trim(),
+    pass: String(process.env.EMAIL_PASSWORD || '').replace(/\s+/g, '')
   }
 };
 
-// Create transporter
-const transporter = nodemailer.createTransport(EMAIL_CONFIG);
+const emailConfigured = Boolean(
+  EMAIL_CONFIG.auth.user
+  && EMAIL_CONFIG.auth.pass
+  && !EMAIL_CONFIG.auth.user.includes('your-email')
+  && !EMAIL_CONFIG.auth.pass.includes('xxxx')
+  && !EMAIL_CONFIG.auth.pass.includes('your-app-password')
+);
+const transporter = emailConfigured ? nodemailer.createTransport(EMAIL_CONFIG) : null;
 
-// Verify connection
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email service error:', error.message);
-  } else {
-    console.log('✅ Email service is ready');
-  }
-});
+if (transporter) {
+  transporter.verify((error) => {
+    if (error) {
+      console.error('❌ Email service error:', error.message);
+    } else {
+      console.log('✅ Email service is ready');
+    }
+  });
+} else {
+  console.warn('[EMAIL] SMTP credentials are not configured; email delivery is disabled.');
+}
+
+const escapeHtml = (value) => String(value ?? '')
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;');
 
 /**
  * Send enrollment confirmation email
@@ -228,6 +244,53 @@ const sendDemoBookingConfirmation = async (to, userData, demoData) => {
 };
 
 /**
+ * Notify the administrator when a free-session request is submitted.
+ */
+const sendDemoBookingAdminNotification = async (booking) => {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  if (!transporter || !adminEmail) {
+    return { success: false, skipped: true, error: 'Admin email is not configured' };
+  }
+
+  const adminUrl = `${String(process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '')}/admin/notifications`;
+  const mailOptions = {
+    from: `${process.env.SENDER_NAME || 'TrainerMentors'} <${process.env.SENDER_EMAIL || process.env.EMAIL_USER}>`,
+    to: adminEmail,
+    replyTo: booking.email,
+    subject: `New free session request - ${booking.course_interested}`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;color:#172033">
+        <div style="background:#020617;color:#fff;padding:24px;border-radius:12px 12px 0 0">
+          <h1 style="font-size:22px;margin:0">New free session request</h1>
+        </div>
+        <div style="padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-top:0;border-radius:0 0 12px 12px">
+          <p>A learner submitted a new booking request.</p>
+          <table style="width:100%;border-collapse:collapse;background:#fff">
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Name</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.name)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Email</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.email)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Phone</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.phone)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Course</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.course_interested)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Mode</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.mode)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Preferred date</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.timeline)}</td></tr>
+            <tr><td style="padding:10px;border:1px solid #e2e8f0"><strong>Message</strong></td><td style="padding:10px;border:1px solid #e2e8f0">${escapeHtml(booking.message || '—')}</td></tr>
+          </table>
+          <p style="margin-top:20px"><a href="${escapeHtml(adminUrl)}" style="display:inline-block;background:#4f46e5;color:#fff;padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:700">Open admin notifications</a></p>
+        </div>
+      </div>
+    `,
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('✅ Admin booking notification sent to:', adminEmail);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error('❌ Error sending admin booking notification:', error.message);
+    return { success: false, error: error.message };
+  }
+};
+
+/**
  * Send welcome email
  */
 const sendWelcomeEmail = async (to, userName) => {
@@ -292,5 +355,6 @@ module.exports = {
   sendEnrollmentConfirmation,
   sendPaymentConfirmation,
   sendDemoBookingConfirmation,
+  sendDemoBookingAdminNotification,
   sendWelcomeEmail
 };

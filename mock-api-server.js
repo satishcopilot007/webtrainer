@@ -14,6 +14,7 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const { sendDemoBookingAdminNotification } = require('./emailService');
 
 // Load Razorpay SDK — only available when keys are configured
 let Razorpay;
@@ -136,6 +137,8 @@ const mockDB = {
       updated_at: '2026-07-17T08:20:00Z'
     }
   ],
+  founders: [],
+  blogs: [],
   leads: [
     {
       id: 1,
@@ -1143,6 +1146,7 @@ app.post('/api/feedback', (req, res) => {
 
   const name = cleanText(data.name, 255, true);
   const email = validEmail(data.email);
+  const role = cleanText(data.role, 100, true);
   const message = cleanText(data.message, 20000, true);
   const courseId = positiveId(data.course_id);
   const rating = Number(data.rating);
@@ -1150,6 +1154,7 @@ app.post('/api/feedback', (req, res) => {
 
   if (!name || name.length < 2) return adminError(res, 'Validation failed', { name: 'Enter your name' }, 422);
   if (!email) return adminError(res, 'Validation failed', { email: 'Enter a valid email address' }, 422);
+  if (!role || role.length < 2) return adminError(res, 'Validation failed', { role: 'Select or enter your role' }, 422);
   if (!message || message.length < 10) return adminError(res, 'Validation failed', { message: 'Feedback must contain at least 10 characters' }, 422);
   if (!course || activeFlag(course.is_active, 1) !== 1) return adminError(res, 'Validation failed', { course_id: 'Select a valid course' }, 422);
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) return adminError(res, 'Validation failed', { rating: 'Select a rating from 1 to 5' }, 422);
@@ -1166,6 +1171,7 @@ app.post('/api/feedback', (req, res) => {
     id: nextId(mockDB.feedback),
     name,
     email,
+    role,
     phone: '',
     course_id: courseId,
     subject: `Feedback for ${course.title}`,
@@ -1178,6 +1184,26 @@ app.post('/api/feedback', (req, res) => {
   };
   mockDB.feedback.push(feedback);
   return adminSuccess(res, { id: feedback.id }, 'Thank you. Your feedback has been sent for review.', 201);
+});
+
+app.get('/api/founders', (req, res) => {
+  const founders = mockDB.founders
+    .filter(founder => activeFlag(founder.is_active, 1) === 1)
+    .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+  return adminSuccess(res, founders, 'Founders retrieved successfully');
+});
+
+app.get('/api/blogs', (req, res) => {
+  const blogs = mockDB.blogs
+    .filter(blog => activeFlag(blog.is_published, 0) === 1)
+    .sort((a, b) => String(b.published_at).localeCompare(String(a.published_at)));
+  return adminSuccess(res, blogs, 'Blogs retrieved successfully');
+});
+
+app.get('/api/blogs/:slug', (req, res) => {
+  const blog = mockDB.blogs.find(item => item.slug === String(req.params.slug) && activeFlag(item.is_published, 0) === 1);
+  if (!blog) return adminError(res, 'Blog not found', null, 404);
+  return adminSuccess(res, blog, 'Blog retrieved successfully');
 });
 
 // Get filter options (levels, modes)
@@ -1483,6 +1509,13 @@ app.post('/api/leads', (req, res) => {
   };
 
   mockDB.leads.push(demoBooking);
+
+  // The booking remains successful even if the external email provider is unavailable.
+  sendDemoBookingAdminNotification(demoBooking).then((result) => {
+    if (!result.success && !result.skipped) {
+      console.error(`[EMAIL] Admin notification failed for booking ${demoBooking.id}: ${result.error}`);
+    }
+  });
 
   // Log demo booking (in real app, this would be saved to database)
   console.log('\n📧 ===== NEW DEMO BOOKING RECEIVED =====');
@@ -2053,13 +2086,14 @@ function validateFeedbackInput(data, existing = null) {
   const value = (field, fallback) => data[field] !== undefined ? data[field] : (existing?.[field] ?? fallback);
   const name = cleanText(value('name', ''), 255, true);
   const email = validEmail(value('email', ''));
+  const role = cleanText(value('role', ''), 100);
   const message = cleanText(value('message', ''), 20000, true);
   if (!name) return { error: { name: 'Name is required' } };
   if (!email) return { error: { email: 'A valid email address is required' } };
   if (!message) return { error: { message: 'Message is required' } };
   const phone = cleanText(value('phone', ''), 30);
   const subject = cleanText(value('subject', ''), 255);
-  if (phone === null || subject === null) return { error: { value: 'A field exceeds its maximum length' } };
+  if (role === null || phone === null || subject === null) return { error: { value: 'A field exceeds its maximum length' } };
   let courseId = value('course_id', null);
   if (courseId !== null && courseId !== '') {
     courseId = positiveId(courseId);
@@ -2074,7 +2108,60 @@ function validateFeedbackInput(data, existing = null) {
   if (!['new', 'reviewed', 'resolved'].includes(status)) return { error: { status: 'Invalid feedback status' } };
   const published = requestedActiveFlag(value('is_published', false), 0);
   if (!published.valid) return { error: { is_published: 'Must be a boolean' } };
-  return { feedback: { name, email, phone, course_id: courseId, subject, message, rating, status, is_published: published.value } };
+  return { feedback: { name, email, role, phone, course_id: courseId, subject, message, rating, status, is_published: published.value } };
+}
+
+function validateFounderInput(data, existing = null) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return { error: { body: 'A JSON object is required' } };
+  const value = (field, fallback) => data[field] !== undefined ? data[field] : (existing?.[field] ?? fallback);
+  const founder = {
+    name: cleanText(value('name', ''), 255, true),
+    role: cleanText(value('role', ''), 255, true),
+    expertise: cleanText(value('expertise', ''), 500),
+    experience: cleanText(value('experience', ''), 100),
+    location: cleanText(value('location', ''), 255),
+    country: cleanText(value('country', ''), 2),
+    photo_url: cleanText(value('photo_url', ''), 1000),
+    linkedin_url: cleanText(value('linkedin_url', ''), 1000),
+    bio: cleanText(value('bio', ''), 5000),
+    quote: cleanText(value('quote', ''), 1000),
+    sort_order: Number(value('sort_order', 0)),
+    is_active: activeFlag(value('is_active', true), 1),
+  };
+  if (!founder.name) return { error: { name: 'Name is required' } };
+  if (!founder.role) return { error: { role: 'Role is required' } };
+  if (Object.values(founder).some(item => item === null)) return { error: { value: 'A field exceeds its maximum length' } };
+  if (!Number.isInteger(founder.sort_order) || founder.sort_order < 0 || founder.sort_order > 9999) return { error: { sort_order: 'Display order must be between 0 and 9999' } };
+  founder.country = founder.country.toUpperCase();
+  return { founder };
+}
+
+function validateBlogInput(data, existing = null) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return { error: { body: 'A JSON object is required' } };
+  const value = (field, fallback) => data[field] !== undefined ? data[field] : (existing?.[field] ?? fallback);
+  const title = cleanText(value('title', ''), 255, true);
+  const blog = {
+    title,
+    slug: slugifyCourseTitle(value('slug', '') || title),
+    excerpt: cleanText(value('excerpt', ''), 1000, true),
+    content: cleanText(value('content', ''), 50000),
+    image_url: cleanText(value('image_url', ''), 1000),
+    author: cleanText(value('author', ''), 255, true),
+    category: cleanText(value('category', ''), 100, true),
+    read_time: cleanText(value('read_time', ''), 50),
+    source_platform: cleanText(value('source_platform', 'website'), 30, true),
+    external_url: cleanText(value('external_url', ''), 1000),
+    reference_url: cleanText(value('reference_url', ''), 1000),
+    published_at: cleanText(value('published_at', ''), 30, true),
+    is_published: activeFlag(value('is_published', true), 1),
+  };
+  if (!blog.title || !blog.slug) return { error: { title: 'Title is required' } };
+  if (!blog.excerpt) return { error: { excerpt: 'Excerpt is required' } };
+  if (!blog.author || !blog.category) return { error: { author: 'Author and category are required' } };
+  if (!blog.content && !blog.external_url) return { error: { content: 'Add website content or an external post link' } };
+  if (!['website', 'linkedin', 'facebook', 'instagram', 'youtube', 'other'].includes(blog.source_platform)) return { error: { source_platform: 'Invalid source platform' } };
+  if (Object.values(blog).some(item => item === null)) return { error: { value: 'A field exceeds its maximum length' } };
+  return { blog };
 }
 
 app.get('/api/admin/overview', requireAdmin, (req, res) => {
@@ -2384,11 +2471,83 @@ app.delete('/api/admin/courses/:id', requireAdmin, (req, res) => {
   return adminSuccess(res, null, 'Course deactivated successfully');
 });
 
+app.get('/api/admin/founders', requireAdmin, (req, res) => {
+  const search = String(req.query.search || '').trim();
+  let rows = mockDB.founders.filter(founder => includesSearch([founder.name, founder.role, founder.expertise, founder.location], search));
+  rows = [...rows].sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+  const { page, pageSize, start } = adminPageParams(req);
+  return adminPaginated(res, rows.slice(start, start + pageSize), rows.length, page, pageSize, 'Founders retrieved successfully');
+});
+
+app.post('/api/admin/founders', requireAdmin, (req, res) => {
+  const result = validateFounderInput(req.body);
+  if (result.error) return adminError(res, 'Validation failed', result.error, 422);
+  const now = new Date().toISOString();
+  const founder = { id: nextId(mockDB.founders), ...result.founder, created_at: now, updated_at: now };
+  mockDB.founders.push(founder);
+  return adminSuccess(res, { id: founder.id }, 'Founder created successfully', 201);
+});
+
+app.put('/api/admin/founders/:id', requireAdmin, (req, res) => {
+  const id = positiveId(req.params.id);
+  const founder = mockDB.founders.find(item => item.id === id);
+  if (!founder) return adminError(res, 'Founder not found', null, 404);
+  const result = validateFounderInput(req.body, founder);
+  if (result.error) return adminError(res, 'Validation failed', result.error, 422);
+  Object.assign(founder, result.founder, { updated_at: new Date().toISOString() });
+  return adminSuccess(res, { id }, 'Founder updated successfully');
+});
+
+app.delete('/api/admin/founders/:id', requireAdmin, (req, res) => {
+  const id = positiveId(req.params.id);
+  const index = mockDB.founders.findIndex(item => item.id === id);
+  if (index === -1) return adminError(res, 'Founder not found', null, 404);
+  mockDB.founders.splice(index, 1);
+  return adminSuccess(res, null, 'Founder deleted successfully');
+});
+
+app.get('/api/admin/blogs', requireAdmin, (req, res) => {
+  const search = String(req.query.search || '').trim();
+  let rows = mockDB.blogs.filter(blog => includesSearch([blog.title, blog.category, blog.author, blog.excerpt, blog.content], search));
+  rows = [...rows].sort((a, b) => String(b.published_at).localeCompare(String(a.published_at)));
+  const { page, pageSize, start } = adminPageParams(req);
+  return adminPaginated(res, rows.slice(start, start + pageSize), rows.length, page, pageSize, 'Blogs retrieved successfully');
+});
+
+app.post('/api/admin/blogs', requireAdmin, (req, res) => {
+  const result = validateBlogInput(req.body);
+  if (result.error) return adminError(res, 'Validation failed', result.error, 422);
+  if (mockDB.blogs.some(item => item.slug === result.blog.slug)) return adminError(res, 'Slug already exists', { slug: 'Must be unique' }, 409);
+  const now = new Date().toISOString();
+  const blog = { id: nextId(mockDB.blogs), ...result.blog, created_at: now, updated_at: now };
+  mockDB.blogs.push(blog);
+  return adminSuccess(res, { id: blog.id }, 'Blog created successfully', 201);
+});
+
+app.put('/api/admin/blogs/:id', requireAdmin, (req, res) => {
+  const id = positiveId(req.params.id);
+  const blog = mockDB.blogs.find(item => item.id === id);
+  if (!blog) return adminError(res, 'Blog not found', null, 404);
+  const result = validateBlogInput(req.body, blog);
+  if (result.error) return adminError(res, 'Validation failed', result.error, 422);
+  if (mockDB.blogs.some(item => item.id !== id && item.slug === result.blog.slug)) return adminError(res, 'Slug already exists', { slug: 'Must be unique' }, 409);
+  Object.assign(blog, result.blog, { updated_at: new Date().toISOString() });
+  return adminSuccess(res, { id }, 'Blog updated successfully');
+});
+
+app.delete('/api/admin/blogs/:id', requireAdmin, (req, res) => {
+  const id = positiveId(req.params.id);
+  const index = mockDB.blogs.findIndex(item => item.id === id);
+  if (index === -1) return adminError(res, 'Blog not found', null, 404);
+  mockDB.blogs.splice(index, 1);
+  return adminSuccess(res, null, 'Blog deleted successfully');
+});
+
 app.get('/api/admin/feedback', requireAdmin, (req, res) => {
   const status = parseStatusFilter(req, ['all', 'new', 'reviewed', 'resolved']);
   if (!status) return adminError(res, 'Invalid status filter', null, 422);
   const search = String(req.query.search || '').trim().slice(0, 100);
-  let rows = mockDB.feedback.filter(feedback => includesSearch([feedback.name, feedback.email, feedback.subject, feedback.message], search));
+  let rows = mockDB.feedback.filter(feedback => includesSearch([feedback.name, feedback.email, feedback.role, feedback.subject, feedback.message], search));
   if (status !== 'all') rows = rows.filter(feedback => feedback.status === status);
   rows = rows.map(feedbackView).sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
   const { page, pageSize, start } = adminPageParams(req);

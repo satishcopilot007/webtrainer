@@ -38,7 +38,7 @@ const TESTIMONIALS = [
 
 const TestimonialSlider = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-primary-900 via-dark-800 to-dark-900 relative overflow-hidden">
+    <section className="relative overflow-hidden border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-72 h-72 bg-secondary-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl" />
@@ -65,7 +65,7 @@ const TestimonialSlider = () => {
         >
           {TESTIMONIALS.map((t) => (
             <SwiperSlide key={t.id}>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 h-full flex flex-col">
+              <div className="flex h-full flex-col rounded-2xl border border-[#30363d] bg-[#161b22]/90 p-8 backdrop-blur-sm transition-colors hover:border-[#58a6ff]/60">
                 <FaQuoteLeft className="text-secondary-400/30 text-3xl mb-4" />
                 <p className="text-gray-300 leading-relaxed flex-1 mb-6">{t.quote}</p>
                 <div className="mt-auto">

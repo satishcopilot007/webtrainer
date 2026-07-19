@@ -7,7 +7,7 @@ import { formatPrice, truncateText } from '../../utils/helpers';
 import { LEVEL_COLORS } from '../../utils/constants';
 import useCartStore from '../../store/useCartStore';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, darkTheme = false }) => {
   const {
     id, slug, title, short_description, thumbnail, category, level,
     price, discounted_price, discount_percentage, rating, rating_count,
@@ -63,7 +63,7 @@ const CourseCard = ({ course }) => {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
+      className={`${darkTheme ? 'border-[#30363d] bg-[#161b22] shadow-black/20 hover:border-[#58a6ff]/60' : 'border-gray-100 bg-white'} flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-xl`}
     >
       {/* Thumbnail */}
       <div className="relative">
@@ -89,21 +89,21 @@ const CourseCard = ({ course }) => {
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <Link to={`/course/${slug}`}>
-          <h3 className="font-display font-semibold text-dark-800 text-lg mb-2 line-clamp-2 hover:text-primary-500 transition-colors">
+          <h3 className={`font-display mb-2 line-clamp-2 text-lg font-semibold transition-colors hover:text-[#58a6ff] ${darkTheme ? 'text-[#f0f6fc]' : 'text-dark-800'}`}>
             {title}
           </h3>
         </Link>
 
-        <p className="text-gray-500 text-sm mb-3 flex-1">
+        <p className={`mb-3 flex-1 text-sm ${darkTheme ? 'text-[#8b949e]' : 'text-gray-500'}`}>
           {truncateText(short_description, 90)}
         </p>
 
         {syllabusPreview.length > 0 && (
-          <div className="mb-3 rounded-lg bg-gray-50 p-2.5 border border-gray-100">
-            <p className="text-[11px] font-semibold text-gray-600 mb-1">Syllabus Highlights</p>
+          <div className={`mb-3 rounded-lg border p-2.5 ${darkTheme ? 'border-[#30363d] bg-[#0d1117]' : 'border-gray-100 bg-gray-50'}`}>
+            <p className={`mb-1 text-[11px] font-semibold ${darkTheme ? 'text-[#c9d1d9]' : 'text-gray-600'}`}>Syllabus Highlights</p>
             <ul className="space-y-1">
               {syllabusPreview.map((item, idx) => (
-                <li key={`${slug}-syllabus-${idx}`} className="text-xs text-gray-600 line-clamp-1">• {item}</li>
+                <li key={`${slug}-syllabus-${idx}`} className={`line-clamp-1 text-xs ${darkTheme ? 'text-[#8b949e]' : 'text-gray-600'}`}>• {item}</li>
               ))}
             </ul>
           </div>
@@ -115,7 +115,7 @@ const CourseCard = ({ course }) => {
             {tools_covered.slice(0, 3).map((tool) => (
               <span
                 key={tool}
-                className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded"
+                className={`rounded px-2 py-0.5 text-xs ${darkTheme ? 'bg-[#21262d] text-[#c9d1d9]' : 'bg-gray-100 text-gray-600'}`}
               >
                 {tool}
               </span>
@@ -127,7 +127,7 @@ const CourseCard = ({ course }) => {
         )}
 
         {/* Rating & meta */}
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+        <div className={`mb-4 flex items-center justify-between text-sm ${darkTheme ? 'text-[#8b949e]' : 'text-gray-500'}`}>
           <StarRating rating={rating || 0} showCount count={rating_count || 0} />
           <div className="flex items-center gap-3">
             {durationLabel && (
@@ -144,10 +144,10 @@ const CourseCard = ({ course }) => {
         </div>
 
         {/* Price & CTA */}
-        <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
+        <div className={`flex flex-col gap-3 border-t pt-4 ${darkTheme ? 'border-[#30363d]' : 'border-gray-100'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold text-primary-600">
+              <span className={`text-xl font-bold ${darkTheme ? 'text-[#58a6ff]' : 'text-primary-600'}`}>
                 {hasValidPrice ? formatPrice(effectivePrice) : pricingNote}
               </span>
               {hasDiscount && (
@@ -163,14 +163,14 @@ const CourseCard = ({ course }) => {
           <div className="flex gap-2">
             <button
               onClick={handleAddToCart}
-              className="flex-1 flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-3 rounded-lg transition-colors"
+              className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 font-semibold text-white transition-colors ${darkTheme ? 'bg-[#1f6feb] hover:bg-[#388bfd]' : 'bg-primary-600 hover:bg-primary-700'}`}
             >
               <FaShoppingCart className="text-sm" />
               Add to Cart
             </button>
             <Link
               to={`/course/${slug}`}
-              className="px-4 py-2 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors whitespace-nowrap"
+              className={`whitespace-nowrap rounded-lg border px-4 py-2 font-semibold transition-colors ${darkTheme ? 'border-[#30363d] text-[#c9d1d9] hover:border-[#58a6ff] hover:bg-[#21262d]' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
             >
               Details
             </Link>

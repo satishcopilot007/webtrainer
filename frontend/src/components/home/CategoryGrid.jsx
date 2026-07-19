@@ -14,13 +14,13 @@ const CATEGORY_ICONS = {
 };
 
 const CATEGORY_COLORS = {
-  'corporate': 'border-green-400 text-green-600 bg-green-50',
-  'technical': 'border-blue-400 text-blue-600 bg-blue-50',
-  'non-technical': 'border-pink-400 text-pink-600 bg-pink-50',
-  'certificate': 'border-purple-400 text-purple-600 bg-purple-50',
+  'corporate': 'border-green-500/50 text-green-400 bg-[#161b22]',
+  'technical': 'border-blue-500/50 text-blue-400 bg-[#161b22]',
+  'non-technical': 'border-pink-500/50 text-pink-400 bg-[#161b22]',
+  'certificate': 'border-purple-500/50 text-purple-400 bg-[#161b22]',
 };
 
-const DEFAULT_COLOR = 'border-primary-400 text-primary-500 bg-primary-50';
+const DEFAULT_COLOR = 'border-[#30363d] text-[#58a6ff] bg-[#161b22]';
 
 const CategoryGrid = () => {
   const store = useCourseStore();
@@ -32,7 +32,7 @@ const CategoryGrid = () => {
   }, [fetchCategories]);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
       <div className="container mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-14">
@@ -49,7 +49,7 @@ const CategoryGrid = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-display text-3xl md:text-4xl font-bold text-dark-800"
+            className="font-display text-3xl font-bold text-[#f0f6fc] md:text-4xl"
           >
             Explore Categories
           </motion.h2>
@@ -71,13 +71,13 @@ const CategoryGrid = () => {
               >
                 <Link
                   to={`/courses/${cat.slug}`}
-                  className={`block border-2 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 group ${color}`}
+                  className={`group block rounded-xl border p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#58a6ff] hover:shadow-xl hover:shadow-blue-950/20 ${color}`}
                 >
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white shadow-sm mb-4 group-hover:scale-110 transition-transform">
+                  <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#30363d] bg-[#0d1117] shadow-sm transition-transform group-hover:scale-110">
                     <Icon className="text-2xl" />
                   </div>
-                  <h3 className="font-semibold text-dark-800 mb-1">{cat.name}</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="mb-1 font-semibold text-[#f0f6fc]">{cat.name}</h3>
+                  <p className="text-sm text-[#8b949e]">
                     {cat.course_count ?? 0} {cat.course_count === 1 ? 'Course' : 'Courses'}
                   </p>
                 </Link>

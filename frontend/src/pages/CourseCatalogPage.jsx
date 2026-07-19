@@ -98,11 +98,11 @@ const CourseCatalogPage = () => {
     <div className="space-y-6">
       {/* Category Filter */}
       <div>
-        <h3 className="font-semibold text-gray-800 mb-3">Category</h3>
+        <h3 className="mb-3 font-semibold text-[#f0f6fc]">Category</h3>
         <div className="space-y-2">
           <button
             onClick={() => updateFilter('category', '')}
-            className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedCategory ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+            className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${!selectedCategory ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
           >
             All Categories
           </button>
@@ -110,7 +110,7 @@ const CourseCatalogPage = () => {
             <button
               key={cat.slug}
               onClick={() => updateFilter('category', cat.slug)}
-              className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.slug ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${selectedCategory === cat.slug ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
             >
               {cat.name}
             </button>
@@ -120,11 +120,11 @@ const CourseCatalogPage = () => {
 
       {/* Level Filter */}
       <div>
-        <h3 className="font-semibold text-gray-800 mb-3">Level</h3>
+        <h3 className="mb-3 font-semibold text-[#f0f6fc]">Level</h3>
         <div className="space-y-2">
           <button
             onClick={() => updateFilter('level', '')}
-            className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedLevel ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+            className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${!selectedLevel ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
           >
             All Levels
           </button>
@@ -132,7 +132,7 @@ const CourseCatalogPage = () => {
             <button
               key={lvl}
               onClick={() => updateFilter('level', lvl)}
-              className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedLevel === lvl ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${selectedLevel === lvl ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
             >
               {LEVEL_LABELS[lvl] || lvl}
             </button>
@@ -142,11 +142,11 @@ const CourseCatalogPage = () => {
 
       {/* Mode Filter */}
       <div>
-        <h3 className="font-semibold text-gray-800 mb-3">Mode</h3>
+        <h3 className="mb-3 font-semibold text-[#f0f6fc]">Mode</h3>
         <div className="space-y-2">
           <button
             onClick={() => updateFilter('mode', '')}
-            className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${!selectedMode ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+            className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${!selectedMode ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
           >
             All Modes
           </button>
@@ -154,7 +154,7 @@ const CourseCatalogPage = () => {
             <button
               key={m}
               onClick={() => updateFilter('mode', m)}
-              className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedMode === m ? 'bg-primary-100 text-primary-700 font-medium' : 'text-gray-600 hover:bg-gray-100'}`}
+              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${selectedMode === m ? 'bg-[#1f6feb]/20 font-medium text-[#58a6ff]' : 'text-[#8b949e] hover:bg-[#21262d] hover:text-[#c9d1d9]'}`}
             >
               {MODE_LABELS[m] || m}
             </button>
@@ -181,8 +181,10 @@ const CourseCatalogPage = () => {
         <link rel="canonical" href={`https://trainermentors.com/courses${mainCategory ? '/' + mainCategory : ''}`} />
       </Helmet>
 
+      <div className="min-h-screen bg-[#0d1117] text-[#f0f6fc]">
+
       {/* Hero Banner */}
-      <section className="bg-gradient-to-r from-[#461E96] to-[#461E96]/80 py-16">
+      <section className="border-b border-[#21262d] bg-gradient-to-br from-[#000240] via-[#071b35] to-[#010409] py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -202,17 +204,17 @@ const CourseCatalogPage = () => {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="mx-auto max-w-7xl bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] px-4 py-12">
         {/* Search Bar */}
         <form onSubmit={handleSearch} className="mb-8">
           <div className="relative max-w-xl mx-auto">
-            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#8b949e]" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search courses..."
-              className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+              className="w-full rounded-full border border-[#30363d] bg-[#161b22] py-3 pl-12 pr-4 text-[#f0f6fc] outline-none transition-all placeholder:text-[#6e7681] focus:border-[#58a6ff] focus:ring-2 focus:ring-[#1f6feb]/20"
             />
           </div>
         </form>
@@ -235,12 +237,12 @@ const CourseCatalogPage = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="lg:hidden bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+              className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm lg:hidden"
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-bold text-lg">Filters</h2>
+                <h2 className="text-lg font-bold text-[#f0f6fc]">Filters</h2>
                 <button onClick={() => setShowMobileFilters(false)}>
-                  <FaTimes className="text-gray-400" />
+                  <FaTimes className="text-[#8b949e]" />
                 </button>
               </div>
               <FilterPanel />
@@ -249,8 +251,8 @@ const CourseCatalogPage = () => {
 
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-24 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <h2 className="font-bold text-lg mb-4">Filters</h2>
+            <div className="sticky top-24 rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-lg shadow-black/20">
+              <h2 className="mb-4 text-lg font-bold text-[#f0f6fc]">Filters</h2>
               <FilterPanel />
             </div>
           </aside>
@@ -259,11 +261,11 @@ const CourseCatalogPage = () => {
           <div className="flex-1">
             {isLoading ? (
               <div className="flex justify-center py-20">
-                <Loader />
+                <Loader darkTheme />
               </div>
             ) : courses.length === 0 ? (
               <div className="text-center py-20">
-                <p className="text-gray-500 text-lg">No courses found matching your criteria.</p>
+                <p className="text-lg text-[#8b949e]">No courses found matching your criteria.</p>
                 <button onClick={clearFilters} className="mt-4 text-primary-500 hover:underline font-medium">
                   Clear filters
                 </button>
@@ -279,7 +281,7 @@ const CourseCatalogPage = () => {
                       viewport={{ once: true }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CourseCard course={course} />
+                      <CourseCard course={course} darkTheme />
                     </motion.div>
                   ))}
                 </div>
@@ -290,7 +292,7 @@ const CourseCatalogPage = () => {
                     <button
                       onClick={() => goToPage(currentPage - 1)}
                       disabled={currentPage <= 1}
-                      className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                      className="rounded-lg border border-[#30363d] bg-[#161b22] px-4 py-2 text-sm font-medium text-[#c9d1d9] transition-colors hover:border-[#58a6ff] hover:bg-[#21262d] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Previous
                     </button>
@@ -311,7 +313,7 @@ const CourseCatalogPage = () => {
                       }
                       return pages.map((page, idx) => (
                         page === '...' ? (
-                          <span key={`dots-${idx}`} className="px-2 text-gray-400">...</span>
+                          <span key={`dots-${idx}`} className="px-2 text-[#8b949e]">...</span>
                         ) : (
                           <button
                             key={page}
@@ -319,7 +321,7 @@ const CourseCatalogPage = () => {
                             className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
                               page === currentPage
                                 ? 'bg-primary-500 text-white'
-                                : 'border border-gray-200 hover:bg-gray-50'
+                                : 'border border-[#30363d] bg-[#161b22] text-[#c9d1d9] hover:border-[#58a6ff] hover:bg-[#21262d]'
                             }`}
                           >
                             {page}
@@ -330,7 +332,7 @@ const CourseCatalogPage = () => {
                     <button
                       onClick={() => goToPage(currentPage + 1)}
                       disabled={currentPage >= totalPages}
-                      className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                      className="rounded-lg border border-[#30363d] bg-[#161b22] px-4 py-2 text-sm font-medium text-[#c9d1d9] transition-colors hover:border-[#58a6ff] hover:bg-[#21262d] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Next
                     </button>
@@ -341,6 +343,7 @@ const CourseCatalogPage = () => {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 };

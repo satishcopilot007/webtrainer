@@ -10,6 +10,7 @@ import {
 import StatsCounter from '../components/home/StatsCounter';
 import AvatarGenerator from '../components/common/AvatarGenerator';
 import { getMentors } from '../api/courseApi';
+import { getPublicFounders } from '../api/contentApi';
 import useUIStore from '../store/useUIStore';
 
 const CORE_VALUES = [
@@ -123,9 +124,21 @@ const partnerTrack = [...PARTNERS, ...PARTNERS];
 
 const AboutPage = () => {
   const [mentors, setMentors] = useState([]);
+  const [founders, setFounders] = useState([]);
   const openDemoModal = useUIStore((s) => s.openDemoModal);
 
   useEffect(() => {
+    getPublicFounders()
+      .then(({ data }) => setFounders((data.data || []).map((founder) => ({
+        ...founder,
+        spec: founder.expertise,
+        exp: founder.experience,
+        loc: founder.location,
+        photo: founder.photo_url,
+        linkedin: founder.linkedin_url,
+      }))))
+      .catch(() => setFounders([]));
+
     const fetchMentors = async () => {
       try {
         const { data } = await getMentors();
@@ -135,7 +148,9 @@ const AboutPage = () => {
     fetchMentors();
   }, []);
 
-  const teamList = mentors.length > 0 ? mentors : TEAM;
+  const mentorList = mentors.length > 0 ? mentors : TEAM;
+  const founderNames = new Set(founders.map((founder) => founder.name));
+  const teamList = [...founders, ...mentorList.filter((mentor) => !founderNames.has(mentor.name || mentor.full_name))];
 
   return (
     <>
@@ -146,10 +161,12 @@ const AboutPage = () => {
         <link rel="canonical" href="https://trainermentors.com/about" />
       </Helmet>
 
+      <div className="bg-[#0d1117] text-[#f0f6fc]">
+
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section
         className="relative overflow-hidden py-28 text-center"
-        style={{ background: 'linear-gradient(135deg, #2D1266 0%, #461E96 55%, #1a0a40 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #000240 0%, #071b35 52%, #010409 100%)' }}
       >
         {/* subtle dot grid */}
         <div className="absolute inset-0 opacity-10"
@@ -203,21 +220,21 @@ const AboutPage = () => {
       </section>
 
       {/* ── Mission & Vision ─────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="rounded-2xl p-10"
-            style={{ background: 'linear-gradient(135deg,#f8f5ff,#ede8ff)', borderLeft: '5px solid #461E96' }}
+            className="rounded-2xl border border-[#30363d] p-10 shadow-xl shadow-black/10"
+            style={{ background: 'linear-gradient(135deg,#161b22,#0d1117)', borderLeft: '5px solid #58a6ff' }}
           >
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
               style={{ background: '#461E96' }}>
               <FaBullseye className="text-xl text-white" />
             </div>
-            <h2 className="text-2xl font-bold mb-4" style={{ color: '#461E96' }}>Our Mission</h2>
-            <p className="text-gray-600 leading-relaxed">
+            <h2 className="mb-4 text-2xl font-bold text-[#58a6ff]">Our Mission</h2>
+            <p className="leading-relaxed text-[#8b949e]">
               At TrainerMentors, our mission is to bridge the gap between education and employment
               by providing accessible, mentor-led training programs that equip learners with
               real-world skills, industry-relevant knowledge, and the confidence to build
@@ -229,15 +246,15 @@ const AboutPage = () => {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="rounded-2xl p-10"
-            style={{ background: 'linear-gradient(135deg,#f0faff,#e0f5ff)', borderLeft: '5px solid #00B4E6' }}
+            className="rounded-2xl border border-[#30363d] p-10 shadow-xl shadow-black/10"
+            style={{ background: 'linear-gradient(135deg,#161b22,#071b35)', borderLeft: '5px solid #00B4E6' }}
           >
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
               style={{ background: '#00B4E6' }}>
               <FaEye className="text-xl text-white" />
             </div>
             <h2 className="text-2xl font-bold mb-4" style={{ color: '#00B4E6' }}>Our Vision</h2>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="leading-relaxed text-[#8b949e]">
               To become India&apos;s most trusted career development platform — where every learner,
               regardless of background, has access to world-class mentorship and the opportunity
               to achieve their professional dreams.
@@ -247,10 +264,10 @@ const AboutPage = () => {
       </section>
 
       {/* ── Animated Stats ──────────────────────────────────────── */}
-      <StatsCounter />
+      <StatsCounter tone="blue" />
 
       {/* ── Core Values ──────────────────────────────────────────── */}
-      <section className="py-20 bg-gray-50">
+      <section className="border-b border-[#21262d] bg-gradient-to-b from-[#010409] to-[#0d1117] py-20">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,8 +275,8 @@ const AboutPage = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">What We Stand For</h2>
-            <p className="text-gray-500 text-base max-w-xl mx-auto">The values that drive everything we do</p>
+            <h2 className="mb-3 text-3xl font-bold text-[#f0f6fc] md:text-4xl">What We Stand For</h2>
+            <p className="mx-auto max-w-xl text-base text-[#8b949e]">The values that drive everything we do</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -271,14 +288,14 @@ const AboutPage = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform duration-300"
-                style={{ borderTop: `4px solid ${val.border}`, boxShadow: '0 4px 20px rgba(70,30,150,0.07)' }}
+                className="rounded-2xl border border-[#30363d] bg-[#161b22] p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#58a6ff]/60"
+                style={{ borderTop: `4px solid ${val.border}`, boxShadow: '0 10px 30px rgba(0,0,0,0.18)' }}
               >
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${val.gradient} flex items-center justify-center mx-auto mb-5`}>
                   <val.icon className="text-2xl text-white" />
                 </div>
-                <h3 className="text-base font-bold text-gray-800 mb-3">{val.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{val.description}</p>
+                <h3 className="mb-3 text-base font-bold text-[#f0f6fc]">{val.title}</h3>
+                <p className="text-sm leading-relaxed text-[#8b949e]">{val.description}</p>
               </motion.div>
             ))}
           </div>
@@ -286,7 +303,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── Company Story ──────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-20">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -294,17 +311,17 @@ const AboutPage = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Our Story</h2>
+            <h2 className="mb-3 text-3xl font-bold text-[#f0f6fc] md:text-4xl">Our Story</h2>
             <div className="h-1 w-16 mx-auto rounded-full" style={{ background: 'linear-gradient(90deg,#461E96,#00B4E6)' }} />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-6 text-gray-600 text-lg leading-relaxed"
+            className="space-y-6 text-lg leading-relaxed text-[#8b949e]"
           >
             <p>
-              <strong className="text-[#461E96]">TrainerMentors was born from a simple observation:</strong>{' '}
+              <strong className="text-[#58a6ff]">TrainerMentors was born from a simple observation:</strong>{' '}
               traditional education wasn&apos;t preparing students for the real world. Founded by passionate
               educators and industry professionals, we set out to create a platform where learning meets
               real-world application — where every student gets the personalized guidance they deserve.
@@ -318,7 +335,7 @@ const AboutPage = () => {
             </p>
             <p>
               Today, TrainerMentors proudly serves{' '}
-              <strong className="text-[#461E96]">hundreds of learners</strong>, partnering with
+              <strong className="text-[#58a6ff]">hundreds of learners</strong>, partnering with
               industry professionals and hiring companies to create a seamless bridge from learning to
               employment. Our alumni work at leading tech companies, startups, and enterprises across India.
             </p>
@@ -327,7 +344,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── Why Choose Us ────────────────────────────────────────── */}
-      <section className="py-20 bg-gray-50">
+      <section className="border-b border-[#21262d] bg-gradient-to-b from-[#010409] to-[#0d1117] py-20">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -335,8 +352,8 @@ const AboutPage = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Why Choose Us</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">We go beyond traditional training to deliver measurable career outcomes.</p>
+            <h2 className="mb-3 text-3xl font-bold text-[#f0f6fc] md:text-4xl">Why Choose Us</h2>
+            <p className="mx-auto max-w-xl text-[#8b949e]">We go beyond traditional training to deliver measurable career outcomes.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -348,13 +365,13 @@ const AboutPage = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow text-center"
+                className="rounded-2xl border border-[#30363d] bg-[#161b22] p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-[#58a6ff]/60 hover:shadow-lg"
               >
                 <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <item.icon className="text-2xl text-primary-600" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
+                <h3 className="mb-2 text-lg font-bold text-[#f0f6fc]">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-[#8b949e]">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -362,13 +379,13 @@ const AboutPage = () => {
       </section>
 
       {/* ── Timeline ─────────────────────────────────────────────── */}
-      <section className="py-20" style={{ background: '#f8f5ff' }}>
+      <section className="border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-20">
         <div className="max-w-3xl mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-14"
+            className="mb-14 text-center text-3xl font-bold text-[#f0f6fc] md:text-4xl"
           >
             Our Journey
           </motion.h2>
@@ -389,7 +406,7 @@ const AboutPage = () => {
               >
                 {/* dot */}
                 <span
-                  className="absolute -left-6 top-1 w-5 h-5 rounded-full border-4 border-[#f8f5ff]"
+                  className="absolute -left-6 top-1 h-5 w-5 rounded-full border-4 border-[#0d1117]"
                   style={{ background: item.color }}
                 />
                 <span
@@ -398,8 +415,8 @@ const AboutPage = () => {
                 >
                   {item.year}
                 </span>
-                <h3 className="text-lg font-bold text-gray-800 mb-1">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="mb-1 text-lg font-bold text-[#f0f6fc]">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-[#8b949e]">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -407,7 +424,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── Meet Our Mentors ──────────────────────────────────────── */}
-      <section id="mentors" className="scroll-mt-20 py-20 bg-white">
+      <section id="mentors" className="scroll-mt-20 border-b border-[#21262d] bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-20">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -415,9 +432,9 @@ const AboutPage = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">Our Global Mentor Network</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Industry veterans from <strong className="text-gray-700">India, USA, UK, Singapore, Canada &amp; Australia</strong> — dedicated to shaping the next generation of tech professionals.
+            <h2 className="mb-3 text-3xl font-bold text-[#f0f6fc] md:text-4xl">Our Global Mentor Network</h2>
+            <p className="mx-auto max-w-2xl text-[#8b949e]">
+              Industry veterans from <strong className="text-[#c9d1d9]">India, USA, UK, Singapore, Canada &amp; Australia</strong> — dedicated to shaping the next generation of tech professionals.
             </p>
           </motion.div>
 
@@ -436,7 +453,7 @@ const AboutPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.07 }}
-                  className="bg-gray-50 rounded-2xl p-6 text-center hover:shadow-md transition-shadow border border-gray-100"
+                  className="rounded-2xl border border-[#30363d] bg-[#161b22] p-6 text-center transition-all hover:-translate-y-1 hover:border-[#58a6ff]/60 hover:shadow-md"
                 >
                   <div className="relative mx-auto mb-4 w-24 h-24">
                     {(mentor.image || mentor.photo || mentor.profile_image)
@@ -449,18 +466,18 @@ const AboutPage = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-base font-bold text-gray-800">{name}</h3>
-                  <p className="text-sm font-medium mb-1" style={{ color: '#461E96' }}>{role}</p>
-                  {spec && <p className="text-gray-400 text-xs mb-2">{spec}</p>}
+                  <h3 className="text-base font-bold text-[#f0f6fc]">{name}</h3>
+                  <p className="mb-1 text-sm font-medium text-[#58a6ff]">{role}</p>
+                  {spec && <p className="mb-2 text-xs text-[#8b949e]">{spec}</p>}
                   {(mentor.loc || exp) && (
-                    <p className="text-gray-400 text-xs mb-2">
+                    <p className="mb-2 text-xs text-[#8b949e]">
                       {mentor.loc ? mentor.loc : exp}
                       {mentor.loc && exp ? <span className="mx-1 text-gray-300">·</span> : null}
                       {mentor.loc && exp ? <span>{exp}</span> : null}
                     </p>
                   )}
                   {quote && (
-                    <p className="text-gray-500 text-xs italic leading-relaxed border-t border-gray-100 pt-3">
+                    <p className="border-t border-[#30363d] pt-3 text-xs italic leading-relaxed text-[#8b949e]">
                       &ldquo;{quote}&rdquo;
                     </p>
                   )}
@@ -478,17 +495,17 @@ const AboutPage = () => {
       </section>
 
       {/* ── Where Alumni Work (Partners Marquee) ─────────────────── */}
-      <section className="py-16 bg-gray-50 overflow-hidden">
+      <section className="overflow-hidden border-b border-[#254777] bg-gradient-to-br from-[#071b35] via-[#0b2f66] to-[#000240] py-16">
         <div className="max-w-5xl mx-auto px-4 text-center mb-10">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-bold text-gray-800 mb-2"
+            className="mb-2 text-2xl font-bold text-[#f0f6fc] md:text-3xl"
           >
             Where Our Alumni Work
           </motion.h2>
-          <p className="text-gray-500 text-sm">Our graduates are hired at India&apos;s top companies</p>
+          <p className="text-sm text-[#8b949e]">Our graduates are hired at India&apos;s top companies</p>
         </div>
 
         <div className="relative overflow-hidden">
@@ -503,8 +520,8 @@ const AboutPage = () => {
           <div className="tm-marquee gap-5">
             {partnerTrack.map((name, i) => (
               <div key={i}
-                className="flex-shrink-0 flex items-center justify-center px-7 py-3 rounded-xl font-bold text-gray-700 text-sm"
-                style={{ background: '#fff', boxShadow: '0 2px 10px rgba(0,0,0,0.06)', minWidth: 130 }}>
+                className="flex flex-shrink-0 items-center justify-center rounded-xl border border-[#30363d] bg-[#161b22] px-7 py-3 text-sm font-bold text-[#c9d1d9]"
+                style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.18)', minWidth: 130 }}>
                 {name}
               </div>
             ))}
@@ -513,7 +530,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24 text-center" style={{ background: 'linear-gradient(135deg,#461E96,#00B4E6)' }}>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#010409] via-[#0d1117] to-[#010409] py-24 text-center">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -546,6 +563,7 @@ const AboutPage = () => {
           </motion.div>
         </div>
       </section>
+      </div>
     </>
   );
 };

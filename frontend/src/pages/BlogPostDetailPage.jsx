@@ -3,16 +3,39 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt, FaUser, FaClock, FaArrowLeft, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import { BLOG_POSTS } from '../utils/constants';
+import { useEffect, useState } from 'react';
+import { getPublicBlog, getPublicBlogs } from '../api/contentApi';
 
 const BlogPostDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const blog = BLOG_POSTS.find(post => post.slug === slug);
+  const fallbackBlog = BLOG_POSTS.find(post => post.slug === slug);
+  const [blog, setBlog] = useState(fallbackBlog || null);
+  const [posts, setPosts] = useState(BLOG_POSTS);
+  const [loading, setLoading] = useState(!fallbackBlog);
+
+  useEffect(() => {
+    setLoading(!fallbackBlog);
+    Promise.allSettled([getPublicBlog(slug), getPublicBlogs()]).then(([detail, list]) => {
+      if (detail.status === 'fulfilled') {
+        const item = detail.value.data.data;
+        setBlog({ ...item, date: item.published_at, readTime: item.read_time, image: item.image_url || '📝' });
+      } else setBlog(fallbackBlog || null);
+      if (list.status === 'fulfilled' && list.value.data.data?.length) {
+        const managed = list.value.data.data.map((item) => ({ ...item, date: item.published_at, readTime: item.read_time, image: item.image_url || '📝' }));
+        const managedSlugs = new Set(managed.map((item) => item.slug));
+        setPosts([...managed, ...BLOG_POSTS.filter((item) => !managedSlugs.has(item.slug))]);
+      } else setPosts(BLOG_POSTS);
+      setLoading(false);
+    });
+  }, [fallbackBlog, slug]);
 
   // Get related posts (same category, different post)
-  const relatedPosts = BLOG_POSTS.filter(
+  const relatedPosts = posts.filter(
     post => post.category === blog?.category && post.id !== blog?.id
   ).slice(0, 3);
+
+  if (loading) return <div className="min-h-[60vh] grid place-items-center text-gray-500">Loading article…</div>;
 
   if (!blog) {
     return (
@@ -124,7 +147,7 @@ const BlogPostDetailPage = () => {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
               {/* Featured Image Placeholder */}
               <div className="mb-8 h-96 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center">
-                <div className="text-8xl">{blog.image}</div>
+                {blog.image_url ? <img src={blog.image_url} alt="" className="h-full w-full rounded-xl object-cover" /> : <div className="text-8xl">{blog.image}</div>}
               </div>
 
               {/* Content */}
@@ -160,6 +183,16 @@ const BlogPostDetailPage = () => {
                   </div>
                 ))}
               </div>
+
+              {(blog.external_url || blog.reference_url) && (
+                <div className="mt-8 rounded-xl border border-blue-100 bg-blue-50 p-5">
+                  <h3 className="font-bold text-gray-800">Sources &amp; references</h3>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {blog.external_url && <a href={blog.external_url} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white">Open original {blog.source_platform || 'post'}</a>}
+                    {blog.reference_url && <a href={blog.reference_url} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700">View reference</a>}
+                  </div>
+                </div>
+              )}
 
               {/* Divider */}
               <div className="border-t border-gray-200 my-12"></div>
@@ -234,7 +267,7 @@ const BlogPostDetailPage = () => {
                   onClick={() => navigate(`/blog/${post.slug}`)}
                 >
                   <div className="h-40 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <div className="text-6xl">{post.image}</div>
+                    {post.image_url ? <img src={post.image_url} alt="" className="h-full w-full object-cover" /> : <div className="text-6xl">{post.image}</div>}
                   </div>
                   <div className="p-5">
                     <span className="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded">

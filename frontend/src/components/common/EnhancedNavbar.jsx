@@ -11,7 +11,6 @@ import Logo from './Logo';
 import CourseDropdown from './CourseDropdown';
 
 const EnhancedNavbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -26,15 +25,6 @@ const EnhancedNavbar = () => {
     return location.pathname === pathname
       && new URLSearchParams(location.search).toString() === new URLSearchParams(query).toString();
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     let active = true;
@@ -61,14 +51,14 @@ const EnhancedNavbar = () => {
     }));
   };
 
-  const topNavBg = scrolled ? 'bg-white shadow-md' : 'bg-black';
-  const topNavText = scrolled ? 'text-gray-700' : 'text-white';
-  const topNavHover = scrolled ? 'hover:text-primary-600' : 'hover:text-orange-400';
+  const topNavBg = 'bg-black';
+  const topNavText = 'text-white';
+  const topNavHover = 'hover:text-orange-400';
 
-  const bottomNavBg = scrolled ? 'bg-gray-50 border-b border-gray-200' : 'bg-gray-900 border-b border-gray-800';
-  const bottomNavText = scrolled ? 'text-gray-800' : 'text-white';
-  const bottomNavHover = scrolled ? 'hover:text-primary-600' : 'hover:text-orange-400';
-  const bottomNavActive = scrolled ? 'text-primary-600 border-b-2 border-primary-600' : 'text-orange-400 border-b-2 border-orange-400';
+  const bottomNavBg = 'bg-gray-900 border-b border-gray-800';
+  const bottomNavText = 'text-white';
+  const bottomNavHover = 'hover:text-orange-400';
+  const bottomNavActive = 'text-orange-400 border-b-2 border-orange-400';
 
   return (
     <>
@@ -161,7 +151,6 @@ const EnhancedNavbar = () => {
                         <CourseDropdown
                           categorySlug={link.path.split('/').pop()}
                           dropdownType={link.dropdownType}
-                          scrolled={scrolled}
                         />
                       </motion.div>
                     )}
@@ -175,11 +164,7 @@ const EnhancedNavbar = () => {
                 {/* Cart Icon */}
               <Link
                 to="/cart"
-                className={`relative p-2 rounded-lg transition-colors ${
-                  scrolled
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-white hover:bg-white/10'
-                }`}
+                className="relative p-2 rounded-lg text-white transition-colors hover:bg-white/10"
                 title="Shopping Cart"
               >
                 <FaShoppingCart className="text-xl" />
@@ -194,11 +179,7 @@ const EnhancedNavbar = () => {
               {isAuthenticated ? (
                 <Link
                   to="/dashboard"
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                    scrolled
-                      ? 'bg-primary-100 text-primary-600'
-                      : 'bg-primary-600 text-white'
-                  }`}
+                  className="flex items-center space-x-2 rounded-lg bg-primary-600 px-4 py-2 text-white"
                 >
                   <FaUser />
                   <span className="text-sm font-medium">{user?.first_name || 'Dashboard'}</span>

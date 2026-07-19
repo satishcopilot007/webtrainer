@@ -5,7 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { getFeedbackCourseOptions, submitPublicFeedback } from '../api/feedbackApi';
 
-const initialForm = { name: '', email: '', course_id: '', rating: 0, message: '', website: '' };
+const initialForm = { name: '', email: '', role: '', other_role: '', course_id: '', rating: 0, message: '', website: '' };
 
 const FeedbackPage = () => {
   const [form, setForm] = useState(initialForm);
@@ -32,6 +32,10 @@ const FeedbackPage = () => {
 
   const submit = async (event) => {
     event.preventDefault();
+    if (form.role === 'other' && !form.other_role.trim()) {
+      toast.error('Please enter your role');
+      return;
+    }
     if (!form.rating) {
       toast.error('Please select a rating');
       return;
@@ -41,6 +45,8 @@ const FeedbackPage = () => {
     try {
       const response = await submitPublicFeedback({
         ...form,
+        role: form.role === 'other' ? form.other_role.trim() : form.role,
+        other_role: undefined,
         course_id: Number(form.course_id),
         rating: Number(form.rating),
       });
@@ -112,6 +118,40 @@ const FeedbackPage = () => {
                 placeholder="Enter your email"
               />
             </div>
+
+            <div className="mb-6">
+              <label className="block text-white font-semibold mb-2" htmlFor="feedback-role">I am</label>
+              <select
+                id="feedback-role"
+                required
+                value={form.role}
+                onChange={(event) => setForm({ ...form, role: event.target.value, other_role: '' })}
+                className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+              >
+                <option value="">Select your role</option>
+                <option value="student">Student</option>
+                <option value="trainer">Trainer</option>
+                <option value="job support">Job Support</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {form.role === 'other' && (
+              <div className="mb-6">
+                <label className="block text-white font-semibold mb-2" htmlFor="feedback-other-role">Other Role</label>
+                <input
+                  id="feedback-other-role"
+                  type="text"
+                  required
+                  minLength={2}
+                  maxLength={100}
+                  value={form.other_role}
+                  onChange={(event) => setForm({ ...form, other_role: event.target.value })}
+                  className="w-full px-4 py-3 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
+                  placeholder="Enter your role"
+                />
+              </div>
+            )}
 
             <div className="mb-6">
               <label className="block text-white font-semibold mb-2">Course/Program</label>

@@ -5,15 +5,17 @@ import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes } from 'react-icons/fa';
 import { bookDemo } from '../../api/leadApi';
+import { getFeedbackCourseOptions } from '../../api/feedbackApi';
 import useUIStore from '../../store/useUIStore';
-import useCourseStore from '../../store/useCourseStore';
+import useAuthStore from '../../store/useAuthStore';
 import toast from 'react-hot-toast';
 
 const demoSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().min(10, 'Please enter a valid phone number').max(15),
-  course: z.string().min(1, 'Please select a course'),
+  course_id: z.string().min(1, 'Please select a course'),
+  mode: z.enum(['online', 'classroom', 'hybrid'], { required_error: 'Please select a learning mode' }),
   preferred_date: z.string().min(1, 'Please select a preferred date'),
   message: z.string().optional(),
 });
@@ -31,29 +33,59 @@ const modalVariants = {
 
 const DemoBookingForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState('');
   const { isDemoModalOpen, closeDemoModal } = useUIStore();
-  const store = useCourseStore();
-  const courses = Array.isArray(store.courses) ? store.courses : [];
-  const { fetchCourses } = store;
+  const { user, isAuthenticated, fetchProfile } = useAuthStore();
 
   useEffect(() => {
-    if (isDemoModalOpen && courses.length === 0) {
-      fetchCourses();
-    }
-  }, [isDemoModalOpen, courses.length, fetchCourses]);
+    if (!isDemoModalOpen || courses.length > 0) return;
+    let active = true;
+    setCoursesLoading(true);
+    getFeedbackCourseOptions()
+      .then((response) => {
+        if (!active) return;
+        setCourses(Array.isArray(response.data?.data) ? response.data.data : []);
+        setCoursesError('');
+      })
+      .catch(() => active && setCoursesError('Unable to load courses. Please try again.'))
+      .finally(() => active && setCoursesLoading(false));
+    return () => { active = false; };
+  }, [isDemoModalOpen, courses.length]);
+
+  useEffect(() => {
+    if (isDemoModalOpen && isAuthenticated && !user) fetchProfile();
+  }, [fetchProfile, isAuthenticated, isDemoModalOpen, user]);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(demoSchema) });
+  } = useForm({
+    resolver: zodResolver(demoSchema),
+    defaultValues: { name: '', email: '', phone: '', course_id: '', mode: 'online', preferred_date: '', message: '' },
+  });
+
+  useEffect(() => {
+    if (!isDemoModalOpen) return;
+    reset({
+      name: [user?.first_name, user?.last_name].filter(Boolean).join(' ') || user?.name || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      course_id: '',
+      mode: 'online',
+      preferred_date: '',
+      message: '',
+    });
+  }, [isDemoModalOpen, reset, user]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      await bookDemo(data);
-      toast.success('Demo booked successfully! We will contact you shortly.');
+      await bookDemo({ ...data, timeline: data.preferred_date });
+      toast.success('Free session booked successfully! We will contact you shortly.');
       reset();
       closeDemoModal();
     } catch {
@@ -98,8 +130,8 @@ const DemoBookingForm = () => {
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <div>
-                <h2 className="font-display text-xl font-bold text-dark-800">Book a Free Demo</h2>
-                <p className="text-sm text-gray-500">Fill in your details and we&apos;ll reach out</p>
+                <h2 className="font-display text-xl font-bold text-dark-800">Book a Free Session</h2>
+                <p className="text-sm text-gray-500">Choose any course and provide your contact details</p>
               </div>
               <button
                 onClick={closeDemoModal}
@@ -137,16 +169,17 @@ const DemoBookingForm = () => {
               <div className="grid grid-cols-2 gap-4">
                 {/* Course dropdown */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Course</label>
-                  <select className={inputClass('course')} {...register('course')}>
-                    <option value="">Select a course</option>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Choose Course</label>
+                  <select disabled={coursesLoading} className={inputClass('course_id')} {...register('course_id')}>
+                    <option value="">{coursesLoading ? 'Loading courses…' : 'Select any course'}</option>
                     {courses.map((c) => (
-                      <option key={c.id || c.slug} value={c.slug || c.title}>
+                      <option key={c.id || c.slug} value={String(c.id || c.slug)}>
                         {c.title}
                       </option>
                     ))}
                   </select>
-                  {errors.course && <p className="text-red-500 text-xs mt-1">{errors.course.message}</p>}
+                  {errors.course_id && <p className="text-red-500 text-xs mt-1">{errors.course_id.message}</p>}
+                  {coursesError && <p className="text-red-500 text-xs mt-1">{coursesError}</p>}
                 </div>
 
                 {/* Preferred date */}
@@ -155,6 +188,16 @@ const DemoBookingForm = () => {
                   <input type="date" min={minDateStr} className={inputClass('preferred_date')} {...register('preferred_date')} />
                   {errors.preferred_date && <p className="text-red-500 text-xs mt-1">{errors.preferred_date.message}</p>}
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Learning Mode</label>
+                <select className={inputClass('mode')} {...register('mode')}>
+                  <option value="online">Online</option>
+                  <option value="classroom">Classroom / Center</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+                {errors.mode && <p className="text-red-500 text-xs mt-1">{errors.mode.message}</p>}
               </div>
 
               {/* Message */}
@@ -175,7 +218,7 @@ const DemoBookingForm = () => {
                     Booking...
                   </>
                 ) : (
-                  'Book Free Demo'
+                  'Book Free Session'
                 )}
               </button>
             </form>

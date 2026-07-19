@@ -71,6 +71,7 @@ define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'mp4']);
 
 // Email Settings
 define('EMAIL_FROM', getenv('EMAIL_FROM') ?: 'noreply@trainermentors.com');
+define('ADMIN_EMAIL', getenv('ADMIN_EMAIL') ?: 'admin@trainermentors.com');
 define('SMTP_HOST', getenv('SMTP_HOST') ?: 'smtp.gmail.com');
 define('SMTP_PORT', getenv('SMTP_PORT') ?: 587);
 define('SMTP_USER', getenv('SMTP_USER') ?: '');

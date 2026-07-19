@@ -1,19 +1,35 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { FaCalendar, FaClock, FaTag, FaArrowRight, FaSearch } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BLOG_POSTS, SITE_NAME } from '../utils/constants';
 import { Link } from 'react-router-dom';
+import { getPublicBlogs } from '../api/contentApi';
 
 const BlogPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [managedPosts, setManagedPosts] = useState([]);
+
+  useEffect(() => {
+    getPublicBlogs()
+      .then(({ data }) => setManagedPosts((data.data || []).map((post) => ({
+        ...post,
+        date: post.published_at,
+        readTime: post.read_time,
+        image: post.image_url || '📝',
+      }))))
+      .catch(() => setManagedPosts([]));
+  }, []);
+
+  const managedSlugs = new Set(managedPosts.map((post) => post.slug));
+  const posts = [...managedPosts, ...BLOG_POSTS.filter((post) => !managedSlugs.has(post.slug))];
 
   // Get unique categories
-  const categories = ['All', ...new Set(BLOG_POSTS.map(post => post.category))];
+  const categories = ['All', ...new Set(posts.map(post => post.category))];
 
   // Filter posts
-  const filteredPosts = BLOG_POSTS.filter(post => {
+  const filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
@@ -109,9 +125,7 @@ const BlogPage = () => {
                   >
                     {/* Feature Image */}
                     <div className="h-48 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center relative overflow-hidden">
-                      <div className="text-6xl group-hover:scale-110 transition-transform duration-300">
-                        {post.image}
-                      </div>
+                      {post.image_url ? <img src={post.image_url} alt="" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" /> : <div className="text-6xl group-hover:scale-110 transition-transform duration-300">{post.image}</div>}
                       <div className="absolute top-3 left-3 bg-white text-orange-600 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                         <FaTag size={12} />
                         {post.category}
@@ -143,13 +157,15 @@ const BlogPage = () => {
                       {/* Author & CTA */}
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-gray-500">By {post.author}</p>
-                        <Link
-                          to={`/blog/${post.slug}`}
+                        {post.external_url && !post.content ? <a
+                          href={post.external_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold text-sm transition-colors group/cta"
                         >
-                          Read
+                          Open {post.source_platform || 'post'}
                           <FaArrowRight className="group-hover/cta:translate-x-1 transition-transform" />
-                        </Link>
+                        </a> : <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold text-sm transition-colors group/cta">Read <FaArrowRight className="group-hover/cta:translate-x-1 transition-transform" /></Link>}
                       </div>
                     </div>
                   </motion.div>

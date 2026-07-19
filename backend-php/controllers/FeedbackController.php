@@ -9,6 +9,7 @@ class FeedbackController extends BaseController {
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
+            role VARCHAR(100) NULL,
             phone VARCHAR(30) NULL,
             course_id INT NULL,
             subject VARCHAR(255) NULL,
@@ -27,6 +28,12 @@ class FeedbackController extends BaseController {
             throw new RuntimeException('Unable to initialize feedback storage');
         }
 
+        $roleColumn = $this->conn->query("SHOW COLUMNS FROM admin_feedback LIKE 'role'");
+        if (!$roleColumn || ($roleColumn->num_rows === 0 && !$this->conn->query(
+            "ALTER TABLE admin_feedback ADD COLUMN role VARCHAR(100) NULL AFTER email"
+        ))) {
+            throw new RuntimeException('Unable to update feedback storage');
+        }
     }
 
     private function textValue($value, $field, $maxLength, $minLength = 1) {
@@ -62,6 +69,7 @@ class FeedbackController extends BaseController {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 255) {
             Response::error('Validation failed', ['email' => 'Enter a valid email address'], 422);
         }
+        $role = $this->textValue($data['role'] ?? null, 'role', 100, 2);
         $message = $this->textValue($data['message'] ?? null, 'message', 20000, 10);
         $courseId = filter_var($data['course_id'] ?? null, FILTER_VALIDATE_INT, [
             'options' => ['min_range' => 1],
@@ -105,10 +113,10 @@ class FeedbackController extends BaseController {
         $status = 'new';
         $isPublished = 0;
         $stmt = $this->conn->prepare(
-              'INSERT INTO admin_feedback (name, email, phone, course_id, subject, message, rating, status, is_published, created_at, updated_at)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())'
+                  'INSERT INTO admin_feedback (name, email, role, phone, course_id, subject, message, rating, status, is_published, created_at, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())'
         );
-           $stmt->bind_param('sssissisi', $name, $email, $phone, $courseId, $subject, $message, $rating, $status, $isPublished);
+              $stmt->bind_param('ssssissisi', $name, $email, $role, $phone, $courseId, $subject, $message, $rating, $status, $isPublished);
         if (!$stmt->execute()) {
             $stmt->close();
             throw new RuntimeException('Unable to save feedback');
