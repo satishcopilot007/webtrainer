@@ -52,7 +52,12 @@ if (ENV === 'production' && (strlen($jwtSecret) < 32 || strpos($jwtSecret, 'chan
 define('JWT_SECRET', $jwtSecret !== '' ? $jwtSecret : 'development-only-jwt-secret-not-for-production');
 define('JWT_EXPIRY', 3600); // 1 hour
 define('JWT_REFRESH_EXPIRY', 604800); // 7 days
-define('GOOGLE_CLIENT_ID', trim((string)(getenv('GOOGLE_CLIENT_ID') ?: '')));
+// OAuth client IDs are public identifiers. Keep the deployed web client as a
+// fallback because Hostinger/Git deployments intentionally exclude .env files.
+define(
+    'GOOGLE_CLIENT_ID',
+    trim((string)(getenv('GOOGLE_CLIENT_ID') ?: '995087720646-vfe3ji6thpfnf2jika9vfq0blescmr0g.apps.googleusercontent.com'))
+);
 
 // CORS Settings
 define('ALLOWED_ORIGINS', [
