@@ -1466,6 +1466,38 @@ app.post('/api/enrollments', authenticate, (req, res) => {
   });
 });
 
+app.get('/api/users/:id/enrollments', authenticate, (req, res) => {
+  const requestedUserId = Number(req.params.id);
+  if (req.user.id !== requestedUserId && req.user.role !== 'admin') {
+    return res.status(403).json({ success: false, message: 'Forbidden' });
+  }
+
+  const enrollments = mockDB.enrollments
+    .filter((enrollment) => enrollment.student_id === requestedUserId)
+    .map((enrollment) => {
+      const course = getAllCoursesCatalog().find((item) => Number(item.id) === Number(enrollment.course_id));
+      return {
+        ...enrollment,
+        course_title: course?.title || 'Course',
+        thumbnail: course?.thumbnail || null
+      };
+    });
+
+  res.json({
+    success: true,
+    message: 'User enrollments retrieved successfully',
+    data: enrollments,
+    pagination: {
+      total: enrollments.length,
+      page: 1,
+      pageSize: enrollments.length || 100,
+      totalPages: enrollments.length ? 1 : 0,
+      hasNextPage: false,
+      hasPreviousPage: false
+    }
+  });
+});
+
 // ===== USERS =====
 
 // Get all users (admin only)

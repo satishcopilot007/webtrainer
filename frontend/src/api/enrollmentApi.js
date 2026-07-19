@@ -1,4 +1,5 @@
 import axios from 'axios';
+import api from './axiosConfig';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
@@ -9,18 +10,11 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000
 /**
  * Get all enrollments for the current user
  */
-export const getUserEnrollments = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/accounts/enrollments/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching enrollments:', error);
-    throw error;
-  }
+export const getUserEnrollments = async (userId, pageSize = 100) => {
+  const response = await api.get(`/users/${userId}/enrollments`, {
+    params: { page: 1, pageSize },
+  });
+  return response.data;
 };
 
 /**

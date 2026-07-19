@@ -1,9 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { FaChartLine, FaBook, FaTrophy, FaArrowRight, FaClock, FaStar, FaPlay, FaLock } from 'react-icons/fa';
+import { useEffect, useMemo, useState } from 'react';
+import { FaChartLine, FaBook, FaTrophy, FaArrowRight, FaClock, FaPlay } from 'react-icons/fa';
 import useAuthStore from '../store/useAuthStore';
+import { getUserEnrollments } from '../api/enrollmentApi';
 import FeaturedCourses from '../components/home/FeaturedCourses';
 import TestimonialSlider from '../components/home/TestimonialSlider';
 import EnhancedTestimonials from '../components/home/EnhancedTestimonials';
@@ -19,6 +20,8 @@ const DashboardPage = () => {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+  const [enrollments, setEnrollments] = useState([]);
+  const [isLoadingEnrollments, setIsLoadingEnrollments] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -29,77 +32,48 @@ const DashboardPage = () => {
     }
   }, [isAuthenticated, user, navigate, fetchProfile]);
 
-  // Sample enrolled courses data
-  const enrolledCourses = [
-    {
-      id: 1,
-      title: 'Python for Data Science',
-      image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-      progress: 65,
-      instructor: 'Dr. Rajesh Kumar',
-      rating: 4.8,
-      students: 2543,
-      nextLesson: 'Advanced Data Manipulation'
-    },
-    {
-      id: 2,
-      title: 'Full-Stack Web Development',
-      image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-      progress: 40,
-      instructor: 'Sarah Johnson',
-      rating: 4.9,
-      students: 3421,
-      nextLesson: 'React Hooks & State Management'
-    },
-    {
-      id: 3,
-      title: 'Cloud Computing with AWS',
-      image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-      progress: 25,
-      instructor: 'Mike Chen',
-      rating: 4.7,
-      students: 1892,
-      nextLesson: 'EC2 & Auto Scaling'
-    }
-  ];
+  useEffect(() => {
+    if (!isAuthenticated || !user?.id) return;
 
-  // Learning stats
+    let isMounted = true;
+    setIsLoadingEnrollments(true);
+    getUserEnrollments(user.id)
+      .then((response) => {
+        if (isMounted) setEnrollments(Array.isArray(response.data) ? response.data : []);
+      })
+      .catch(() => {
+        if (isMounted) setEnrollments([]);
+      })
+      .finally(() => {
+        if (isMounted) setIsLoadingEnrollments(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isAuthenticated, user?.id]);
+
+  const enrolledCourses = useMemo(
+    () => enrollments.filter((enrollment) => enrollment.status !== 'dropped'),
+    [enrollments],
+  );
+
+  const certificates = enrolledCourses.filter(
+    (enrollment) => enrollment.status === 'completed' || Number(enrollment.progress_percentage) >= 100,
+  ).length;
+
+  const learningHours = enrolledCourses.reduce(
+    (total, enrollment) => total + Math.max(0, Number(enrollment.learning_hours) || 0),
+    0,
+  );
+
+  const currentStreak = Math.max(0, Number(user?.current_streak) || 0);
+
   const stats = [
-    { label: 'Courses Enrolled', value: '3', icon: FaBook, color: 'bg-blue-500' },
-    { label: 'Learning Hours', value: '24h', icon: FaClock, color: 'bg-green-500' },
-    { label: 'Certificates', value: '1', icon: FaTrophy, color: 'bg-yellow-500' },
-    { label: 'Current Streak', value: '7 days', icon: FaChartLine, color: 'bg-purple-500' }
-  ];
-
-  // Recommended courses
-  const recommendedCourses = [
-    {
-      id: 4,
-      title: 'AI & Machine Learning',
-      instructor: 'Dr. Priya Singh',
-      students: 4532,
-      rating: 4.9,
-      price: '₹4,999',
-      image: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400&h=300&fit=crop'
-    },
-    {
-      id: 5,
-      title: 'Cybersecurity Mastery',
-      instructor: 'James Wilson',
-      students: 2156,
-      rating: 4.8,
-      price: '₹5,499',
-      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=300&fit=crop'
-    },
-    {
-      id: 6,
-      title: 'DevOps & Kubernetes',
-      instructor: 'Amit Patel',
-      students: 1823,
-      rating: 4.7,
-      price: '₹4,799',
-      image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop'
-    }
+    { label: 'Courses Enrolled', value: enrolledCourses.length, icon: FaBook, color: 'bg-blue-500' },
+    { label: 'Learning Hours', value: `${learningHours}h`, icon: FaClock, color: 'bg-green-500' },
+    { label: 'Certificates', value: certificates, icon: FaTrophy, color: 'bg-yellow-500' },
+    { label: 'Current Streak', value: `${currentStreak} days`, icon: FaChartLine, color: 'bg-purple-500' }
   ];
 
   return (
@@ -117,7 +91,7 @@ const DashboardPage = () => {
         className="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-12 px-4"
       >
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.first_name || 'Learner'}! 👋</h1>
+          <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.first_name || user?.name?.split(' ')[0] || 'Learner'}! 👋</h1>
           <p className="text-primary-100 text-lg">Ready to continue your learning journey?</p>
         </div>
       </motion.section>
@@ -159,6 +133,20 @@ const DashboardPage = () => {
               View All <FaArrowRight />
             </Link>
           </div>
+          {isLoadingEnrollments ? (
+            <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center text-gray-500">
+              Loading your courses...
+            </div>
+          ) : enrolledCourses.length === 0 ? (
+            <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center">
+              <FaBook className="text-4xl text-primary-500 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">No courses enrolled yet</h3>
+              <p className="text-gray-600 mb-5">Your enrolled courses and progress will appear here.</p>
+              <Link to="/courses" className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-5 py-3 rounded-xl font-semibold">
+                Browse Courses <FaArrowRight />
+              </Link>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {enrolledCourses.map((course, index) => (
               <motion.div
@@ -171,9 +159,9 @@ const DashboardPage = () => {
               >
                 {/* Course Image */}
                 <div className="relative overflow-hidden h-48">
-                  <img 
-                    src={course.image} 
-                    alt={course.title} 
+                  <img
+                    src={course.thumbnail || 'https://via.placeholder.com/400x300?text=Course'}
+                    alt={course.course_title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -184,37 +172,26 @@ const DashboardPage = () => {
 
                 {/* Course Info */}
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{course.instructor}</p>
+                  <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">{course.course_title}</h3>
+                  <p className="text-sm capitalize text-gray-600 mb-3">Status: {course.status}</p>
 
                   {/* Progress Bar */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold text-gray-700">Progress</span>
-                      <span className="text-xs font-bold text-primary-600">{course.progress}%</span>
+                      <span className="text-xs font-bold text-primary-600">{Number(course.progress_percentage) || 0}%</span>
                     </div>
                     <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div 
                         className="h-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all duration-500"
-                        style={{ width: `${course.progress}%` }}
+                        style={{ width: `${Math.min(100, Math.max(0, Number(course.progress_percentage) || 0))}%` }}
                       />
                     </div>
                   </div>
 
-                  {/* Next Lesson */}
-                  <p className="text-xs text-gray-600 mb-3">
-                    <strong>Next:</strong> {course.nextLesson}
-                  </p>
-
-                  {/* Rating & Continue Button */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <FaStar className="text-yellow-400 text-sm" />
-                      <span className="text-sm font-semibold text-gray-800">{course.rating}</span>
-                      <span className="text-xs text-gray-500">({course.students.toLocaleString()})</span>
-                    </div>
+                  <div className="flex items-center justify-end">
                     <Link 
-                      to={`/courses/${course.id}`}
+                      to={`/courses/${course.course_id}`}
                       className="text-primary-600 hover:text-primary-700 font-bold text-sm"
                     >
                       Continue
@@ -224,51 +201,7 @@ const DashboardPage = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Recommended Courses */}
-      <section className="py-12 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-gray-800">Recommended For You</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recommendedCourses.map((course, index) => (
-              <motion.div
-                key={course.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 group cursor-pointer"
-              >
-                <div className="relative overflow-hidden h-40">
-                  <img 
-                    src={course.image} 
-                    alt={course.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1">{course.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{course.instructor}</p>
-                  <div className="flex items-center gap-2 mb-4">
-                    <FaStar className="text-yellow-400 text-sm" />
-                    <span className="text-sm font-semibold">{course.rating}</span>
-                    <span className="text-xs text-gray-500">({course.students.toLocaleString()} students)</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary-600">{course.price}</span>
-                    <Link 
-                      to={`/courses/${course.id}`}
-                      className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors"
-                    >
-                      Enroll
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          )}
         </div>
       </section>
 
