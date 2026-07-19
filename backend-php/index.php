@@ -83,6 +83,7 @@ try {
         'POST' => [
             '/auth/register' => ['AuthController', 'register'],
             '/auth/login' => ['AuthController', 'login'],
+            '/auth/google' => ['AuthController', 'google'],
             '/auth/refresh' => ['AuthController', 'refreshToken'],
             '/auth/change-password' => ['AuthController', 'changePassword'],
             '/admin/tutors/profile-image' => ['AdminController', 'uploadTutorProfileImage'],

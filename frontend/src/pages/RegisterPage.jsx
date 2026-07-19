@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaUserPlus, FaExclamationCircle, FaCheckCircle } from 'react-icons/fa';
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
+import GoogleAuthButton from '../components/auth/GoogleAuthButton';
 
 const registerSchema = z.object({
   first_name: z.string()
@@ -162,6 +163,13 @@ const RegisterPage = () => {
               </div>
               <h1 className="text-2xl font-bold text-gray-800">Create Account</h1>
               <p className="text-gray-500 text-sm mt-1">Join thousands of learners on TrainerMentors</p>
+            </div>
+
+            <GoogleAuthButton mode="register" />
+            <div className="flex items-center gap-3 my-6" aria-hidden="true">
+              <div className="h-px flex-1 bg-gray-200" />
+              <span className="text-xs font-medium uppercase tracking-wider text-gray-400">or register with email</span>
+              <div className="h-px flex-1 bg-gray-200" />
             </div>
 
             {/* Server Error with Field Details */}

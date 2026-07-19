@@ -52,6 +52,7 @@ if (ENV === 'production' && (strlen($jwtSecret) < 32 || strpos($jwtSecret, 'chan
 define('JWT_SECRET', $jwtSecret !== '' ? $jwtSecret : 'development-only-jwt-secret-not-for-production');
 define('JWT_EXPIRY', 3600); // 1 hour
 define('JWT_REFRESH_EXPIRY', 604800); // 7 days
+define('GOOGLE_CLIENT_ID', trim((string)(getenv('GOOGLE_CLIENT_ID') ?: '')));
 
 // CORS Settings
 define('ALLOWED_ORIGINS', [

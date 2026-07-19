@@ -17,6 +17,10 @@ export const register = (data) => withLegacyFallback(
 	() => api.post('/auth/register', data),
 	() => api.post('/register', data),
 );
+export const continueWithGoogle = (credential) => withLegacyFallback(
+	() => api.post('/auth/google', { credential }),
+	() => api.post('/google-auth', { credential }),
+);
 export const getCurrentUser = () => withLegacyFallback(
 	() => api.get('/auth/me'),
 	() => api.get('/me'),

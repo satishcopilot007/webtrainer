@@ -26,7 +26,7 @@ class UserModel {
         }
 
         $stmt->bind_param(
-            'ssssiss',
+            'sssssss',
             $data['name'],
             $data['email'],
             $data['password'],

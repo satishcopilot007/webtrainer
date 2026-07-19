@@ -1,5 +1,13 @@
 import { create } from 'zustand';
-import { login as loginApi, register as registerApi, getProfile } from '../api/authApi';
+import { login as loginApi, register as registerApi, continueWithGoogle as googleApi, getProfile } from '../api/authApi';
+
+const saveSession = (set, authData) => {
+  const { user, accessToken, refreshToken } = authData;
+  localStorage.setItem('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+  set({ user, isAuthenticated: true, isLoading: false });
+  return user;
+};
 
 const useAuthStore = create((set) => ({
   user: null,
@@ -11,10 +19,7 @@ const useAuthStore = create((set) => ({
     try {
       const response = await loginApi(credentials);
       const { data: loginData } = response;
-      const { user, accessToken, refreshToken } = loginData.data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      set({ user, isAuthenticated: true, isLoading: false });
+      const user = saveSession(set, loginData.data);
       return { success: true, user };
     } catch (error) {
       set({ isLoading: false });
@@ -27,10 +32,7 @@ const useAuthStore = create((set) => ({
     try {
       const response = await registerApi(userData);
       const { data: regData } = response;
-      const { user, accessToken, refreshToken } = regData.data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      set({ user, isAuthenticated: true, isLoading: false });
+      saveSession(set, regData.data);
       return { success: true };
     } catch (error) {
       set({ isLoading: false });
@@ -54,6 +56,21 @@ const useAuthStore = create((set) => ({
         error: fieldErrors.email ? errorMessage : errorMessage,
         fieldErrors: fieldErrors,
         rawError: errorData
+      };
+    }
+  },
+
+  continueWithGoogle: async (credential) => {
+    set({ isLoading: true });
+    try {
+      const response = await googleApi(credential);
+      const user = saveSession(set, response.data.data);
+      return { success: true, user };
+    } catch (error) {
+      set({ isLoading: false });
+      return {
+        success: false,
+        error: error.response?.data?.message || 'Unable to continue with Google',
       };
     }
   },

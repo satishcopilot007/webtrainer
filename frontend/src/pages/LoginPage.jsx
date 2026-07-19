@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
+import GoogleAuthButton from '../components/auth/GoogleAuthButton';
 
 const loginSchema = z.object({
   email: z.string()
@@ -63,6 +64,13 @@ const LoginPage = () => {
               </div>
               <h1 className="text-2xl font-bold text-gray-800">Welcome Back</h1>
               <p className="text-gray-500 text-sm mt-1">Log in to continue your learning journey</p>
+            </div>
+
+            <GoogleAuthButton />
+            <div className="flex items-center gap-3 my-6" aria-hidden="true">
+              <div className="h-px flex-1 bg-gray-200" />
+              <span className="text-xs font-medium uppercase tracking-wider text-gray-400">or log in with email</span>
+              <div className="h-px flex-1 bg-gray-200" />
             </div>
 
             {/* Server Error */}

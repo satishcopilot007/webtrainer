@@ -13,6 +13,7 @@ const crypto = require('crypto');
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 const bodyParser = require('body-parser');
 const { sendDemoBookingAdminNotification } = require('./emailService');
 
@@ -637,6 +638,8 @@ function generateRefreshToken(userId) {
   return jwt.sign({ user_id: userId, type: 'refresh' }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 function verifyToken(token) {
   try {
     return jwt.verify(token, JWT_SECRET);
@@ -911,6 +914,54 @@ function loginHandler(req, res) {
 
 // Modern auth paths are exact aliases of the legacy local mock paths.
 app.post(['/api/login', '/api/auth/login'], loginHandler);
+
+app.post(['/api/google-auth', '/api/auth/google'], async (req, res) => {
+  const credential = String(req.body?.credential || '').trim();
+  const clientId = String(process.env.GOOGLE_CLIENT_ID || '').trim();
+  if (!clientId) {
+    return res.status(503).json({ success: false, message: 'Google sign-in is not configured' });
+  }
+  if (!credential) {
+    return res.status(422).json({ success: false, message: 'Google credential is required' });
+  }
+
+  try {
+    const ticket = await googleClient.verifyIdToken({ idToken: credential, audience: clientId });
+    const payload = ticket.getPayload();
+    if (!payload?.email_verified || !payload.email) {
+      return res.status(401).json({ success: false, message: 'Google email is not verified' });
+    }
+
+    const email = payload.email.trim().toLowerCase();
+    let user = mockDB.users.find((item) => item.email.toLowerCase() === email);
+    if (!user) {
+      user = {
+        id: Math.max(...mockDB.users.map((item) => item.id), 0) + 1,
+        name: payload.name || 'Google User',
+        email,
+        phone: '',
+        role: 'student',
+        profile_image: payload.picture || null,
+        bio: '',
+        created_at: new Date().toISOString()
+      };
+      mockDB.users.push(user);
+    }
+
+    return res.json({
+      success: true,
+      message: 'Google authentication successful',
+      data: {
+        user,
+        accessToken: generateToken(user.id),
+        refreshToken: generateRefreshToken(user.id)
+      }
+    });
+  } catch (error) {
+    console.warn(`[AUTH] Google credential rejected: ${error.message}`);
+    return res.status(401).json({ success: false, message: 'Invalid or expired Google credential' });
+  }
+});
 
 function currentUserHandler(req, res) {
   res.json({

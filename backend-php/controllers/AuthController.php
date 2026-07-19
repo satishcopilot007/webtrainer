@@ -142,6 +142,70 @@ class AuthController extends BaseController {
     }
 
     /**
+     * Continue with Google. Google validates the ID-token signature; this API
+     * additionally enforces audience, issuer, expiry, and verified email.
+     * POST /api/auth/google
+     */
+    public function google() {
+        if ($this->getMethod() !== 'POST') {
+            Response::error('Method not allowed', null, 405);
+        }
+        if (GOOGLE_CLIENT_ID === '') {
+            Response::error('Google sign-in is not configured', null, 503);
+        }
+
+        $data = $this->getRequestData();
+        $credential = trim((string)($data['credential'] ?? ''));
+        if ($credential === '') {
+            Response::error('Google credential is required', null, 422);
+        }
+
+        $url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' . rawurlencode($credential);
+        $context = stream_context_create(['http' => ['timeout' => 8, 'ignore_errors' => true]]);
+        $result = @file_get_contents($url, false, $context);
+        $claims = $result !== false ? json_decode($result, true) : null;
+        $issuer = $claims['iss'] ?? '';
+        $verified = filter_var($claims['email_verified'] ?? false, FILTER_VALIDATE_BOOLEAN);
+
+        if (!is_array($claims)
+            || !hash_equals(GOOGLE_CLIENT_ID, (string)($claims['aud'] ?? ''))
+            || !in_array($issuer, ['accounts.google.com', 'https://accounts.google.com'], true)
+            || (int)($claims['exp'] ?? 0) <= time()
+            || !$verified
+            || !filter_var($claims['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
+            Response::error('Invalid or expired Google credential', null, 401);
+        }
+
+        $email = strtolower(trim($claims['email']));
+        $userModel = new UserModel($this->conn);
+        $user = $userModel->getByEmail($email);
+
+        if (!$user) {
+            $name = trim((string)($claims['name'] ?? 'Google User')) ?: 'Google User';
+            $userId = $userModel->create([
+                'name' => $this->sanitize($name),
+                'email' => $email,
+                'password' => $this->hashPassword(bin2hex(random_bytes(32))),
+                'phone' => '',
+                'role' => 'student',
+                'profile_image' => filter_var($claims['picture'] ?? '', FILTER_VALIDATE_URL) ? $claims['picture'] : null,
+                'bio' => ''
+            ]);
+            if (!$userId) {
+                Response::error('Unable to create Google account', null, 500);
+            }
+            $user = $userModel->getById($userId);
+        }
+
+        unset($user['password']);
+        Response::success([
+            'user' => $user,
+            'accessToken' => JWT::generateToken(['user_id' => $user['id'], 'email' => $user['email']]),
+            'refreshToken' => JWT::generateRefreshToken($user['id'])
+        ], 'Google authentication successful');
+    }
+
+    /**
      * Refresh Token
      * POST /api/auth/refresh
      */
